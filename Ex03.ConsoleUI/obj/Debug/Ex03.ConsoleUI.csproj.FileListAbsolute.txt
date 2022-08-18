@@ -9,3 +9,14 @@ D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex02 Yarin 207128091 Ben 3165
 D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex02 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.CopyComplete
 D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex02 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.exe
 D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex02 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.pdb
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.exe.config
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.exe
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.pdb
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\bin\Debug\Ex03.GarageLogic.dll
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\bin\Debug\Ex03.GarageLogic.pdb
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.AssemblyReference.cache
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.SuggestedBindingRedirects.cache
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.CoreCompileInputs.cache
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.CopyComplete
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.exe
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.pdb

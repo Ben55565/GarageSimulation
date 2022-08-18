@@ -32,7 +32,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            string output = string.Format(Environment.NewLine + "You have checked in to our garage an electric car!" + r_BasicDetails.ToString() + Environment.NewLine + Environment.NewLine + "======== Electric Car details ========" + Environment.NewLine + Environment.NewLine + "Current battery time left(in hours): {0}" + Environment.NewLine + "Max battery capacity time(in hours): {1}", m_CurrentBatteryTimeLeft, r_MaxBatteryCapacityTime);
+            string output = string.Format(Environment.NewLine + "You have checked in to our garage an electric car!" + r_BasicDetails + Environment.NewLine + Environment.NewLine + "======== Electric Car details ========" + Environment.NewLine + Environment.NewLine + "Current battery time left(in hours): {0}" + Environment.NewLine + "Max battery capacity time(in hours): {1}", m_CurrentBatteryTimeLeft, r_MaxBatteryCapacityTime);
 
             return output;
         }

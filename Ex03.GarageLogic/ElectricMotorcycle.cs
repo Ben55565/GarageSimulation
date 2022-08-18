@@ -1,14 +1,16 @@
-﻿namespace Ex03.GarageLogic
+﻿using System;
+
+namespace Ex03.GarageLogic
 {
-    internal class ElectricMotorcycle
+    public class ElectricMotorcycle
     {
         private readonly float r_MaxBatteryCapacityTime;
-        private Motorcycle m_BasicDetails;
+        private readonly Motorcycle r_BasicDetails;
         private float m_CurrentBatteryTimeLeft;
 
         public ElectricMotorcycle(Motorcycle i_BasicDetails, float i_CurrentBatteryTimeLeft, float i_MaxBatteryCapacityTime)
         {
-            this.m_BasicDetails = i_BasicDetails;
+            this.r_BasicDetails = i_BasicDetails;
             this.m_CurrentBatteryTimeLeft = i_CurrentBatteryTimeLeft;
             this.r_MaxBatteryCapacityTime = i_MaxBatteryCapacityTime;
         }
@@ -26,6 +28,13 @@
             }
 
             return canChargeVehicle;
+        }
+
+        public override string ToString()
+        {
+            string output = string.Format(Environment.NewLine + "You have checked in to our garage an electric motorcycle!" + r_BasicDetails + Environment.NewLine + Environment.NewLine + "======== Electric Motorcycle details ========" + Environment.NewLine + Environment.NewLine + "Current battery time left(in hours): {0}" + Environment.NewLine + "Max battery capacity time(in hours): {1}", m_CurrentBatteryTimeLeft, r_MaxBatteryCapacityTime);
+
+            return output;
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            string output = string.Format(Environment.NewLine + "You have checked in to our garage an Fueled car!" + r_BasicDetails.ToString() + Environment.NewLine + Environment.NewLine + "======== Fueled Car details ========" + Environment.NewLine + Environment.NewLine + "Car fuel type: {0}" + Environment.NewLine + "Current fuel status: {1}" + Environment.NewLine + "Max fuel capacity: {2}", r_FuelType, m_CurrentFuelStatus, r_MaxFuelCapacity);
+            string output = string.Format(Environment.NewLine + "You have checked in to our garage an Fueled car!" + r_BasicDetails + Environment.NewLine + Environment.NewLine + "======== Fueled Car details ========" + Environment.NewLine + Environment.NewLine + "Car fuel type: {0}" + Environment.NewLine + "Current fuel status: {1}" + Environment.NewLine + "Max fuel capacity: {2}", r_FuelType, m_CurrentFuelStatus, r_MaxFuelCapacity);
 
             return output;
         }

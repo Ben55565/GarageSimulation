@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
     using System.Collections.Generic;
 
