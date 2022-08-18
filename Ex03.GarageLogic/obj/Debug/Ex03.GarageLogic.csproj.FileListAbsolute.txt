@@ -1,0 +1,7 @@
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex02 Yarin 207128091 Ben 316582295\Ex03.GarageLogic\bin\Debug\Ex03.GarageLogic.dll.config
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex02 Yarin 207128091 Ben 316582295\Ex03.GarageLogic\bin\Debug\Ex03.GarageLogic.dll
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex02 Yarin 207128091 Ben 316582295\Ex03.GarageLogic\bin\Debug\Ex03.GarageLogic.pdb
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex02 Yarin 207128091 Ben 316582295\Ex03.GarageLogic\obj\Debug\Ex03.GarageLogic.csproj.AssemblyReference.cache
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex02 Yarin 207128091 Ben 316582295\Ex03.GarageLogic\obj\Debug\Ex03.GarageLogic.csproj.CoreCompileInputs.cache
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex02 Yarin 207128091 Ben 316582295\Ex03.GarageLogic\obj\Debug\Ex03.GarageLogic.dll
+D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex02 Yarin 207128091 Ben 316582295\Ex03.GarageLogic\obj\Debug\Ex03.GarageLogic.pdb
