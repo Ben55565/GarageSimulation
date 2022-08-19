@@ -35,7 +35,7 @@ namespace Ex03.ConsoleUI
                 @"                ===========================================================
                 =============== Welcome to our garage! ====================
                 ===========================================================
-");
+                ");
             Console.WriteLine(greetMessage);
         }
 
@@ -333,7 +333,17 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("Please enter truck max cargo capacity: ");
             string cargoCapacityString = Console.ReadLine();
             float.TryParse(cargoCapacityString, out float cargoCapacity);
-            CreateAndSaveData.CreateTruck(i_CarModule, i_RegistrationId, i_EnergyPercentage, i_WheelModule, i_CurrentAirPressure, i_MaxAirPressure, isCooling, cargoCapacity, i_OwnerName, i_OwnerPhoneNumber);
+            CreateAndSaveData.CreateTruck(
+                i_CarModule,
+                i_RegistrationId,
+                i_EnergyPercentage,
+                i_WheelModule,
+                i_CurrentAirPressure,
+                i_MaxAirPressure,
+                isCooling,
+                cargoCapacity,
+                i_OwnerName,
+                i_OwnerPhoneNumber);
         }
 
         private static void fueledMotorcycleCreation(
@@ -352,7 +362,20 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("Please enter the fuel max capacity:");
             string fuelMaxCapacityStr = Console.ReadLine();
             float.TryParse(fuelMaxCapacityStr, out float fuelMaxCapacity);
-            CreateAndSaveData.CreateFueledMotorcycle(i_CarModule, i_RegistrationId, i_EnergyPercentage, i_WheelModule, i_CurrentAirPressure, i_MaxAirPressure, setLicenseType(), setEngineCapacity(), setFuelType(), fuelCurrentStatus, fuelMaxCapacity, i_OwnerName, i_OwnerPhoneNum);
+            CreateAndSaveData.CreateFueledMotorcycle(
+                i_CarModule,
+                i_RegistrationId,
+                i_EnergyPercentage,
+                i_WheelModule,
+                i_CurrentAirPressure,
+                i_MaxAirPressure,
+                setLicenseType(),
+                setEngineCapacity(),
+                setFuelType(),
+                fuelCurrentStatus,
+                fuelMaxCapacity,
+                i_OwnerName,
+                i_OwnerPhoneNum);
         }
 
         private static void electricMotorcycleCreation(
