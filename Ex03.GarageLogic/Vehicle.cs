@@ -10,13 +10,16 @@ namespace Ex03.GarageLogic
         private readonly float r_EnergyPercentageLeft;
         private readonly Wheel[] r_Wheels;
 
-        public Vehicle(string i_ModelName, string i_RegistrationId, float i_EnergyPercentageLeft, Wheel[] i_Wheels)
+        public Vehicle(string i_ModelName, string i_RegistrationId, float i_EnergyPercentageLeft, Wheel[] i_Wheels, OwnerDetailsAndStatus i_OwnerDetails)
         {
             this.r_ModelName = i_ModelName;
             this.r_RegistrationId = i_RegistrationId;
             this.r_EnergyPercentageLeft = i_EnergyPercentageLeft;
             this.r_Wheels = i_Wheels;
+            OwnerDetails = i_OwnerDetails;
         }
+
+        public OwnerDetailsAndStatus OwnerDetails { get; set; }
 
         public override string ToString()
         {
@@ -27,7 +30,7 @@ namespace Ex03.GarageLogic
                 wheelsDetails.AppendLine(r_Wheels[i].ToString());
             }
 
-            string output = string.Format(Environment.NewLine + "======== Basic vehicle details ========" + Environment.NewLine + Environment.NewLine + "Vehicle model: {0}" + Environment.NewLine + "Registration id: {1}" + Environment.NewLine + "Energy percentage left: {2}" + Environment.NewLine + Environment.NewLine + "======== Wheels details ======== " + Environment.NewLine + "{3}" + Environment.NewLine, r_ModelName, r_RegistrationId, r_EnergyPercentageLeft, wheelsDetails);
+            string output = string.Format(Environment.NewLine + "======== Basic vehicle details ========" + Environment.NewLine + Environment.NewLine + "Vehicle model: {0}" + Environment.NewLine + "Registration id: {1}" + Environment.NewLine + "Energy percentage left: {2}" + Environment.NewLine + Environment.NewLine + "======== Wheels details ======== " + Environment.NewLine + "{3}" + Environment.NewLine + Environment.NewLine + "{4}" + Environment.NewLine, r_ModelName, r_RegistrationId, r_EnergyPercentageLeft, wheelsDetails, OwnerDetails);
             return output;
         }
     }
