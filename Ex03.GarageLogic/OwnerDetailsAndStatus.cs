@@ -18,8 +18,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            string output = string.Format(Environment.NewLine + "======== Customer details ========" + Environment.NewLine + Environment.NewLine + "Owner Name: {0}" + Environment.NewLine + "Owner Phone number: {1}" + Environment.NewLine + "Vehicle current status: {2}" + Environment.NewLine, r_OwnerName, r_OwnerPhone, CarStatus.ToString());
-            return output;
+            return string.Format(Environment.NewLine + "======== Customer details ========" + Environment.NewLine + Environment.NewLine + "Owner Name: {0}" + Environment.NewLine + "Owner Phone number: {1}" + Environment.NewLine + "Vehicle current status: {2}" + Environment.NewLine, r_OwnerName, r_OwnerPhone, CarStatus.ToString()); ;
         }
     }
 }

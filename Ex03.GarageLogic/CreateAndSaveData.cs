@@ -5,7 +5,7 @@
     public class CreateAndSaveData
     {
         private static int s_VehicleNumOfWheels;
-        public static Dictionary<string, object> m_VehiclesInSystem = new Dictionary<string, object>();
+        public static Dictionary<string, object> s_VehiclesInSystem = new Dictionary<string, object>();
 
         private static Vehicle createVehicle(
             eVehicleType i_VehicleType,
@@ -18,7 +18,7 @@
             string i_OwnerName,
             string i_OwnerPhone)
         {
-            switch(i_VehicleType)
+            switch (i_VehicleType)
             {
                 case eVehicleType.Motorcycle:
                     s_VehicleNumOfWheels = 2;
@@ -41,10 +41,7 @@
                 carWheels[i] = new Wheel(i_WheelModuleName, i_CurrentAirPressure, i_MaxAirPressure);
             }
 
-            OwnerDetailsAndStatus ownerDetails = new OwnerDetailsAndStatus(
-                i_OwnerName,
-                i_OwnerPhone,
-                eCarStatus.InRepair);
+            OwnerDetailsAndStatus ownerDetails = new OwnerDetailsAndStatus(i_OwnerName, i_OwnerPhone, eCarStatus.InRepair);
 
             return new Vehicle(i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, carWheels, ownerDetails);
         }
@@ -63,6 +60,7 @@
         {
             const eVehicleType k_Type = eVehicleType.Car;
             Vehicle vehicle = createVehicle(k_Type, i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, i_WheelModuleName, i_CurrentAirPressure, i_MaxAirPressure, i_OwnerName, i_OwnerPhone);
+
             return new Car(vehicle, i_CarColor, i_NumOfDoors);
         }
 
@@ -80,6 +78,7 @@
         {
             const eVehicleType k_Type = eVehicleType.Motorcycle;
             Vehicle vehicle = createVehicle(k_Type, i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, i_WheelModuleName, i_CurrentAirPressure, i_MaxAirPressure, i_OwnerName, i_OwnerPhone);
+
             return new Motorcycle(vehicle, i_LicenseType, i_EngineCapacity);
         }
 
@@ -98,7 +97,7 @@
             string i_OwnerPhone)
         {
             Car car = createCar(i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, i_WheelModuleName, i_CurrentAirPressure, i_MaxAirPressure, i_CarColor, i_NumOfDoors, i_OwnerName, i_OwnerPhone);
-            m_VehiclesInSystem.Add(i_RegistrationId, new ElectricCar(car, i_CurrentBatteryTimeLeft, i_MaxBatteryCapacityTime));
+            s_VehiclesInSystem.Add(i_RegistrationId, new ElectricCar(car, i_CurrentBatteryTimeLeft, i_MaxBatteryCapacityTime));
         }
 
         public static void CreateFueledCar(
@@ -117,7 +116,7 @@
             string i_OwnerPhone)
         {
             Car car = createCar(i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, i_WheelModuleName, i_CurrentAirPressure, i_MaxAirPressure, i_CarColor, i_NumOfDoors, i_OwnerName, i_OwnerPhone);
-            m_VehiclesInSystem.Add(i_RegistrationId, new FueledCar(car, i_FuelType, i_CurrentFuelStatus, i_MaxFuelCapacity));
+            s_VehiclesInSystem.Add(i_RegistrationId, new FueledCar(car, i_FuelType, i_CurrentFuelStatus, i_MaxFuelCapacity));
         }
 
         public static void CreateElectricMotorcycle(
@@ -145,7 +144,7 @@
                 i_EngineCapacity,
                 i_OwnerName,
                 i_OwnerPhone);
-            m_VehiclesInSystem.Add(i_RegistrationId, new ElectricMotorcycle(motorcycle, i_CurrentBatteryTimeLeft, i_MaxBatteryCapacityTime));
+            s_VehiclesInSystem.Add(i_RegistrationId, new ElectricMotorcycle(motorcycle, i_CurrentBatteryTimeLeft, i_MaxBatteryCapacityTime));
         }
 
         public static void CreateFueledMotorcycle(
@@ -174,7 +173,7 @@
                 i_EngineCapacity,
                 i_OwnerName,
                 i_OwnerPhone);
-            m_VehiclesInSystem.Add(i_RegistrationId, new FueledMotorcycle(motorcycle, i_FuelType, i_CurrentFuelStatus, i_MaxFuelCapacity));
+            s_VehiclesInSystem.Add(i_RegistrationId, new FueledMotorcycle(motorcycle, i_FuelType, i_CurrentFuelStatus, i_MaxFuelCapacity));
         }
 
         public static void CreateTruck(
@@ -191,7 +190,7 @@
         {
             const eVehicleType k_Type = eVehicleType.Truck;
             Vehicle vehicle = createVehicle(k_Type, i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, i_WheelModuleName, i_CurrentAirPressure, i_MaxAirPressure, i_OwnerName, i_OwnerPhone);
-            m_VehiclesInSystem.Add(i_RegistrationId, new Truck(vehicle, i_TransportWithCooling, i_MaxCargoWeight));
+            s_VehiclesInSystem.Add(i_RegistrationId, new Truck(vehicle, i_TransportWithCooling, i_MaxCargoWeight));
         }
     }
 }

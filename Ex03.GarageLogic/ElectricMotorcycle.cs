@@ -18,6 +18,7 @@ namespace Ex03.GarageLogic
         public bool ChargeVehicle(float i_HoursToAddBatteryTime) // add exception
         {
             bool canChargeVehicle = true;
+
             if (m_CurrentBatteryTimeLeft + i_HoursToAddBatteryTime > r_MaxBatteryCapacityTime)
             {
                 canChargeVehicle = false;
@@ -32,9 +33,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            string output = string.Format(Environment.NewLine + "You have checked in to our garage an electric motorcycle!" + r_BasicDetails + Environment.NewLine + Environment.NewLine + "======== Electric Motorcycle details ========" + Environment.NewLine + Environment.NewLine + "Current battery time left(in hours): {0}" + Environment.NewLine + "Max battery capacity time(in hours): {1}", m_CurrentBatteryTimeLeft, r_MaxBatteryCapacityTime);
-
-            return output;
+            return string.Format(Environment.NewLine + "You have checked in to our garage an electric motorcycle!" + r_BasicDetails + Environment.NewLine + Environment.NewLine + "======== Electric Motorcycle details ========" + Environment.NewLine + Environment.NewLine + "Current battery time left(in hours): {0}" + Environment.NewLine + "Max battery capacity time(in hours): {1}", m_CurrentBatteryTimeLeft, r_MaxBatteryCapacityTime); ;
         }
     }
 }

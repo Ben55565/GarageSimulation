@@ -17,8 +17,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            string output = string.Format(Environment.NewLine + r_BasicDetails + "======== Car details ========" + Environment.NewLine + Environment.NewLine + "Car color: {0}" + Environment.NewLine + "Number of doors: {1}", r_CarColor, r_NumOfDoors);
-            return output;
+            return string.Format(Environment.NewLine + r_BasicDetails + "======== Car details ========" + Environment.NewLine + Environment.NewLine + "Car color: {0}" + Environment.NewLine + "Number of doors: {1}", r_CarColor, r_NumOfDoors); ;
         }
     }
 }

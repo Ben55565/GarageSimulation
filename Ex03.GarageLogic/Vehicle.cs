@@ -16,7 +16,7 @@ namespace Ex03.GarageLogic
             this.r_RegistrationId = i_RegistrationId;
             this.r_EnergyPercentageLeft = i_EnergyPercentageLeft;
             this.r_Wheels = i_Wheels;
-            OwnerDetails = i_OwnerDetails;
+            this.OwnerDetails = i_OwnerDetails;
         }
 
         public OwnerDetailsAndStatus OwnerDetails { get; set; }
@@ -24,14 +24,14 @@ namespace Ex03.GarageLogic
         public override string ToString()
         {
             StringBuilder wheelsDetails = new StringBuilder();
+
             for (int i = 0; i < this.r_Wheels.Length; i++)
             {
                 wheelsDetails.AppendLine(Environment.NewLine + "Wheel #" + (i + 1).ToString());
                 wheelsDetails.AppendLine(r_Wheels[i].ToString());
             }
 
-            string output = string.Format(Environment.NewLine + "======== Basic vehicle details ========" + Environment.NewLine + Environment.NewLine + "Vehicle model: {0}" + Environment.NewLine + "Registration id: {1}" + Environment.NewLine + "Energy percentage left: {2}" + Environment.NewLine + Environment.NewLine + "======== Wheels details ======== " + Environment.NewLine + "{3}" + Environment.NewLine + Environment.NewLine + "{4}" + Environment.NewLine, r_ModelName, r_RegistrationId, r_EnergyPercentageLeft, wheelsDetails, OwnerDetails);
-            return output;
+            return string.Format(Environment.NewLine + "======== Basic vehicle details ========" + Environment.NewLine + Environment.NewLine + "Vehicle model: {0}" + Environment.NewLine + "Registration id: {1}" + Environment.NewLine + "Energy percentage left: {2}" + Environment.NewLine + Environment.NewLine + "======== Wheels details ======== " + Environment.NewLine + "{3}" + Environment.NewLine + Environment.NewLine + "{4}" + Environment.NewLine, r_ModelName, r_RegistrationId, r_EnergyPercentageLeft, wheelsDetails, OwnerDetails);
         }
     }
 }

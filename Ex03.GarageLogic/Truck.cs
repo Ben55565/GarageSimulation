@@ -17,8 +17,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            string output = string.Format(Environment.NewLine + "You have checked in to our garage an Fueled motorcycle!" + Environment.NewLine + r_BasicDetails + "======== Truck details ========" + Environment.NewLine + Environment.NewLine + "Is transporting with cooling? {0}" + Environment.NewLine + "Max cargo weight capacity: {1}", r_TransportWithCooling, r_MaxCargoWeight);
-            return output;
+            return string.Format(Environment.NewLine + "You have checked in to our garage a Truck!" + Environment.NewLine + r_BasicDetails + "======== Truck details ========" + Environment.NewLine + Environment.NewLine + "Is transporting with cooling? {0}" + Environment.NewLine + "Max cargo weight capacity: {1}", r_TransportWithCooling, r_MaxCargoWeight);
         }
     }
 }

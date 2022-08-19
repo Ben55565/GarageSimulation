@@ -13,7 +13,7 @@ namespace Ex03.ConsoleUI
     internal class UserInterface
     {
         private static string s_ChoiceInput;
-        private static eUserChoice s_Choice;
+        private static eUserChoice s_UserChoice;
         private static eVehiclesAvailable s_VehicleType;
 
         public static void RunGarage()
@@ -31,19 +31,39 @@ namespace Ex03.ConsoleUI
 
         private static void welcomeMessage()
         {
-            string output = string.Format(
+            string greetMessage = string.Format(
                 @"                ===========================================================
                 =============== Welcome to our garage! ====================
                 ===========================================================
 ");
-            Console.WriteLine(output);
+            Console.WriteLine(greetMessage);
         }
 
         private static void showMenu()
         {
-            Console.WriteLine("Please choose your action:" + Environment.NewLine + "1 - Register a new vehicle into the garage" + Environment.NewLine + "2 - Show list of the vehicles registration ID's" + Environment.NewLine + "3 - Update existing vehicle status" + Environment.NewLine + "4 - Fill existing vehicle wheels air pressure to the max" + Environment.NewLine + "5 - Fuel an existing vehicle(relevant to fuel powered vehicles only)" + Environment.NewLine + "6 - Charge an existing vehicle(relevant to electric powered vehicles only)" + Environment.NewLine + "7 - Show existing vehicle full details(using registration ID)" + Environment.NewLine + Environment.NewLine + "Please enter 'q' to exit the system.");
+            string menuMessage = string.Format(
+                "Please choose your action:" +
+                Environment.NewLine +
+                "1 - Register a new vehicle into the garage" +
+                Environment.NewLine +
+                "2 - Show list of the vehicles registration ID's" +
+                Environment.NewLine +
+                "3 - Update existing vehicle status" +
+                Environment.NewLine +
+                "4 - Fill existing vehicle wheels air pressure to the max" +
+                Environment.NewLine +
+                "5 - Fuel an existing vehicle(relevant to fuel powered vehicles only)" +
+                Environment.NewLine +
+                "6 - Charge an existing vehicle(relevant to electric powered vehicles only)" +
+                Environment.NewLine +
+                "7 - Show existing vehicle full details(using registration ID)" +
+                Environment.NewLine +
+                Environment.NewLine +
+                "Please enter 'q' to exit the system.");
+            Console.WriteLine(menuMessage);
             s_ChoiceInput = Console.ReadLine();
-            while(!InputValidations.MenuChoiceInputValidation(s_ChoiceInput))
+
+            while (!InputValidations.MenuChoiceInputValidation(s_ChoiceInput))
             {
                 Console.WriteLine("Entered choice is invalid! Please choose again:");
                 s_ChoiceInput = Console.ReadLine();
@@ -54,36 +74,34 @@ namespace Ex03.ConsoleUI
 
         private static void setUserChoice()
         {
-            char.TryParse(s_ChoiceInput, out char inputChar);
-            switch(inputChar)
+            char.TryParse(s_ChoiceInput, out char userMenuSelectionChoice);
+            switch (userMenuSelectionChoice)
             {
                 case '1':
-                    s_Choice = eUserChoice.RegisterNewVehicle;
+                    s_UserChoice = eUserChoice.RegisterNewVehicle;
                     break;
                 case '2':
-                    s_Choice = eUserChoice.ShowAllExistingVehicles;
+                    s_UserChoice = eUserChoice.ShowAllExistingVehicles;
                     break;
                 case '3':
-                    s_Choice = eUserChoice.UpdateVehicleStatus;
+                    s_UserChoice = eUserChoice.UpdateVehicleStatus;
                     break;
                 case '4':
-                    s_Choice = eUserChoice.FillAllTires;
+                    s_UserChoice = eUserChoice.FillAllTires;
                     break;
                 case '5':
-                    s_Choice = eUserChoice.FuelVehicle;
+                    s_UserChoice = eUserChoice.FuelVehicle;
                     break;
                 case '6':
-                    s_Choice = eUserChoice.ChargeVehicle;
+                    s_UserChoice = eUserChoice.ChargeVehicle;
                     break;
                 case '7':
-                    s_Choice = eUserChoice.ShowVehicleFullDetails;
+                    s_UserChoice = eUserChoice.ShowVehicleFullDetails;
                     break;
                 default:
-                    s_Choice = eUserChoice.Exit;
+                    s_UserChoice = eUserChoice.Exit;
                     break;
-
             }
-
         }
 
         private static void runUserInterface()
@@ -91,7 +109,7 @@ namespace Ex03.ConsoleUI
             do
             {
                 showMenu();
-                switch(s_Choice)
+                switch (s_UserChoice)
                 {
                     case eUserChoice.RegisterNewVehicle:
                         registerNewVehicle();
@@ -120,28 +138,42 @@ namespace Ex03.ConsoleUI
                         throw new ArgumentOutOfRangeException();
                 }
             }
-            while(true);
+            while (true);
         }
 
         private static void registerNewVehicle()
         {
             Console.WriteLine("Please enter the vehicle ID you wish to enlist to the garage:");
             string id = Console.ReadLine();
-            while(!InputValidations.CarIdValidation(id))
+
+            while (!InputValidations.CarIdValidation(id))
             {
                 Console.WriteLine("Car id entered is invalid! please enter a valid id:");
                 id = Console.ReadLine();
             }
 
-            if(!CreateAndSaveData.m_VehiclesInSystem.ContainsKey(id))
+            if (!CreateAndSaveData.s_VehiclesInSystem.ContainsKey(id))
             {
-                Console.WriteLine("Please choose the type of the vehicle you wish to add:" + Environment.NewLine + "1 - Electric car" + Environment.NewLine + "2 - Fueled car" + Environment.NewLine + "3 - Electric motorcycle" + Environment.NewLine + "4 - Fueled motorcycle" + Environment.NewLine + "5 - Truck");
+                string vehicleType = string.Format(
+                    "Please choose the type of the vehicle you wish to add:" +
+                    Environment.NewLine +
+                    "1 - Electric car" +
+                    Environment.NewLine +
+                    "2 - Fueled car" +
+                    Environment.NewLine +
+                    "3 - Electric motorcycle" +
+                    Environment.NewLine +
+                    "4 - Fueled motorcycle" +
+                    Environment.NewLine +
+                    "5 - Truck");
+                Console.WriteLine(vehicleType);
                 s_ChoiceInput = Console.ReadLine();
+
                 try
                 {
                     setChosenVehicle();
                 }
-                catch(ArgumentOutOfRangeException ex)
+                catch (ArgumentOutOfRangeException ex)
                 {
                     Console.WriteLine("Entered value is invalid!");
                 }
@@ -151,7 +183,7 @@ namespace Ex03.ConsoleUI
             else
             {
                 Console.WriteLine("This vehicle is already in the system! Moving existing vehicle to repair now..");
-                if(CreateAndSaveData.m_VehiclesInSystem[id] is Vehicle vehicle)
+                if (CreateAndSaveData.s_VehiclesInSystem[id] is Vehicle vehicle)
                 {
                     vehicle.OwnerDetails.CarStatus = eCarStatus.InRepair;
                 }
@@ -160,8 +192,8 @@ namespace Ex03.ConsoleUI
 
         private static void setChosenVehicle()
         {
-            char.TryParse(s_ChoiceInput, out char choice);
-            switch (choice)
+            char.TryParse(s_ChoiceInput, out char userVehicleSelectionChoice);
+            switch (userVehicleSelectionChoice)
             {
                 case '1':
                     s_VehicleType = eVehiclesAvailable.ElectricCar;
@@ -184,25 +216,26 @@ namespace Ex03.ConsoleUI
         }
 
         private static void createChosenVehicle(string i_RegistrationId) // a lot of input validation here
-        {
+        { /// Collect all of the props in different methods ?
             Console.WriteLine("Please enter your name: ");
             string ownerName = Console.ReadLine();
             Console.WriteLine("Please enter your Phone number: ");
             string ownerPhoneNum = Console.ReadLine();
-            Console.WriteLine("Please enter Car wheels module(will apply for all tires): ");
+            Console.WriteLine("Please enter Car wheels module (will apply for all tires): ");
             string wheelModule = Console.ReadLine();
-            Console.WriteLine("Please enter Car wheels current air pressure(will apply for all tires): ");
-            string currentAirPressureStr = Console.ReadLine();
-            float.TryParse(currentAirPressureStr, out float currentAirPressure);
-            Console.WriteLine("Please enter Car wheels max air pressure(will apply for all tires): ");
-            string maxAirPressureStr = Console.ReadLine();
-            float.TryParse(maxAirPressureStr, out float maxAirPressure);
+            Console.WriteLine("Please enter Car wheels current air pressure (will apply for all tires): ");
+            string currentAirPressureString = Console.ReadLine();
+            float.TryParse(currentAirPressureString, out float currentAirPressure);
+            Console.WriteLine("Please enter Car wheels max air pressure (will apply for all tires): ");
+            string maxAirPressureString = Console.ReadLine();
+            float.TryParse(maxAirPressureString, out float maxAirPressure);
+            Console.WriteLine("Please enter car energy percentage left: ");
+            string energyPercentageString = Console.ReadLine();
+            float.TryParse(energyPercentageString, out float energyPercentage);
             Console.WriteLine("Please enter Car module: ");
             string carModule = Console.ReadLine();
-            Console.WriteLine("Please enter car energy percentage left: ");
-            string energyPercentageStr = Console.ReadLine();
-            float.TryParse(energyPercentageStr, out float energyPercentage);
-            switch(s_VehicleType)
+
+            switch (s_VehicleType)
             {
                 case eVehiclesAvailable.FueledCar:
                     fueledCarCreation(
@@ -259,7 +292,6 @@ namespace Ex03.ConsoleUI
                         carModule,
                         energyPercentage);
                     break;
-
                 default:
                     throw new FormatException();
             }
@@ -268,23 +300,24 @@ namespace Ex03.ConsoleUI
         private static void truckCreation(
             string i_RegistrationId,
             string i_OwnerName,
-            string i_OwnerPhoneNum,
+            string i_OwnerPhoneNumber,
             string i_WheelModule,
             float i_CurrentAirPressure,
             float i_MaxAirPressure,
             string i_CarModule,
             float i_EnergyPercentage)
         {
-            Console.WriteLine("Is the truck transporting with cooling?(yes/no)");
-            string isCoolingStr = Console.ReadLine();
             bool isCooling;
-            if(isCoolingStr == null)
+            Console.WriteLine("Is the truck transporting with cooling? (yes/no)");
+            string isCoolingString = Console.ReadLine();
+
+            if (isCoolingString == null)
             {
                 throw new FormatException();
             }
             else
             {
-                switch(isCoolingStr.ToLower())
+                switch (isCoolingString.ToLower())
                 {
                     case "yes":
                         isCooling = true;
@@ -298,9 +331,9 @@ namespace Ex03.ConsoleUI
             }
 
             Console.WriteLine("Please enter truck max cargo capacity: ");
-            string cargoCapacityStr = Console.ReadLine();
-            float.TryParse(cargoCapacityStr, out float cargoCapacity);
-            CreateAndSaveData.CreateTruck(i_CarModule, i_RegistrationId, i_EnergyPercentage, i_WheelModule, i_CurrentAirPressure, i_MaxAirPressure, isCooling, cargoCapacity, i_OwnerName, i_OwnerPhoneNum);
+            string cargoCapacityString = Console.ReadLine();
+            float.TryParse(cargoCapacityString, out float cargoCapacity);
+            CreateAndSaveData.CreateTruck(i_CarModule, i_RegistrationId, i_EnergyPercentage, i_WheelModule, i_CurrentAirPressure, i_MaxAirPressure, isCooling, cargoCapacity, i_OwnerName, i_OwnerPhoneNumber);
         }
 
         private static void fueledMotorcycleCreation(
@@ -313,13 +346,12 @@ namespace Ex03.ConsoleUI
             string i_CarModule,
             float i_EnergyPercentage)
         {
-            Console.WriteLine("Please enter car current fuel status:");
-            string fuelCurrentStatusStr = Console.ReadLine();
-            float.TryParse(fuelCurrentStatusStr, out float fuelCurrentStatus);
+            Console.WriteLine("Please enter motorcycle current fuel status:");
+            string fuelCurrentStatusString = Console.ReadLine();
+            float.TryParse(fuelCurrentStatusString, out float fuelCurrentStatus);
             Console.WriteLine("Please enter the fuel max capacity:");
             string fuelMaxCapacityStr = Console.ReadLine();
             float.TryParse(fuelMaxCapacityStr, out float fuelMaxCapacity);
-
             CreateAndSaveData.CreateFueledMotorcycle(i_CarModule, i_RegistrationId, i_EnergyPercentage, i_WheelModule, i_CurrentAirPressure, i_MaxAirPressure, setLicenseType(), setEngineCapacity(), setFuelType(), fuelCurrentStatus, fuelMaxCapacity, i_OwnerName, i_OwnerPhoneNum);
         }
 
@@ -334,11 +366,11 @@ namespace Ex03.ConsoleUI
             float i_EnergyPercentage)
         {
             Console.WriteLine("Please enter the battery time left: ");
-            string batteryTimeLeftStr = Console.ReadLine();
+            string batteryTimeLeftString = Console.ReadLine();
             Console.WriteLine("Please enter the max battery capacity:");
-            string batterTimeCapacityStr = Console.ReadLine();
-            float.TryParse(batteryTimeLeftStr, out float batteryTimeLeft);
-            float.TryParse(batterTimeCapacityStr, out float batteryTimeCapacity);
+            string batterTimeCapacityString = Console.ReadLine();
+            float.TryParse(batteryTimeLeftString, out float batteryTimeLeft);
+            float.TryParse(batterTimeCapacityString, out float batteryTimeCapacity);
             CreateAndSaveData.CreateElectricMotorcycle(
                 i_CarModule,
                 i_RegistrationId,
@@ -365,20 +397,20 @@ namespace Ex03.ConsoleUI
             float i_EnergyPercentage)
         {
             Console.WriteLine("Please enter the battery time left: ");
-            string batteryTimeLeftStr = Console.ReadLine();
+            string batteryTimeLeftString = Console.ReadLine();
             Console.WriteLine("Please enter the max battery capacity:");
-            string batterTimeCapacityStr = Console.ReadLine();
-            float.TryParse(batteryTimeLeftStr, out float batteryTimeLeft);
-            float.TryParse(batterTimeCapacityStr, out float batteryTimeCapacity);
+            string batterTimeCapacityString = Console.ReadLine();
+            float.TryParse(batteryTimeLeftString, out float batteryTimeLeft);
+            float.TryParse(batterTimeCapacityString, out float batteryTimeCapacity);
             CreateAndSaveData.CreateElectricCar(i_CarModule, i_RegistrationId, i_EnergyPercentage, i_WheelModule, i_CurrentAirPressure, i_MaxAirPressure, setCarColor(), setNumOfDoors(), batteryTimeLeft, batteryTimeCapacity, i_OwnerName, i_OwnerPhoneNum);
-
         }
 
         private static int setEngineCapacity()
         {
             Console.WriteLine("Please enter the engine capacity:");
             string engineCapacityStr = Console.ReadLine();
-            if(int.TryParse(engineCapacityStr, out int engineCapacity))
+
+            if (int.TryParse(engineCapacityStr, out int engineCapacity))
             {
                 return engineCapacity;
             }
@@ -390,16 +422,17 @@ namespace Ex03.ConsoleUI
 
         private static eLicenseType setLicenseType()
         {
-            Console.WriteLine("Please enter the license type(A / AA / B1 / BB):");
-            string licenseTypeStr = Console.ReadLine();
             eLicenseType licenseType;
-            if(licenseTypeStr == null)
+            Console.WriteLine("Please enter the license type (A / AA / B1 / BB):");
+            string licenseTypeString = Console.ReadLine();
+
+            if (licenseTypeString == null)
             {
                 throw new FormatException();
             }
             else
             {
-                switch(licenseTypeStr.ToLower())
+                switch (licenseTypeString.ToLower())
                 {
                     case "a":
                         licenseType = eLicenseType.A;
@@ -423,16 +456,17 @@ namespace Ex03.ConsoleUI
 
         private static eCarColor setCarColor()
         {
-            Console.WriteLine("Please enter car color(Grey / White / Black / Blue):");
-            string carColorStr = Console.ReadLine();
             eCarColor carColor;
-            if (carColorStr == null)
+            Console.WriteLine("Please enter car color (Grey / White / Black / Blue):");
+            string carColorString = Console.ReadLine();
+
+            if (carColorString == null)
             {
                 throw new FormatException();
             }
             else
             {
-                switch (carColorStr.ToLower())
+                switch (carColorString.ToLower())
                 {
                     case "black":
                         carColor = eCarColor.Black;
@@ -456,16 +490,17 @@ namespace Ex03.ConsoleUI
 
         private static eNumOfDoors setNumOfDoors()
         {
-            Console.WriteLine("Please enter car Number of doors(2 / 3 / 4 / 5):");
-            string carNumOfDoorsStr = Console.ReadLine();
             eNumOfDoors carNumOfDoors;
-            if (carNumOfDoorsStr == null)
+            Console.WriteLine("Please enter car Number of doors(2 / 3 / 4 / 5):");
+            string carNumOfDoorsString = Console.ReadLine();
+
+            if (carNumOfDoorsString == null)
             {
                 throw new FormatException();
             }
             else
             {
-                switch (carNumOfDoorsStr)
+                switch (carNumOfDoorsString)
                 {
                     case "2":
                         carNumOfDoors = eNumOfDoors.Two;
@@ -489,16 +524,17 @@ namespace Ex03.ConsoleUI
 
         private static eFuelType setFuelType()
         {
-            Console.WriteLine("Please enter fuel type(95 / 96 / 98 / Soler):");
-            string fuelTypeStr = Console.ReadLine();
             eFuelType fuelType;
-            if (fuelTypeStr == null)
+            Console.WriteLine("Please enter fuel type(95 / 96 / 98 / Soler):");
+            string fuelTypeString = Console.ReadLine();
+
+            if (fuelTypeString == null)
             {
                 throw new FormatException();
             }
             else
             {
-                switch (fuelTypeStr)
+                switch (fuelTypeString)
                 {
                     case "95":
                         fuelType = eFuelType.Octan95;
@@ -511,7 +547,7 @@ namespace Ex03.ConsoleUI
                         break;
                     default:
                         {
-                            if (fuelTypeStr.ToLower() == "soler")
+                            if (fuelTypeString.ToLower() == "soler")
                             {
                                 fuelType = eFuelType.Soler;
                             }
@@ -540,7 +576,6 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("Please enter the fuel max capacity:");
             string fuelMaxCapacityStr = Console.ReadLine();
             float.TryParse(fuelMaxCapacityStr, out float fuelMaxCapacity);
-
             CreateAndSaveData.CreateFueledCar(i_CarModule, i_RegistrationId, i_EnergyPercentage, i_WheelModule, i_CurrentAirPressure, i_MaxAirPressure, carColor, numOfDoors, fuelType, fuelCurrentStatus, fuelMaxCapacity, i_OwnerName, i_OwnerPhoneNum);
         }
 
@@ -573,11 +608,12 @@ namespace Ex03.ConsoleUI
         {
             Console.WriteLine("Please Enter an id to show the car status:");
             string idToShow = Console.ReadLine();
+
             try
             {
-                Console.WriteLine(CreateAndSaveData.m_VehiclesInSystem[idToShow]);
+                Console.WriteLine(CreateAndSaveData.s_VehiclesInSystem[idToShow]);
             }
-            catch(ArgumentException exception)
+            catch (ArgumentException exception)
             {
                 Console.Write("This id is not registered in our garage!");
             }

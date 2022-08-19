@@ -20,6 +20,7 @@ namespace Ex03.GarageLogic
         public bool FuelVehicle(float i_LitersToFuel)
         {
             bool canFuelVehicle = true;
+
             if(m_CurrentFuelStatus + i_LitersToFuel > r_MaxFuelCapacity)
             {
                 canFuelVehicle = false;
@@ -34,9 +35,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            string output = string.Format(Environment.NewLine + "You have checked in to our garage an Fueled motorcycle!" + r_BasicDetails + Environment.NewLine + Environment.NewLine + "======== Fueled Motorcycle details ========" + Environment.NewLine + Environment.NewLine + "Motorcycle fuel type: {0}" + Environment.NewLine + "Current fuel status: {1}" + Environment.NewLine + "Max fuel capacity: {2}", r_FuelType, m_CurrentFuelStatus, r_MaxFuelCapacity);
-
-            return output;
+            return string.Format(Environment.NewLine + "You have checked in to our garage an Fueled motorcycle!" + r_BasicDetails + Environment.NewLine + Environment.NewLine + "======== Fueled Motorcycle details ========" + Environment.NewLine + Environment.NewLine + "Motorcycle fuel type: {0}" + Environment.NewLine + "Current fuel status: {1}" + Environment.NewLine + "Max fuel capacity: {2}", r_FuelType, m_CurrentFuelStatus, r_MaxFuelCapacity); ;
         }
     }
 }

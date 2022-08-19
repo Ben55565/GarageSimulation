@@ -20,3 +20,13 @@ D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDa
 D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.CopyComplete
 D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.exe
 D:\Softwares\programming softwares\C# exe\EXE3\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.pdb
+C:\Users\USER\source\repos\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\C22 Ex03 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.exe.config
+C:\Users\USER\source\repos\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\C22 Ex03 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.exe
+C:\Users\USER\source\repos\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\C22 Ex03 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.pdb
+C:\Users\USER\source\repos\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\C22 Ex03 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\bin\Debug\Ex03.GarageLogic.dll
+C:\Users\USER\source\repos\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\C22 Ex03 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\bin\Debug\Ex03.GarageLogic.pdb
+C:\Users\USER\source\repos\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\C22 Ex03 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.AssemblyReference.cache
+C:\Users\USER\source\repos\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\C22 Ex03 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.CoreCompileInputs.cache
+C:\Users\USER\source\repos\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\C22 Ex03 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.CopyComplete
+C:\Users\USER\source\repos\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\C22 Ex03 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.exe
+C:\Users\USER\source\repos\C22 Ex03 YarinBar 207128091 BenDaniels 316582295\C22 Ex03 Yarin 207128091 Ben 316582295\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.pdb

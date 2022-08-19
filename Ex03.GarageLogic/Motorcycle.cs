@@ -17,8 +17,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            string output = string.Format(Environment.NewLine + r_BasicDetails + "======== Motorcycle details ========" + Environment.NewLine + Environment.NewLine + "License type: {0}" + Environment.NewLine + "Engine capacity: {1}", r_LicenseType, r_EngineCapacity);
-            return output;
+            return string.Format(Environment.NewLine + r_BasicDetails + "======== Motorcycle details ========" + Environment.NewLine + Environment.NewLine + "License type: {0}" + Environment.NewLine + "Engine capacity: {1}", r_LicenseType, r_EngineCapacity); ;
         }
     }
 }
