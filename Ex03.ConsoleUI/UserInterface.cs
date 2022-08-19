@@ -425,7 +425,19 @@ namespace Ex03.ConsoleUI
             string batterTimeCapacityString = Console.ReadLine();
             float.TryParse(batteryTimeLeftString, out float batteryTimeLeft);
             float.TryParse(batterTimeCapacityString, out float batteryTimeCapacity);
-            CreateAndSaveData.CreateElectricCar(i_CarModule, i_RegistrationId, i_EnergyPercentage, i_WheelModule, i_CurrentAirPressure, i_MaxAirPressure, setCarColor(), setNumOfDoors(), batteryTimeLeft, batteryTimeCapacity, i_OwnerName, i_OwnerPhoneNum);
+            CreateAndSaveData.CreateElectricCar(
+                i_CarModule,
+                i_RegistrationId,
+                i_EnergyPercentage,
+                i_WheelModule,
+                i_CurrentAirPressure,
+                i_MaxAirPressure,
+                setCarColor(),
+                setNumOfDoors(),
+                batteryTimeLeft,
+                batteryTimeCapacity,
+                i_OwnerName,
+                i_OwnerPhoneNum);
         }
 
         private static int setEngineCapacity()
@@ -599,7 +611,20 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("Please enter the fuel max capacity:");
             string fuelMaxCapacityStr = Console.ReadLine();
             float.TryParse(fuelMaxCapacityStr, out float fuelMaxCapacity);
-            CreateAndSaveData.CreateFueledCar(i_CarModule, i_RegistrationId, i_EnergyPercentage, i_WheelModule, i_CurrentAirPressure, i_MaxAirPressure, carColor, numOfDoors, fuelType, fuelCurrentStatus, fuelMaxCapacity, i_OwnerName, i_OwnerPhoneNum);
+            CreateAndSaveData.CreateFueledCar(
+                i_CarModule,
+                i_RegistrationId,
+                i_EnergyPercentage,
+                i_WheelModule,
+                i_CurrentAirPressure,
+                i_MaxAirPressure,
+                carColor,
+                numOfDoors,
+                fuelType,
+                fuelCurrentStatus,
+                fuelMaxCapacity,
+                i_OwnerName,
+                i_OwnerPhoneNum);
         }
 
         private static void showAllExistingVehicles()
