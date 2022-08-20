@@ -71,7 +71,7 @@ namespace Ex03.ConsoleUI
                 s_ChoiceInput = Console.ReadLine();
             }
 
-            setUserChoice();
+            InputValidations.setUserChoice(s_ChoiceInput, ref s_UserChoice);
         }
 
         private static void runUserInterface()
@@ -139,7 +139,7 @@ namespace Ex03.ConsoleUI
 
         private static void registerNewVehicle() // has one input read that needs to be handled with exceptions(check later if can exported to different method)
         {
-            string id = setVehicleId();
+            string id = InputValidations.setVehicleId();
 
             if (!CreateAndSaveData.s_VehiclesInSystem.ContainsKey(id))
             {
@@ -160,7 +160,7 @@ namespace Ex03.ConsoleUI
 
                 try
                 {
-                    setChosenVehicle();
+                    InputValidations.setChosenVehicle(s_ChoiceInput, ref s_VehicleType);
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
@@ -185,13 +185,13 @@ namespace Ex03.ConsoleUI
                     {
                         fueledCarCreation(
                             i_RegistrationId,
-                            setOwnerName(),
-                            setPhoneNumber(),
-                            setWheelsManufacture(),
-                            setWheelsCurrentAirPressure(),
-                            setWheelsMaxAirPressure(),
-                            setCarModel(),
-                            setCarEnergyPercentage());
+                            InputValidations.setOwnerName(),
+                            InputValidations.setPhoneNumber(),
+                            InputValidations.setWheelsManufacture(),
+                            InputValidations.setWheelsCurrentAirPressure(),
+                            InputValidations.setWheelsMaxAirPressure(),
+                            InputValidations.setCarModel(),
+                            InputValidations.setCarEnergyPercentage());
                         break;
                     }
 
@@ -199,13 +199,13 @@ namespace Ex03.ConsoleUI
                     {
                         electricCarCreation(
                             i_RegistrationId,
-                            setOwnerName(),
-                            setPhoneNumber(),
-                            setWheelsManufacture(),
-                            setWheelsCurrentAirPressure(),
-                            setWheelsMaxAirPressure(),
-                            setCarModel(),
-                            setCarEnergyPercentage());
+                            InputValidations.setOwnerName(),
+                            InputValidations.setPhoneNumber(),
+                            InputValidations.setWheelsManufacture(),
+                            InputValidations.setWheelsCurrentAirPressure(),
+                            InputValidations.setWheelsMaxAirPressure(),
+                            InputValidations.setCarModel(),
+                            InputValidations.setCarEnergyPercentage());
                         break;
                     }
 
@@ -213,13 +213,13 @@ namespace Ex03.ConsoleUI
                     {
                         electricMotorcycleCreation(
                             i_RegistrationId,
-                            setOwnerName(),
-                            setPhoneNumber(),
-                            setWheelsManufacture(),
-                            setWheelsCurrentAirPressure(),
-                            setWheelsMaxAirPressure(),
-                            setCarModel(),
-                            setCarEnergyPercentage());
+                            InputValidations.setOwnerName(),
+                            InputValidations.setPhoneNumber(),
+                            InputValidations.setWheelsManufacture(),
+                            InputValidations.setWheelsCurrentAirPressure(),
+                            InputValidations.setWheelsMaxAirPressure(),
+                            InputValidations.setCarModel(),
+                            InputValidations.setCarEnergyPercentage());
                         break;
                     }
 
@@ -227,13 +227,13 @@ namespace Ex03.ConsoleUI
                     {
                         fueledMotorcycleCreation(
                             i_RegistrationId,
-                            setOwnerName(),
-                            setPhoneNumber(),
-                            setWheelsManufacture(),
-                            setWheelsCurrentAirPressure(),
-                            setWheelsMaxAirPressure(),
-                            setCarModel(),
-                            setCarEnergyPercentage());
+                            InputValidations.setOwnerName(),
+                            InputValidations.setPhoneNumber(),
+                            InputValidations.setWheelsManufacture(),
+                            InputValidations.setWheelsCurrentAirPressure(),
+                            InputValidations.setWheelsMaxAirPressure(),
+                            InputValidations.setCarModel(),
+                            InputValidations.setCarEnergyPercentage());
                         break;
                     }
 
@@ -241,13 +241,13 @@ namespace Ex03.ConsoleUI
                     {
                         truckCreation(
                             i_RegistrationId,
-                            setOwnerName(),
-                            setPhoneNumber(),
-                            setWheelsManufacture(),
-                            setWheelsCurrentAirPressure(),
-                            setWheelsMaxAirPressure(),
-                            setCarModel(),
-                            setCarEnergyPercentage());
+                            InputValidations.setOwnerName(),
+                            InputValidations.setPhoneNumber(),
+                            InputValidations.setWheelsManufacture(),
+                            InputValidations.setWheelsCurrentAirPressure(),
+                            InputValidations.setWheelsMaxAirPressure(),
+                            InputValidations.setCarModel(),
+                            InputValidations.setCarEnergyPercentage());
                         break;
                     }
 
@@ -275,13 +275,13 @@ namespace Ex03.ConsoleUI
                 i_WheelManufacture,
                 i_CurrentAirPressure,
                 i_MaxAirPressure,
-                setIsTruckCooling(),
-                setTruckMaxCapacity(),
+                InputValidations.setIsTruckCooling(),
+                InputValidations.setTruckMaxCapacity(),
                 i_OwnerName,
                 i_OwnerPhoneNumber,
-                setFuelType(),
-                setCurrentFuelStatus(),
-                setMaxFuelCapacity());
+                InputValidations.setFuelType(),
+                InputValidations.setCurrentFuelStatus(),
+                InputValidations.setMaxFuelCapacity());
         }
 
         private static void fueledMotorcycleCreation(
@@ -301,11 +301,11 @@ namespace Ex03.ConsoleUI
                 i_WheelManufacture,
                 i_CurrentAirPressure,
                 i_MaxAirPressure,
-                setLicenseType(),
-                setEngineCapacity(),
-                setFuelType(),
-                setCurrentFuelStatus(),
-                setMaxFuelCapacity(),
+                InputValidations.setLicenseType(),
+                InputValidations.setEngineCapacity(),
+                InputValidations.setFuelType(),
+                InputValidations.setCurrentFuelStatus(),
+                InputValidations.setMaxFuelCapacity(),
                 i_OwnerName,
                 i_OwnerPhoneNum);
         }
@@ -327,10 +327,10 @@ namespace Ex03.ConsoleUI
                 i_WheelManufacture,
                 i_CurrentAirPressure,
                 i_MaxAirPressure,
-                setLicenseType(),
-                setEngineCapacity(),
-                setBatteryTimeLeft(),
-                setBatteryMaxTime(),
+                InputValidations.setLicenseType(),
+                InputValidations.setEngineCapacity(),
+                InputValidations.setBatteryTimeLeft(),
+                InputValidations.setBatteryMaxTime(),
                 i_OwnerName,
                 i_OwnerPhoneNum);
         }
@@ -352,10 +352,10 @@ namespace Ex03.ConsoleUI
                 i_WheelManufacture,
                 i_CurrentAirPressure,
                 i_MaxAirPressure,
-                setCarColor(),
-                setNumOfDoors(),
-                setBatteryTimeLeft(),
-                setBatteryMaxTime(),
+                InputValidations.setCarColor(),
+                InputValidations.setNumOfDoors(),
+                InputValidations.setBatteryTimeLeft(),
+                InputValidations.setBatteryMaxTime(),
                 i_OwnerName,
                 i_OwnerPhoneNum);
         }
@@ -377,11 +377,11 @@ namespace Ex03.ConsoleUI
                 i_WheelManufacture,
                 i_CurrentAirPressure,
                 i_MaxAirPressure,
-                setCarColor(),
-                setNumOfDoors(),
-                setFuelType(),
-                setCurrentFuelStatus(),
-                setMaxFuelCapacity(),
+                InputValidations.setCarColor(),
+                InputValidations.setNumOfDoors(),
+                InputValidations.setFuelType(),
+                InputValidations.setCurrentFuelStatus(),
+                InputValidations.setMaxFuelCapacity(),
                 i_OwnerName,
                 i_OwnerPhoneNum);
         }
@@ -395,7 +395,7 @@ namespace Ex03.ConsoleUI
             {
                 case "yes":
                     {
-                        eVehicleStatus filterBy = setVehicleStatus();
+                        eVehicleStatus filterBy = InputValidations.setVehicleStatus();
 
                         switch (filterBy)
                         {
@@ -495,27 +495,34 @@ namespace Ex03.ConsoleUI
 
         private static void updateVehicleStatus()
         {
-            CreateAndSaveData.verifyVehicleTypeAndPerformAction(setVehicleStatus(), setVehicleId(), eCarActions.UpdateStatus);
+            CreateAndSaveData.verifyVehicleTypeAndUpdateStatus(InputValidations.setVehicleStatus(), InputValidations.setVehicleId());
+            Console.WriteLine("Vehicle status updated!" + Environment.NewLine);
         }
 
         private static void fillAllTires()
         {
-            string id = setVehicleId();
+            CreateAndSaveData.verifyVehicleTypeAndFillTiresToMax(InputValidations.setVehicleId());
+            Console.WriteLine("All vehicle tires were filled to max capacity of air pressure!" + Environment.NewLine);
         }
 
         private static void fuelVehicle()
         {
-            return;
+            Console.WriteLine("Please enter the amount you wish to fill (Litters for fueled vehicle):");
+            
+            CreateAndSaveData.verifyVehicleTypeAndFuelVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setVehicleId(), InputValidations.setFuelType());
+            Console.WriteLine("Vehicle has been fueled!" + Environment.NewLine);
         }
 
         private static void chargeVehicle()
         {
-            return;
+            Console.WriteLine("Please enter the amount you wish to fill (minutes for electric vehicle):");
+            CreateAndSaveData.verifyVehicleTypeAndChargeVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setVehicleId());
+            Console.WriteLine("Vehicle has been charged!" + Environment.NewLine);
         }
 
         private static void showVehicleFullDetails()
         {
-            string idToShow = setVehicleId();
+            string idToShow = InputValidations.setVehicleId();
 
             try
             {
@@ -525,388 +532,6 @@ namespace Ex03.ConsoleUI
             {
                 string output = $"This id is not registered in our garage! {Environment.NewLine} {exception.Message}";
                 Console.Write(output);
-            }
-        }
-
-        private static int setEngineCapacity()
-        {
-            Console.WriteLine("Please enter the engine capacity:");
-            string engineCapacityStr = Console.ReadLine();
-
-            if (int.TryParse(engineCapacityStr, out int engineCapacity))
-            {
-                return engineCapacity;
-            }
-            else
-            {
-                throw new FormatException();
-            }
-        }
-
-        private static eLicenseType setLicenseType()
-        {
-            eLicenseType licenseType;
-            Console.WriteLine("Please enter the license type (A / AA / B1 / BB):");
-            string licenseTypeString = Console.ReadLine();
-
-            if (licenseTypeString == null)
-            {
-                throw new FormatException();
-            }
-            else
-            {
-                switch (licenseTypeString.ToLower())
-                {
-                    case "a":
-                        licenseType = eLicenseType.A;
-                        break;
-                    case "aa":
-                        licenseType = eLicenseType.AA;
-                        break;
-                    case "b1":
-                        licenseType = eLicenseType.B1;
-                        break;
-                    case "bb":
-                        licenseType = eLicenseType.BB;
-                        break;
-                    default:
-                        throw new ArgumentException();
-                }
-            }
-
-            return licenseType;
-        }
-
-        private static eCarColor setCarColor()
-        {
-            eCarColor carColor;
-            Console.WriteLine("Please enter car color (Grey / White / Black / Blue):");
-            string carColorString = Console.ReadLine();
-
-            if (carColorString == null)
-            {
-                throw new FormatException();
-            }
-            else
-            {
-                switch (carColorString.ToLower())
-                {
-                    case "black":
-                        carColor = eCarColor.Black;
-                        break;
-                    case "grey":
-                        carColor = eCarColor.Grey;
-                        break;
-                    case "white":
-                        carColor = eCarColor.White;
-                        break;
-                    case "blue":
-                        carColor = eCarColor.Blue;
-                        break;
-                    default:
-                        throw new ArgumentException();
-                }
-            }
-
-            return carColor;
-        }
-
-        private static eNumOfDoors setNumOfDoors()
-        {
-            eNumOfDoors carNumOfDoors;
-            Console.WriteLine("Please enter car Number of doors(2 / 3 / 4 / 5):");
-            string carNumOfDoorsString = Console.ReadLine();
-
-            if (carNumOfDoorsString == null)
-            {
-                throw new FormatException();
-            }
-            else
-            {
-                switch (carNumOfDoorsString)
-                {
-                    case "2":
-                        carNumOfDoors = eNumOfDoors.Two;
-                        break;
-                    case "3":
-                        carNumOfDoors = eNumOfDoors.Three;
-                        break;
-                    case "4":
-                        carNumOfDoors = eNumOfDoors.Four;
-                        break;
-                    case "5":
-                        carNumOfDoors = eNumOfDoors.Five;
-                        break;
-                    default:
-                        throw new ArgumentException();
-                }
-            }
-
-            return carNumOfDoors;
-        }
-
-        private static eFuelType setFuelType()
-        {
-            eFuelType fuelType;
-            Console.WriteLine("Please enter fuel type(95 / 96 / 98 / Soler):");
-            string fuelTypeString = Console.ReadLine();
-
-            if (fuelTypeString == null)
-            {
-                throw new FormatException();
-            }
-            else
-            {
-                switch (fuelTypeString)
-                {
-                    case "95":
-                        fuelType = eFuelType.Octan95;
-                        break;
-                    case "96":
-                        fuelType = eFuelType.Octan96;
-                        break;
-                    case "98":
-                        fuelType = eFuelType.Octan98;
-                        break;
-                    default:
-                        {
-                            if (fuelTypeString.ToLower() == "soler")
-                            {
-                                fuelType = eFuelType.Soler;
-                            }
-                            else
-                            {
-                                throw new FormatException();
-                            }
-
-                            break;
-                        }
-                }
-            }
-
-            return fuelType;
-        }
-
-        private static void setChosenVehicle()
-        {
-            char.TryParse(s_ChoiceInput, out char userVehicleSelectionChoice);
-            switch (userVehicleSelectionChoice)
-            {
-                case '1':
-                    s_VehicleType = eVehiclesAvailable.ElectricCar;
-                    break;
-                case '2':
-                    s_VehicleType = eVehiclesAvailable.FueledCar;
-                    break;
-                case '3':
-                    s_VehicleType = eVehiclesAvailable.ElectricMotorcycle;
-                    break;
-                case '4':
-                    s_VehicleType = eVehiclesAvailable.FueledMotorcycle;
-                    break;
-                case '5':
-                    s_VehicleType = eVehiclesAvailable.Truck;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private static string setOwnerName()
-        {
-            Console.WriteLine("Please enter your name: ");
-            string ownerName = Console.ReadLine();
-            return ownerName;
-        }
-
-        private static string setPhoneNumber()
-        {
-            Console.WriteLine("Please enter your Phone number: ");
-            string ownerPhoneNum = Console.ReadLine();
-            return ownerPhoneNum;
-        }
-
-        private static string setWheelsManufacture()
-        {
-            Console.WriteLine("Please enter Wheel manufacture name (will apply for all tires): ");
-            string wheelManufacture = Console.ReadLine();
-            return wheelManufacture;
-        }
-
-        private static float setWheelsCurrentAirPressure()
-        {
-            Console.WriteLine("Please enter Car wheels current air pressure (will apply for all tires): ");
-            string currentAirPressureString = Console.ReadLine();
-            bool legalInput = float.TryParse(currentAirPressureString, out float currentAirPressure); // use to validate later
-            return currentAirPressure;
-        }
-
-        private static float setWheelsMaxAirPressure()
-        {
-            Console.WriteLine("Please enter Car wheels max air pressure (will apply for all tires): ");
-            string maxAirPressureString = Console.ReadLine();
-            bool legalInput = float.TryParse(maxAirPressureString, out float maxAirPressure); // use to validate later
-            return maxAirPressure;
-        }
-
-        private static float setCarEnergyPercentage()
-        {
-            Console.WriteLine("Please enter car energy percentage left: ");
-            string energyPercentageString = Console.ReadLine();
-            bool legalInput = float.TryParse(energyPercentageString, out float energyPercentage);
-            return energyPercentage;
-        }
-
-        private static string setCarModel()
-        {
-            Console.WriteLine("Please enter Car model: ");
-            string carModel = Console.ReadLine();
-            return carModel;
-        }
-
-        private static void setUserChoice()
-        {
-            char.TryParse(s_ChoiceInput, out char userMenuSelectionChoice);
-            switch (userMenuSelectionChoice)
-            {
-                case '1':
-                    s_UserChoice = eUserChoice.RegisterNewVehicle;
-                    break;
-                case '2':
-                    s_UserChoice = eUserChoice.ShowAllExistingVehicles;
-                    break;
-                case '3':
-                    s_UserChoice = eUserChoice.UpdateVehicleStatus;
-                    break;
-                case '4':
-                    s_UserChoice = eUserChoice.FillAllTires;
-                    break;
-                case '5':
-                    s_UserChoice = eUserChoice.FuelVehicle;
-                    break;
-                case '6':
-                    s_UserChoice = eUserChoice.ChargeVehicle;
-                    break;
-                case '7':
-                    s_UserChoice = eUserChoice.ShowVehicleFullDetails;
-                    break;
-                default:
-                    s_UserChoice = eUserChoice.Exit;
-                    break;
-            }
-        }
-
-        private static float setCurrentFuelStatus()
-        {
-            Console.WriteLine("Please enter the vehicle current fuel status:");
-            string fuelCurrentStatusString = Console.ReadLine();
-            float.TryParse(fuelCurrentStatusString, out float fuelCurrentStatus);
-            return fuelCurrentStatus;
-        }
-
-        private static float setMaxFuelCapacity()
-        {
-            Console.WriteLine("Please enter the vehicle fuel max capacity:");
-            string fuelMaxCapacityStr = Console.ReadLine();
-            float.TryParse(fuelMaxCapacityStr, out float fuelMaxCapacity);
-            return fuelMaxCapacity;
-        }
-
-        private static float setTruckMaxCapacity()
-        {
-            Console.WriteLine("Please enter truck max cargo capacity: ");
-            string cargoCapacityString = Console.ReadLine();
-            float.TryParse(cargoCapacityString, out float cargoCapacity);
-            return cargoCapacity;
-        }
-
-        private static bool setIsTruckCooling()
-        {
-            Console.WriteLine("Is the truck transporting with cooling? (yes/no)");
-            string isCoolingString = Console.ReadLine();
-
-            if (isCoolingString == null)
-            {
-                throw new FormatException();
-            }
-            else
-            {
-                switch (isCoolingString.ToLower())
-                {
-                    case "yes":
-                        {
-                            return true;
-                        }
-
-                    case "no":
-                        {
-                            return false;
-                        }
-
-                    default:
-                        {
-                            throw new ArgumentException();
-                        }
-                }
-            }
-        }
-
-        private static float setBatteryTimeLeft()
-        {
-            Console.WriteLine("Please enter the battery time left: ");
-            string batteryTimeLeftString = Console.ReadLine();
-            float.TryParse(batteryTimeLeftString, out float batteryTimeLeft);
-            return batteryTimeLeft;
-        }
-
-        public static float setBatteryMaxTime()
-        {
-            Console.WriteLine("Please enter the max battery capacity:");
-            string batterTimeCapacityString = Console.ReadLine();
-            float.TryParse(batterTimeCapacityString, out float batteryTimeCapacity);
-            return batteryTimeCapacity;
-        }
-
-        private static string setVehicleId()
-        {
-            Console.WriteLine("Please enter the vehicle ID:");
-            string id = Console.ReadLine();
-
-            while (!InputValidations.CarIdValidation(id))
-            {
-                Console.WriteLine("Car id entered is invalid! please enter a valid id:");
-                id = Console.ReadLine();
-            }
-
-            return id;
-        }
-
-        private static eVehicleStatus setVehicleStatus()
-        {
-            Console.WriteLine("Please enter desired vehicle status (In repair = 1 / Repaired = 2 / Paid = 3):");
-            string vehicleStatusToUpdate = Console.ReadLine();
-
-            switch (vehicleStatusToUpdate?.ToLower())
-            {
-                case "1":
-                    {
-                        return eVehicleStatus.InRepair;
-                    }
-
-                case "2":
-                    {
-                        return eVehicleStatus.Repaired;
-                    }
-
-                case "3":
-                    {
-                        return eVehicleStatus.Paid;
-                    }
-
-                default:
-                    {
-                        throw new FormatException();
-                    }
             }
         }
     }

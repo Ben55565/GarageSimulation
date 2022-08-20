@@ -9,11 +9,13 @@ namespace Ex03.GarageLogic
     public class CreateAndSaveData
     {
         private static int s_VehicleNumOfWheels;
+#pragma warning disable SA1307 // Accessible fields should begin with upper-case letter
         public static Dictionary<string, object> s_VehiclesInSystem = new Dictionary<string, object>();
         public static List<string> s_AllVehiclesIds = new List<string>();
         public static List<string> s_AllVehiclesIdsInRepair = new List<string>();
         public static List<string> s_AllVehiclesIdsRepaired = new List<string>();
         public static List<string> s_AllVehiclesIdsPaid = new List<string>();
+#pragma warning restore SA1307 // Accessible fields should begin with upper-case letter
 
         public static void UpdateVehicleStatusInLists(eVehicleStatus i_VehicleStatus, string i_CarId)
         {
@@ -82,91 +84,176 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public static void verifyVehicleTypeAndPerformAction(eVehicleStatus i_VehicleStatus, string i_CarId, eCarActions i_DesiredAction)
+        public static void verifyVehicleTypeAndUpdateStatus(eVehicleStatus i_VehicleStatus, string i_CarId)
         {
-            string carType = s_VehiclesInSystem[i_CarId].GetType().Name;
+            string vehicleType = s_VehiclesInSystem[i_CarId].GetType().Name;
 
-
-            switch (carType)
+            switch (vehicleType)
             {
                 case "Truck":
                     {
                         Truck truck = (Truck)s_VehiclesInSystem[i_CarId];
-
-                        if (i_DesiredAction == eCarActions.UpdateStatus)
-                        {
-                            UpdateVehicleStatusInLists(i_VehicleStatus, i_CarId);
-                            truck.r_BasicDetails.SetCarStatus(i_VehicleStatus);
-                        }
-                        else if (i_DesiredAction == eCarActions.FillTireToMax)
-                        {
-                            truck.r_BasicDetails.FillAirInTiresToTheMax();
-                        }
-
+                        UpdateVehicleStatusInLists(i_VehicleStatus, i_CarId);
+                        truck.r_VehicleBasicDetails.SetCarStatus(i_VehicleStatus);
                         break;
                     }
 
                 case "ElectricCar":
                     {
                         ElectricCar electricCar = (ElectricCar)s_VehiclesInSystem[i_CarId];
-                        if (i_DesiredAction == eCarActions.UpdateStatus)
-                        {
-                            UpdateVehicleStatusInLists(i_VehicleStatus, i_CarId);
-                            electricCar.r_CarBasicDetails.r_VehicleBasicDetails.SetCarStatus(i_VehicleStatus);
-                        }
-                        else if (i_DesiredAction == eCarActions.FillTireToMax)
-                        {
-                            electricCar.r_CarBasicDetails.r_VehicleBasicDetails.FillAirInTiresToTheMax();
-                        }
-
+                        UpdateVehicleStatusInLists(i_VehicleStatus, i_CarId);
+                        electricCar.r_CarBasicDetails.r_VehicleBasicDetails.SetCarStatus(i_VehicleStatus);
                         break;
                     }
 
                 case "FueledCar":
                     {
                         FueledCar fueledCar = (FueledCar)s_VehiclesInSystem[i_CarId];
-                        if (i_DesiredAction == eCarActions.UpdateStatus)
-                        {
-                            UpdateVehicleStatusInLists(i_VehicleStatus, i_CarId);
-                            fueledCar.r_CarBasicDetails.r_VehicleBasicDetails.SetCarStatus(i_VehicleStatus);
-                        }
-                        else if (i_DesiredAction == eCarActions.FillTireToMax)
-                        {
-                            fueledCar.r_CarBasicDetails.r_VehicleBasicDetails.FillAirInTiresToTheMax();
-                        }
-
+                        UpdateVehicleStatusInLists(i_VehicleStatus, i_CarId);
+                        fueledCar.r_CarBasicDetails.r_VehicleBasicDetails.SetCarStatus(i_VehicleStatus);
                         break;
                     }
 
                 case "ElectricMotorcycle":
                     {
                         ElectricMotorcycle electricMotorcycle = (ElectricMotorcycle)s_VehiclesInSystem[i_CarId];
-                        if (i_DesiredAction == eCarActions.UpdateStatus)
-                        {
-                            UpdateVehicleStatusInLists(i_VehicleStatus, i_CarId);
-                            electricMotorcycle.r_MotorcycleBasicDetails.r_VehicleBasicDetails.SetCarStatus(i_VehicleStatus);
-                        }
-                        else if (i_DesiredAction == eCarActions.FillTireToMax)
-                        {
-                            electricMotorcycle.r_MotorcycleBasicDetails.r_VehicleBasicDetails.FillAirInTiresToTheMax();
-                        }
-
+                        UpdateVehicleStatusInLists(i_VehicleStatus, i_CarId);
+                        electricMotorcycle.r_MotorcycleBasicDetails.r_VehicleBasicDetails.SetCarStatus(i_VehicleStatus);
                         break;
                     }
 
                 case "FueledMotorcycle":
                     {
                         FueledMotorcycle fueledMotorcycle = (FueledMotorcycle)s_VehiclesInSystem[i_CarId];
-                        if (i_DesiredAction == eCarActions.UpdateStatus)
+                        UpdateVehicleStatusInLists(i_VehicleStatus, i_CarId);
+                        fueledMotorcycle.r_MotorcycleBasicDetails.r_VehicleBasicDetails.SetCarStatus(i_VehicleStatus);
+                        break;
+                    }
+
+                default:
+                    {
+                        throw new ArgumentException();
+                    }
+            }
+        }
+
+        public static void verifyVehicleTypeAndFillTiresToMax(string i_CarId)
+        {
+            string vehicleType = s_VehiclesInSystem[i_CarId].GetType().Name;
+
+            switch (vehicleType)
+            {
+                case "Truck":
+                    {
+                        Truck truck = (Truck)s_VehiclesInSystem[i_CarId];
+                        truck.r_VehicleBasicDetails.FillAirInTiresToTheMax();
+                        break;
+                    }
+
+                case "ElectricCar":
+                    {
+                        ElectricCar electricCar = (ElectricCar)s_VehiclesInSystem[i_CarId];
+                        electricCar.r_CarBasicDetails.r_VehicleBasicDetails.FillAirInTiresToTheMax();
+                        break;
+                    }
+
+                case "FueledCar":
+                    {
+                        FueledCar fueledCar = (FueledCar)s_VehiclesInSystem[i_CarId];
+                        fueledCar.r_CarBasicDetails.r_VehicleBasicDetails.FillAirInTiresToTheMax();
+                        break;
+                    }
+
+                case "ElectricMotorcycle":
+                    {
+                        ElectricMotorcycle electricMotorcycle = (ElectricMotorcycle)s_VehiclesInSystem[i_CarId];
+                        electricMotorcycle.r_MotorcycleBasicDetails.r_VehicleBasicDetails.FillAirInTiresToTheMax();
+                        break;
+                    }
+
+                case "FueledMotorcycle":
+                    {
+                        FueledMotorcycle fueledMotorcycle = (FueledMotorcycle)s_VehiclesInSystem[i_CarId];
+                        fueledMotorcycle.r_MotorcycleBasicDetails.r_VehicleBasicDetails.FillAirInTiresToTheMax();
+                        break;
+                    }
+
+                default:
+                    {
+                        throw new ArgumentException();
+                    }
+            }
+        }
+
+        public static void verifyVehicleTypeAndFuelVehicle(float i_LittersToFuel, eFuelType i_FuelType, string i_CarId)
+        {
+            string vehicleType = s_VehiclesInSystem[i_CarId].GetType().Name;
+
+            switch (vehicleType)
+            {
+                case "Truck":
+                    {
+                        Truck truck = (Truck)s_VehiclesInSystem[i_CarId];
+
+                        if (truck.m_FueledVehicleDetails.r_FuelType != i_FuelType)
                         {
-                            UpdateVehicleStatusInLists(i_VehicleStatus, i_CarId);
-                            fueledMotorcycle.r_MotorcycleBasicDetails.r_VehicleBasicDetails.SetCarStatus(i_VehicleStatus);
-                        }
-                        else if (i_DesiredAction == eCarActions.FillTireToMax)
-                        {
-                            fueledMotorcycle.r_MotorcycleBasicDetails.r_VehicleBasicDetails.FillAirInTiresToTheMax();
+                            throw new ArgumentException();
                         }
 
+                        truck.m_FueledVehicleDetails.FuelVehicle(i_LittersToFuel);
+                        break;
+                    }
+
+                case "FueledCar":
+                    {
+                        FueledCar fueledCar = (FueledCar)s_VehiclesInSystem[i_CarId];
+
+                        if (fueledCar.m_FueledVehicleDetails.r_FuelType != i_FuelType)
+                        {
+                            throw new ArgumentException();
+                        }
+
+                        fueledCar.m_FueledVehicleDetails.FuelVehicle(i_LittersToFuel);
+                        break;
+                    }
+
+                case "FueledMotorcycle":
+                    {
+                        FueledMotorcycle fueledMotorcycle = (FueledMotorcycle)s_VehiclesInSystem[i_CarId];
+
+                        if (fueledMotorcycle.m_FueledVehicleDetails.r_FuelType != i_FuelType)
+                        {
+                            throw new ArgumentException();
+                        }
+
+                        fueledMotorcycle.m_FueledVehicleDetails.FuelVehicle(i_LittersToFuel);
+                        break;
+                    }
+
+                default:
+                    {
+                        throw new ArgumentException();
+                    }
+            }
+        }
+
+        public static void verifyVehicleTypeAndChargeVehicle(float i_MinutesToCharge, string i_CarId)
+        {
+            string vehicleType = s_VehiclesInSystem[i_CarId].GetType().Name;
+
+            switch (vehicleType)
+            {
+                case "ElectricCar":
+                    {
+                        ElectricCar electricCar = (ElectricCar)s_VehiclesInSystem[i_CarId];
+                        electricCar.m_ElectricVehicleDetails.ChargeVehicle(i_MinutesToCharge);
+                        break;
+                    }
+
+                case "ElectricMotorcycle":
+                    {
+                        ElectricMotorcycle electricMotorcycle = (ElectricMotorcycle)s_VehiclesInSystem[i_CarId];
+                        electricMotorcycle.m_ElectricVehicleDetails.ChargeVehicle(i_MinutesToCharge);
                         break;
                     }
 
@@ -280,7 +367,8 @@ namespace Ex03.GarageLogic
             string i_OwnerPhone)
         {
             Car car = createCar(i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, i_WheelModuleName, i_CurrentAirPressure, i_MaxAirPressure, i_CarColor, i_NumOfDoors, i_OwnerName, i_OwnerPhone);
-            s_VehiclesInSystem.Add(i_RegistrationId, new ElectricCar(car, i_CurrentBatteryTimeLeft, i_MaxBatteryCapacityTime));
+            ElectricVehicleDetails electricVehicleDetails = new ElectricVehicleDetails(i_MaxBatteryCapacityTime, i_CurrentBatteryTimeLeft);
+            s_VehiclesInSystem.Add(i_RegistrationId, new ElectricCar(car, electricVehicleDetails));
         }
 
         public static void CreateFueledCar(
@@ -299,7 +387,8 @@ namespace Ex03.GarageLogic
             string i_OwnerPhone)
         {
             Car car = createCar(i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, i_WheelModuleName, i_CurrentAirPressure, i_MaxAirPressure, i_CarColor, i_NumOfDoors, i_OwnerName, i_OwnerPhone);
-            s_VehiclesInSystem.Add(i_RegistrationId, new FueledCar(car, i_FuelType, i_CurrentFuelStatus, i_MaxFuelCapacity));
+            FueledVehicleDetails fueledVehicleDetails = new FueledVehicleDetails(i_FuelType, i_CurrentFuelStatus, i_MaxFuelCapacity);
+            s_VehiclesInSystem.Add(i_RegistrationId, new FueledCar(car, fueledVehicleDetails));
         }
 
         public static void CreateElectricMotorcycle(
@@ -327,7 +416,8 @@ namespace Ex03.GarageLogic
                 i_EngineCapacity,
                 i_OwnerName,
                 i_OwnerPhone);
-            s_VehiclesInSystem.Add(i_RegistrationId, new ElectricMotorcycle(motorcycle, i_CurrentBatteryTimeLeft, i_MaxBatteryCapacityTime));
+            ElectricVehicleDetails electricVehicleDetails = new ElectricVehicleDetails(i_MaxBatteryCapacityTime, i_CurrentBatteryTimeLeft);
+            s_VehiclesInSystem.Add(i_RegistrationId, new ElectricMotorcycle(motorcycle, electricVehicleDetails));
         }
 
         public static void CreateFueledMotorcycle(
@@ -356,7 +446,11 @@ namespace Ex03.GarageLogic
                 i_EngineCapacity,
                 i_OwnerName,
                 i_OwnerPhone);
-            s_VehiclesInSystem.Add(i_RegistrationId, new FueledMotorcycle(motorcycle, i_FuelType, i_CurrentFuelStatus, i_MaxFuelCapacity));
+            FueledVehicleDetails fueledVehicleDetails = new FueledVehicleDetails(
+                i_FuelType,
+                i_CurrentFuelStatus,
+                i_MaxFuelCapacity);
+            s_VehiclesInSystem.Add(i_RegistrationId, new FueledMotorcycle(motorcycle, fueledVehicleDetails));
         }
 
         public static void CreateTruck(
@@ -376,7 +470,8 @@ namespace Ex03.GarageLogic
         {
             const eVehicleType k_Type = eVehicleType.Truck;
             Vehicle vehicle = createVehicle(k_Type, i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, i_WheelModuleName, i_CurrentAirPressure, i_MaxAirPressure, i_OwnerName, i_OwnerPhone);
-            s_VehiclesInSystem.Add(i_RegistrationId, new Truck(vehicle, i_TransportWithCooling, i_MaxCargoWeight, i_FuelType, i_CurrentFuelStatus, i_MaxFuelCapacity));
+            FueledVehicleDetails fueledVehicleDetails = new FueledVehicleDetails(i_FuelType, i_CurrentFuelStatus, i_MaxFuelCapacity);
+            s_VehiclesInSystem.Add(i_RegistrationId, new Truck(vehicle, i_TransportWithCooling, i_MaxCargoWeight, fueledVehicleDetails));
         }
     }
 }

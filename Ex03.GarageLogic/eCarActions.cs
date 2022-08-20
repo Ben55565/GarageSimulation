@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    public enum eCarActions
+    public enum eCarActions // delete?
     {
         UpdateStatus,
         FillTireToMax,

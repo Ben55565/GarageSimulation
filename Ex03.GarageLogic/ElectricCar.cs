@@ -4,36 +4,18 @@ namespace Ex03.GarageLogic
 {
     public class ElectricCar
     {
-        private readonly float r_MaxBatteryCapacityTime;
         internal readonly Car r_CarBasicDetails;
-        private float m_CurrentBatteryTimeLeft;
+        internal ElectricVehicleDetails m_ElectricVehicleDetails;
 
-        public ElectricCar(Car i_CarBasicDetails, float i_CurrentBatteryTimeLeft, float i_MaxBatteryCapacityTime)
+        public ElectricCar(Car i_CarBasicDetails, ElectricVehicleDetails i_ElectricVehicleDetails)
         {
             this.r_CarBasicDetails = i_CarBasicDetails;
-            this.m_CurrentBatteryTimeLeft = i_CurrentBatteryTimeLeft;
-            this.r_MaxBatteryCapacityTime = i_MaxBatteryCapacityTime;
-        }
-
-        public bool ChargeVehicle(float i_HoursToAddBatteryTime) // add exception
-        {
-            bool canChargeVehicle = true;
-
-            if (m_CurrentBatteryTimeLeft + i_HoursToAddBatteryTime > r_MaxBatteryCapacityTime)
-            {
-                canChargeVehicle = false;
-            }
-            else
-            {
-                m_CurrentBatteryTimeLeft += i_HoursToAddBatteryTime;
-            }
-
-            return canChargeVehicle;
+            this.m_ElectricVehicleDetails = i_ElectricVehicleDetails;
         }
 
         public override string ToString()
         {
-            return string.Format(Environment.NewLine + "You have checked in to our garage an electric car!" + r_CarBasicDetails + Environment.NewLine + Environment.NewLine + "======== Electric Car details ========" + Environment.NewLine + Environment.NewLine + "Current battery time left(in hours): {0}" + Environment.NewLine + "Max battery capacity time(in hours): {1}", m_CurrentBatteryTimeLeft, r_MaxBatteryCapacityTime);
+            return string.Format(Environment.NewLine + "You have checked in to our garage an electric car! {0}" + Environment.NewLine + Environment.NewLine + "======== Electric Car details ========" + Environment.NewLine + "{1}" + Environment.NewLine, r_CarBasicDetails, m_ElectricVehicleDetails);
         }
     }
 }

@@ -50,6 +50,7 @@
     <Compile Include="CreateAndSaveData.cs" />
     <Compile Include="eCarActions.cs" />
     <Compile Include="eCarColor.cs" />
+    <Compile Include="ElectricVehicleDetails.cs" />
     <Compile Include="eVehicleStatus.cs" />
     <Compile Include="eFuelType.cs" />
     <Compile Include="ElectricCar.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="eVehicleType.cs" />
     <Compile Include="FueledCar.cs" />
     <Compile Include="FueledMotorcycle.cs" />
+    <Compile Include="FueledVehicleDetails.cs" />
     <Compile Include="Motorcycle.cs" />
     <Compile Include="OwnerDetailsAndStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
