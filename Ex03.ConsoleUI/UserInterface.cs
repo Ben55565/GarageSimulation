@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
@@ -508,8 +506,7 @@ namespace Ex03.ConsoleUI
         private static void fuelVehicle()
         {
             Console.WriteLine("Please enter the amount you wish to fill (Litters for fueled vehicle):");
-            
-            CreateAndSaveData.verifyVehicleTypeAndFuelVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setVehicleId(), InputValidations.setFuelType());
+            CreateAndSaveData.verifyVehicleTypeAndFuelVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setFuelType(), InputValidations.setVehicleId());
             Console.WriteLine("Vehicle has been fueled!" + Environment.NewLine);
         }
 

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
+    using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
 
     public class CreateAndSaveData
     {
