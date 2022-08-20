@@ -4,20 +4,20 @@ namespace Ex03.GarageLogic
 {
     public class Car
     {
-        private readonly Vehicle r_BasicDetails;
+        internal readonly Vehicle r_VehicleBasicDetails;
         private readonly eCarColor r_CarColor;
         private readonly eNumOfDoors r_NumOfDoors;
 
-        public Car(Vehicle i_BasicDetails, eCarColor i_CarColor, eNumOfDoors i_NumOfDoors)
+        public Car(Vehicle i_VehicleBasicDetails, eCarColor i_CarColor, eNumOfDoors i_NumOfDoors)
         {
-            r_BasicDetails = i_BasicDetails;
+            r_VehicleBasicDetails = i_VehicleBasicDetails;
             r_CarColor = i_CarColor;
             r_NumOfDoors = i_NumOfDoors;
         }
 
         public override string ToString()
         {
-            return string.Format(Environment.NewLine + r_BasicDetails + "======== Car details ========" + Environment.NewLine + Environment.NewLine + "Car color: {0}" + Environment.NewLine + "Number of doors: {1}", r_CarColor, r_NumOfDoors); ;
+            return string.Format(Environment.NewLine + r_VehicleBasicDetails + "======== Car details ========" + Environment.NewLine + Environment.NewLine + "Car color: {0}" + Environment.NewLine + "Number of doors: {1}", r_CarColor, r_NumOfDoors);
         }
     }
 }

@@ -1,13 +1,16 @@
-﻿namespace Ex03.ConsoleUI
+﻿using System;
+
+namespace Ex03.ConsoleUI
 {
     internal class InputValidations
     {
         public static bool MenuChoiceInputValidation(string i_Input)
         {
             bool isValid = true;
+
             if (i_Input == null || i_Input.Length != 1)
             {
-                isValid = false;
+                throw new FormatException();
             }
             else
             {

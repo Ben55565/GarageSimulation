@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    public enum eCarStatus
+    public enum eVehicleStatus
     {
         InRepair,
         Repaired,

@@ -5,12 +5,12 @@ namespace Ex03.GarageLogic
     public class ElectricCar
     {
         private readonly float r_MaxBatteryCapacityTime;
-        private readonly Car r_BasicDetails;
+        internal readonly Car r_CarBasicDetails;
         private float m_CurrentBatteryTimeLeft;
 
-        public ElectricCar(Car i_BasicDetails, float i_CurrentBatteryTimeLeft, float i_MaxBatteryCapacityTime)
+        public ElectricCar(Car i_CarBasicDetails, float i_CurrentBatteryTimeLeft, float i_MaxBatteryCapacityTime)
         {
-            this.r_BasicDetails = i_BasicDetails;
+            this.r_CarBasicDetails = i_CarBasicDetails;
             this.m_CurrentBatteryTimeLeft = i_CurrentBatteryTimeLeft;
             this.r_MaxBatteryCapacityTime = i_MaxBatteryCapacityTime;
         }
@@ -33,7 +33,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return string.Format(Environment.NewLine + "You have checked in to our garage an electric car!" + r_BasicDetails + Environment.NewLine + Environment.NewLine + "======== Electric Car details ========" + Environment.NewLine + Environment.NewLine + "Current battery time left(in hours): {0}" + Environment.NewLine + "Max battery capacity time(in hours): {1}", m_CurrentBatteryTimeLeft, r_MaxBatteryCapacityTime); ;
+            return string.Format(Environment.NewLine + "You have checked in to our garage an electric car!" + r_CarBasicDetails + Environment.NewLine + Environment.NewLine + "======== Electric Car details ========" + Environment.NewLine + Environment.NewLine + "Current battery time left(in hours): {0}" + Environment.NewLine + "Max battery capacity time(in hours): {1}", m_CurrentBatteryTimeLeft, r_MaxBatteryCapacityTime);
         }
     }
 }

@@ -5,12 +5,12 @@ namespace Ex03.GarageLogic
     public class ElectricMotorcycle
     {
         private readonly float r_MaxBatteryCapacityTime;
-        private readonly Motorcycle r_BasicDetails;
+        internal readonly Motorcycle r_MotorcycleBasicDetails;
         private float m_CurrentBatteryTimeLeft;
 
-        public ElectricMotorcycle(Motorcycle i_BasicDetails, float i_CurrentBatteryTimeLeft, float i_MaxBatteryCapacityTime)
+        public ElectricMotorcycle(Motorcycle i_MotorcycleBasicDetails, float i_CurrentBatteryTimeLeft, float i_MaxBatteryCapacityTime)
         {
-            this.r_BasicDetails = i_BasicDetails;
+            this.r_MotorcycleBasicDetails = i_MotorcycleBasicDetails;
             this.m_CurrentBatteryTimeLeft = i_CurrentBatteryTimeLeft;
             this.r_MaxBatteryCapacityTime = i_MaxBatteryCapacityTime;
         }
@@ -33,7 +33,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return string.Format(Environment.NewLine + "You have checked in to our garage an electric motorcycle!" + r_BasicDetails + Environment.NewLine + Environment.NewLine + "======== Electric Motorcycle details ========" + Environment.NewLine + Environment.NewLine + "Current battery time left(in hours): {0}" + Environment.NewLine + "Max battery capacity time(in hours): {1}", m_CurrentBatteryTimeLeft, r_MaxBatteryCapacityTime); ;
+            return string.Format(Environment.NewLine + "You have checked in to our garage an electric motorcycle!" + r_MotorcycleBasicDetails + Environment.NewLine + Environment.NewLine + "======== Electric Motorcycle details ========" + Environment.NewLine + Environment.NewLine + "Current battery time left(in hours): {0}" + Environment.NewLine + "Max battery capacity time(in hours): {1}", m_CurrentBatteryTimeLeft, r_MaxBatteryCapacityTime);
         }
     }
 }
