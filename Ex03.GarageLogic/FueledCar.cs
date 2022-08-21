@@ -2,20 +2,19 @@
 
 namespace Ex03.GarageLogic
 {
-    public class FueledCar
+    internal class FueledCar : Car
     {
-        internal readonly Car r_CarBasicDetails;
         internal FueledVehicleDetails m_FueledVehicleDetails;
 
-        public FueledCar(Car i_CarBasicDetails, FueledVehicleDetails i_FueledVehicleDetails)
+        public FueledCar(Vehicle i_VehicleBasicDetails, Car i_CarBasicDetails, FueledVehicleDetails i_FueledVehicleDetails)
+        : base(i_VehicleBasicDetails, i_CarBasicDetails.M_CarColor, i_CarBasicDetails.M_NumOfDoors)
         {
-            this.r_CarBasicDetails = i_CarBasicDetails;
-            this.m_FueledVehicleDetails = i_FueledVehicleDetails;
+            m_FueledVehicleDetails = i_FueledVehicleDetails;
         }
 
         public override string ToString()
         {
-            return string.Format(Environment.NewLine + "You have checked in to our garage an Fueled car! {0}" + Environment.NewLine + Environment.NewLine + "======== Fueled Car details ========" + Environment.NewLine + "{1}" + Environment.NewLine, r_CarBasicDetails, m_FueledVehicleDetails);
+            return string.Format(Environment.NewLine + "You have checked in to our garage an Fueled car!" + Environment.NewLine + Environment.NewLine + "======== Fueled Car details ========" + Environment.NewLine + "{0}" + Environment.NewLine, base.ToString());
         }
     }
 }

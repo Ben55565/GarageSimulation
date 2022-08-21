@@ -5,22 +5,22 @@ namespace Ex03.GarageLogic
 {
     public class Vehicle
     {
-        private readonly string r_ModelName;
-        private readonly float r_EnergyPercentageLeft;
-        private readonly Wheel[] r_Wheels;
+        internal string m_ModelName;
+        internal float m_EnergyPercentageLeft;
+        internal Wheel[] m_Wheels;
 
         public Vehicle(string i_ModelName, string i_RegistrationId, float i_EnergyPercentageLeft, Wheel[] i_Wheels, OwnerDetailsAndStatus i_OwnerDetails)
         {
-            this.r_ModelName = i_ModelName;
-            this.RegistrationId = i_RegistrationId;
-            this.r_EnergyPercentageLeft = i_EnergyPercentageLeft;
-            this.r_Wheels = i_Wheels;
-            this.OwnerDetails = i_OwnerDetails;
+            m_ModelName = i_ModelName;
+            RegistrationId = i_RegistrationId;
+            m_EnergyPercentageLeft = i_EnergyPercentageLeft;
+            m_Wheels = i_Wheels;
+            OwnerDetails = i_OwnerDetails;
         }
 
         public OwnerDetailsAndStatus OwnerDetails { get; set; }
 
-        public string RegistrationId { get; }
+        public string RegistrationId { get; set; }
 
         public void SetCarStatus(eVehicleStatus i_Status)
         {
@@ -29,9 +29,10 @@ namespace Ex03.GarageLogic
 
         public void FillAirInTiresToTheMax()
         {
-            foreach (Wheel wheel in r_Wheels)
+            foreach (Wheel wheel in m_Wheels)
             {
-                wheel.CurrentAirPressure = wheel.r_MaxAirPressure;
+                float airToFill = wheel.r_MaxAirPressure - wheel.CurrentAirPressure;
+                wheel.FillAirInWheel(airToFill);
             }
         }
 
@@ -39,13 +40,13 @@ namespace Ex03.GarageLogic
         {
             StringBuilder wheelsDetails = new StringBuilder();
 
-            for (int i = 0; i < this.r_Wheels.Length; i++)
+            for (int i = 0; i < this.m_Wheels.Length; i++)
             {
                 wheelsDetails.AppendLine(Environment.NewLine + "Wheel #" + (i + 1).ToString());
-                wheelsDetails.AppendLine(r_Wheels[i].ToString());
+                wheelsDetails.AppendLine(m_Wheels[i].ToString());
             }
 
-            return string.Format(Environment.NewLine + "======== Basic vehicle details ========" + Environment.NewLine + Environment.NewLine + "Vehicle model: {0}" + Environment.NewLine + "Registration id: {1}" + Environment.NewLine + "Energy percentage left: {2}" + Environment.NewLine + Environment.NewLine + "======== Wheels details ======== " + Environment.NewLine + "{3}" + Environment.NewLine + Environment.NewLine + "{4}" + Environment.NewLine, r_ModelName, RegistrationId, r_EnergyPercentageLeft, wheelsDetails, OwnerDetails);
+            return string.Format(Environment.NewLine + "======== Basic vehicle details ========" + Environment.NewLine + Environment.NewLine + "Vehicle model: {0}" + Environment.NewLine + "Registration id: {1}" + Environment.NewLine + "Energy percentage left: {2}" + Environment.NewLine + Environment.NewLine + "======== Wheels details ======== " + Environment.NewLine + "{3}" + Environment.NewLine + "{4}" + Environment.NewLine, m_ModelName, RegistrationId, m_EnergyPercentageLeft, wheelsDetails, OwnerDetails);
         }
     }
 }

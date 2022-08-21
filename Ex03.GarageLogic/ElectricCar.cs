@@ -2,20 +2,19 @@
 
 namespace Ex03.GarageLogic
 {
-    public class ElectricCar
+    internal class ElectricCar : Car
     {
-        internal readonly Car r_CarBasicDetails;
         internal ElectricVehicleDetails m_ElectricVehicleDetails;
 
-        public ElectricCar(Car i_CarBasicDetails, ElectricVehicleDetails i_ElectricVehicleDetails)
+        public ElectricCar(Vehicle i_VehicleBasicDetails, Car i_CarBasicDetails, ElectricVehicleDetails i_ElectricVehicleDetails)
+            : base(i_VehicleBasicDetails, i_CarBasicDetails.M_CarColor, i_CarBasicDetails.M_NumOfDoors)
         {
-            this.r_CarBasicDetails = i_CarBasicDetails;
-            this.m_ElectricVehicleDetails = i_ElectricVehicleDetails;
+            m_ElectricVehicleDetails = i_ElectricVehicleDetails;
         }
 
         public override string ToString()
         {
-            return string.Format(Environment.NewLine + "You have checked in to our garage an electric car! {0}" + Environment.NewLine + Environment.NewLine + "======== Electric Car details ========" + Environment.NewLine + "{1}" + Environment.NewLine, r_CarBasicDetails, m_ElectricVehicleDetails);
+            return string.Format(Environment.NewLine + "You have checked in to our garage an electric car! {0}" + Environment.NewLine + Environment.NewLine + "======== Electric Car details ========" + Environment.NewLine + "{1}" + Environment.NewLine, base.ToString(), m_ElectricVehicleDetails);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    public enum eUserChoice
+    public enum eUserChoiceInMenu
     {
         RegisterNewVehicle = '1',
         ShowAllExistingVehicles = '2',

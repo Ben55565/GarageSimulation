@@ -4,32 +4,26 @@ namespace Ex03.GarageLogic
 {
     public class Wheel
     {
-#pragma warning disable SA1307 // Accessible fields should begin with upper-case letter
         internal readonly float r_MaxAirPressure;
-#pragma warning restore SA1307 // Accessible fields should begin with upper-case letter
         private readonly string r_ModuleName;
 
         public Wheel(string i_ModuleName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
-            this.r_ModuleName = i_ModuleName;
-            this.CurrentAirPressure = i_CurrentAirPressure;
-            this.r_MaxAirPressure = i_MaxAirPressure;
+            r_ModuleName = i_ModuleName;
+            CurrentAirPressure = i_CurrentAirPressure;
+            r_MaxAirPressure = i_MaxAirPressure;
         }
 
-        public bool FillWheel(float i_AirToAdd) // add exception
+        public void FillAirInWheel(float i_AirToAdd) //handle exception here
         {
-            bool canFillWheel = true;
-
             if (CurrentAirPressure + i_AirToAdd > r_MaxAirPressure)
             {
-                canFillWheel = false;
+                throw new ValueOutOfRangeException();
             }
             else
             {
                 CurrentAirPressure += i_AirToAdd;
             }
-
-            return canFillWheel;
         }
 
         public float CurrentAirPressure { get; set; }

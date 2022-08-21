@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Car.cs" />
     <Compile Include="CreateAndSaveData.cs" />
-    <Compile Include="eCarActions.cs" />
     <Compile Include="eCarColor.cs" />
     <Compile Include="ElectricVehicleDetails.cs" />
     <Compile Include="eVehicleStatus.cs" />
@@ -57,7 +56,7 @@
     <Compile Include="ElectricMotorcycle.cs" />
     <Compile Include="eLicenseType.cs" />
     <Compile Include="eNumOfDoors.cs" />
-    <Compile Include="eUserChoice.cs" />
+    <Compile Include="eUserChoiceInMenu.cs" />
     <Compile Include="eVehiclesAvailable.cs" />
     <Compile Include="eVehicleType.cs" />
     <Compile Include="FueledCar.cs" />

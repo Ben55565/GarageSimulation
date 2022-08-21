@@ -2,20 +2,20 @@
 
 namespace Ex03.GarageLogic
 {
-    public class FueledVehicleDetails
+    internal class FueledVehicleDetails
     {
-        internal readonly eFuelType r_FuelType;
-        private float m_CurrentFuelStatus;
-        private readonly float r_MaxFuelCapacity;
+        internal eFuelType r_FuelType;
+        internal float r_MaxFuelCapacity;
+        internal float m_CurrentFuelStatus;
 
         public FueledVehicleDetails(eFuelType i_FuelType, float i_currentFuelStatus, float i_MaxFuelCapacity)
         {
-            this.r_FuelType = i_FuelType;
-            this.m_CurrentFuelStatus = i_currentFuelStatus;
-            this.r_MaxFuelCapacity = i_MaxFuelCapacity;
+            r_FuelType = i_FuelType;
+            m_CurrentFuelStatus = i_currentFuelStatus;
+            r_MaxFuelCapacity = i_MaxFuelCapacity;
         }
 
-        public bool FuelVehicle(float i_LitersToFuel) // add exception
+        public bool FuelVehicle(float i_LitersToFuel) //add exception here
         {
             bool canFuelVehicle = true;
 

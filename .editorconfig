@@ -191,3 +191,9 @@ dotnet_diagnostic.SA1404.severity = none
 
 # SA1504: All accessors should be single-line or multi-line
 dotnet_diagnostic.SA1504.severity = none
+
+# IDE0079: Remove unnecessary suppression
+dotnet_diagnostic.IDE0079.severity = none
+
+# IDE1006: Naming Styles
+dotnet_diagnostic.IDE1006.severity = none

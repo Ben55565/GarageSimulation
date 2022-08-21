@@ -2,22 +2,21 @@
 
 namespace Ex03.GarageLogic
 {
-    public class Car
+    internal class Car : Vehicle
     {
-        internal readonly Vehicle r_VehicleBasicDetails;
-        private readonly eCarColor r_CarColor;
-        private readonly eNumOfDoors r_NumOfDoors;
+        public eCarColor M_CarColor;
+        public eNumOfDoors M_NumOfDoors;
 
         public Car(Vehicle i_VehicleBasicDetails, eCarColor i_CarColor, eNumOfDoors i_NumOfDoors)
+            : base(i_VehicleBasicDetails.m_ModelName, i_VehicleBasicDetails.RegistrationId, i_VehicleBasicDetails.m_EnergyPercentageLeft, i_VehicleBasicDetails.m_Wheels, i_VehicleBasicDetails.OwnerDetails)
         {
-            r_VehicleBasicDetails = i_VehicleBasicDetails;
-            r_CarColor = i_CarColor;
-            r_NumOfDoors = i_NumOfDoors;
+            M_CarColor = i_CarColor;
+            M_NumOfDoors = i_NumOfDoors;
         }
 
         public override string ToString()
         {
-            return string.Format(Environment.NewLine + r_VehicleBasicDetails + "======== Car details ========" + Environment.NewLine + Environment.NewLine + "Car color: {0}" + Environment.NewLine + "Number of doors: {1}", r_CarColor, r_NumOfDoors);
+            return string.Format(Environment.NewLine + base.ToString() + "======== Car details ========" + Environment.NewLine + Environment.NewLine + "Car color: {0}" + Environment.NewLine + "Number of doors: {1}", M_CarColor, M_NumOfDoors);
         }
     }
 }

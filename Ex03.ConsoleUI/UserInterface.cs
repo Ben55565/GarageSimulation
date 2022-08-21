@@ -5,16 +5,14 @@ using Ex03.GarageLogic;
 namespace Ex03.ConsoleUI
 {
     ////    TO DO LIST:
-    ////    1. use format exception for invalid input(int instead of string and such)
-    ////    2. use argument exception for in-logic input(wrong fuel type for the car and such)
-    ////    3. write ValueOutOfRangeException class for exception if entered to much
+    ////    1. make sure max values are not lower then current value entered
+    ////    2. write ValueOutOfRangeException class for exception if entered to much
     ////       air pressure of fuel amount, throw from relevant classes and catch it here
     ////       this class should contain float MaxValue and float MinValue and inherits exception
 
     internal class UserInterface
     {
         private static string s_MenuChoiceInput;
-        private static eUserChoice s_UserChoice;
         private static eVehiclesAvailable s_VehicleType;
 
         public static void RunGarage()
@@ -32,11 +30,10 @@ namespace Ex03.ConsoleUI
 
         private static void welcomeMessage()
         {
-            string greetMessage = string.Format(
-                @"                ===========================================================
+            const string greetMessage = @"                ===========================================================
                 =============== Welcome to our garage! ====================
                 ===========================================================
-                ");
+                ";
             Console.WriteLine(greetMessage);
         }
 
@@ -78,53 +75,53 @@ namespace Ex03.ConsoleUI
                     showMenu();
                     s_MenuChoiceInput = Console.ReadLine();
                     InputValidations.checkValidMenuChoice(s_MenuChoiceInput);
-                    setUserMenuChoice(s_MenuChoiceInput);
+                    char userMenuChoice = char.Parse(s_MenuChoiceInput ?? throw new FormatException());
 
-                    switch (s_UserChoice)
+                    switch (userMenuChoice)
                     {
-                        case eUserChoice.RegisterNewVehicle:
+                        case (char)eUserChoiceInMenu.RegisterNewVehicle:
                             {
                                 registerNewVehicle();
                                 break;
                             }
 
-                        case eUserChoice.ShowAllExistingVehicles:
+                        case (char)eUserChoiceInMenu.ShowAllExistingVehicles:
                             {
                                 showAllExistingVehicles();
                                 break;
                             }
 
-                        case eUserChoice.UpdateVehicleStatus:
+                        case (char)eUserChoiceInMenu.UpdateVehicleStatus:
                             {
                                 updateVehicleStatus();
                                 break;
                             }
 
-                        case eUserChoice.FillAllTires:
+                        case (char)eUserChoiceInMenu.FillAllTires:
                             {
                                 fillAllTires();
                                 break;
                             }
 
-                        case eUserChoice.FuelVehicle:
+                        case (char)eUserChoiceInMenu.FuelVehicle:
                             {
                                 fuelVehicle();
                                 break;
                             }
 
-                        case eUserChoice.ChargeVehicle:
+                        case (char)eUserChoiceInMenu.ChargeVehicle:
                             {
                                 chargeVehicle();
                                 break;
                             }
 
-                        case eUserChoice.ShowVehicleFullDetails:
+                        case (char)eUserChoiceInMenu.ShowVehicleFullDetails:
                             {
                                 showVehicleFullDetails();
                                 break;
                             }
 
-                        case eUserChoice.Exit:
+                        case (char)eUserChoiceInMenu.Exit:
                             {
                                 return;
                             }
@@ -150,61 +147,6 @@ namespace Ex03.ConsoleUI
                 runUserInterface();
             }
         }
-
-        private static void setUserMenuChoice(string i_MenuChoiceInput)
-        {
-            char.TryParse(i_MenuChoiceInput, out char o_userMenuSelectionChoice);
-            switch (o_userMenuSelectionChoice)
-            {
-                case '1':
-                    {
-                        s_UserChoice = eUserChoice.RegisterNewVehicle;
-                        break;
-                    }
-
-                case '2':
-                    {
-                        s_UserChoice = eUserChoice.ShowAllExistingVehicles;
-                        break;
-                    }
-
-                case '3':
-                    {
-                        s_UserChoice = eUserChoice.UpdateVehicleStatus;
-                        break;
-                    }
-
-                case '4':
-                    {
-                        s_UserChoice = eUserChoice.FillAllTires;
-                        break;
-                    }
-
-                case '5':
-                    {
-                        s_UserChoice = eUserChoice.FuelVehicle;
-                        break;
-                    }
-
-                case '6':
-                    {
-                        s_UserChoice = eUserChoice.ChargeVehicle;
-                        break;
-                    }
-
-                case '7':
-                    {
-                        s_UserChoice = eUserChoice.ShowVehicleFullDetails;
-                        break;
-                    }
-
-                default:
-                    {
-                        s_UserChoice = eUserChoice.Exit;
-                        break;
-                    }
-            }
-        } // Done
 
         private static void registerNewVehicle()
         {
@@ -238,10 +180,10 @@ namespace Ex03.ConsoleUI
                 else
                 {
                     Console.WriteLine("-> This vehicle is already in the system! Moving existing vehicle to repair now...");
-                    CreateAndSaveData.UpdateVehicleStatusInLists(eVehicleStatus.InRepair, vehicleID);
+                    CreateAndSaveData.UpdateVehicleStatus(eVehicleStatus.InRepair, vehicleID);
                 }
             }
-            catch (ArgumentException i_ArgumentException)
+            catch (ArgumentException i_ArgumentException) //check if to change exception
             {
                 string errorMessage = string.Format(
                     Environment.NewLine +
@@ -265,7 +207,7 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine(errorMessage);
                 registerNewVehicle();
             }
-        } // Done
+        }
 
         private static void createChosenVehicle(string i_RegistrationId)
         {
@@ -600,13 +542,14 @@ namespace Ex03.ConsoleUI
 
         private static void updateVehicleStatus()
         {
-            CreateAndSaveData.verifyVehicleTypeAndUpdateStatus(InputValidations.setVehicleStatus(), InputValidations.setVehicleId());
+            CreateAndSaveData.UpdateVehicleStatus(InputValidations.setVehicleStatus(), InputValidations.setVehicleId());
             Console.WriteLine("Vehicle status updated!" + Environment.NewLine);
         }
 
         private static void fillAllTires()
         {
-            CreateAndSaveData.verifyVehicleTypeAndFillTiresToMax(InputValidations.setVehicleId());
+            string carId = InputValidations.setVehicleId();
+            CreateAndSaveData.s_VehiclesInSystem[carId].FillAirInTiresToTheMax();
             Console.WriteLine("All vehicle tires were filled to max capacity of air pressure!" + Environment.NewLine);
         }
 
@@ -655,6 +598,6 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine(errorMessage);
                 registerNewVehicle();
             }
-        } // Done
+        }
     }
 }
