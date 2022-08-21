@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
@@ -12,7 +13,7 @@ namespace Ex03.ConsoleUI
 
     internal class UserInterface
     {
-        private static string s_ChoiceInput;
+        private static string s_MenuChoiceInput;
         private static eUserChoice s_UserChoice;
         private static eVehiclesAvailable s_VehicleType;
 
@@ -39,220 +40,326 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(greetMessage);
         }
 
-        private static void showMenu() // has one input read that needs to be handled with exceptions(check later if can exported to different method)
+        private static void showMenu()
         {
-            string menuMessage = string.Format(
-                "Please choose your action:" +
-                Environment.NewLine +
-                "1 - Register a new vehicle into the garage" +
-                Environment.NewLine +
-                "2 - Show list of the vehicles registration ID's" +
-                Environment.NewLine +
-                "3 - Update existing vehicle status" +
-                Environment.NewLine +
-                "4 - Fill existing vehicle wheels air pressure to the max" +
-                Environment.NewLine +
-                "5 - Fuel an existing vehicle(relevant to fuel powered vehicles only)" +
-                Environment.NewLine +
-                "6 - Charge an existing vehicle(relevant to electric powered vehicles only)" +
-                Environment.NewLine +
-                "7 - Show existing vehicle full details(using registration ID)" +
-                Environment.NewLine +
-                Environment.NewLine +
-                "Please enter 'q' to exit the system.");
-            Console.WriteLine(menuMessage);
-            s_ChoiceInput = Console.ReadLine();
-
-            while (!InputValidations.MenuChoiceInputValidation(s_ChoiceInput))
-            {
-                Console.WriteLine("Entered choice is invalid! Please choose again:");
-                s_ChoiceInput = Console.ReadLine();
-            }
-
-            InputValidations.setUserChoice(s_ChoiceInput, ref s_UserChoice);
+                string menuMessage = string.Format(
+                    "---------------------------------------------------------------------------------" +
+                    Environment.NewLine +
+                    "Please choose your action:" +
+                    Environment.NewLine +
+                    Environment.NewLine +
+                    "   1 - Register a new vehicle into the garage" +
+                    Environment.NewLine +
+                    "   2 - Show list of the vehicles registration ID's" +
+                    Environment.NewLine +
+                    "   3 - Update existing vehicle status" +
+                    Environment.NewLine +
+                    "   4 - Fill existing vehicle wheels air pressure to the max" +
+                    Environment.NewLine +
+                    "   5 - Fuel an existing vehicle (relevant to fuel powered vehicles only)" +
+                    Environment.NewLine +
+                    "   6 - Charge an existing vehicle (relevant to electric powered vehicles only)" +
+                    Environment.NewLine +
+                    "   7 - Show existing vehicle full details (using registration ID)" +
+                    Environment.NewLine +
+                    Environment.NewLine +
+                    "Please enter 'q' to exit the system." +
+                    Environment.NewLine +
+                    "---------------------------------------------------------------------------------");
+                Console.WriteLine(menuMessage);
         }
 
         private static void runUserInterface()
         {
-            do
+            try
             {
-                showMenu();
-                switch (s_UserChoice)
+                do
                 {
-                    case eUserChoice.RegisterNewVehicle:
-                        {
-                            registerNewVehicle();
-                            break;
-                        }
+                    showMenu();
+                    s_MenuChoiceInput = Console.ReadLine();
+                    InputValidations.checkValidMenuChoice(s_MenuChoiceInput);
+                    setUserMenuChoice(s_MenuChoiceInput);
 
-                    case eUserChoice.ShowAllExistingVehicles:
-                        {
-                            showAllExistingVehicles();
-                            break;
-                        }
+                    switch (s_UserChoice)
+                    {
+                        case eUserChoice.RegisterNewVehicle:
+                            {
+                                registerNewVehicle();
+                                break;
+                            }
 
-                    case eUserChoice.UpdateVehicleStatus:
-                        {
-                            updateVehicleStatus();
-                            break;
-                        }
+                        case eUserChoice.ShowAllExistingVehicles:
+                            {
+                                showAllExistingVehicles();
+                                break;
+                            }
 
-                    case eUserChoice.FillAllTires:
-                        {
-                            fillAllTires();
-                            break;
-                        }
+                        case eUserChoice.UpdateVehicleStatus:
+                            {
+                                updateVehicleStatus();
+                                break;
+                            }
 
-                    case eUserChoice.FuelVehicle:
-                        {
-                            fuelVehicle();
-                            break;
-                        }
+                        case eUserChoice.FillAllTires:
+                            {
+                                fillAllTires();
+                                break;
+                            }
 
-                    case eUserChoice.ChargeVehicle:
-                        {
-                            chargeVehicle();
-                            break;
-                        }
+                        case eUserChoice.FuelVehicle:
+                            {
+                                fuelVehicle();
+                                break;
+                            }
 
-                    case eUserChoice.ShowVehicleFullDetails:
-                        {
-                            showVehicleFullDetails();
-                            break;
-                        }
+                        case eUserChoice.ChargeVehicle:
+                            {
+                                chargeVehicle();
+                                break;
+                            }
 
-                    case eUserChoice.Exit:
-                        {
-                            return;
-                        }
+                        case eUserChoice.ShowVehicleFullDetails:
+                            {
+                                showVehicleFullDetails();
+                                break;
+                            }
 
-                    default:
-                        {
-                            throw new ArgumentOutOfRangeException();
-                        }
+                        case eUserChoice.Exit:
+                            {
+                                return;
+                            }
+
+                        default:
+                            {
+                                throw new FormatException();
+                            }
+                    }
                 }
+                while (true);
             }
-            while (true);
-        }
-
-        private static void registerNewVehicle() // has one input read that needs to be handled with exceptions(check later if can exported to different method)
-        {
-            string id = InputValidations.setVehicleId();
-
-            if (!CreateAndSaveData.s_VehiclesInSystem.ContainsKey(id))
+            catch (FormatException i_FormatException)
             {
-                string vehicleType = string.Format(
-                    "Please choose the type of the vehicle you wish to add:" +
+                string errorMessage = string.Format(
                     Environment.NewLine +
-                    "1 - Electric car" +
+                    "-> Menu choice entered is invalid! Please choose again." +
                     Environment.NewLine +
-                    "2 - Fueled car" +
-                    Environment.NewLine +
-                    "3 - Electric motorcycle" +
-                    Environment.NewLine +
-                    "4 - Fueled motorcycle" +
-                    Environment.NewLine +
-                    "5 - Truck");
-                Console.WriteLine(vehicleType);
-                s_ChoiceInput = Console.ReadLine();
-
-                try
-                {
-                    InputValidations.setChosenVehicle(s_ChoiceInput, ref s_VehicleType);
-                }
-                catch (ArgumentOutOfRangeException ex)
-                {
-                    string output = $"Entered value is invalid! {Environment.NewLine} {ex.Message}";
-                    Console.WriteLine(output);
-                }
-
-                createChosenVehicle(id);
-            }
-            else
-            {
-                Console.WriteLine("This vehicle is already in the system! Moving existing vehicle to repair now..");
-                CreateAndSaveData.UpdateVehicleStatusInLists(eVehicleStatus.InRepair, id);
+                    "-> Error Details: " +
+                    i_FormatException.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+                runUserInterface();
             }
         }
 
-        private static void createChosenVehicle(string i_RegistrationId)
+        private static void setUserMenuChoice(string i_MenuChoiceInput)
         {
-            switch (s_VehicleType)
+            char.TryParse(i_MenuChoiceInput, out char o_userMenuSelectionChoice);
+            switch (o_userMenuSelectionChoice)
             {
-                case eVehiclesAvailable.FueledCar:
+                case '1':
                     {
-                        fueledCarCreation(
-                            i_RegistrationId,
-                            InputValidations.setOwnerName(),
-                            InputValidations.setPhoneNumber(),
-                            InputValidations.setWheelsManufacture(),
-                            InputValidations.setWheelsCurrentAirPressure(),
-                            InputValidations.setWheelsMaxAirPressure(),
-                            InputValidations.setCarModel(),
-                            InputValidations.setCarEnergyPercentage());
+                        s_UserChoice = eUserChoice.RegisterNewVehicle;
                         break;
                     }
 
-                case eVehiclesAvailable.ElectricCar:
+                case '2':
                     {
-                        electricCarCreation(
-                            i_RegistrationId,
-                            InputValidations.setOwnerName(),
-                            InputValidations.setPhoneNumber(),
-                            InputValidations.setWheelsManufacture(),
-                            InputValidations.setWheelsCurrentAirPressure(),
-                            InputValidations.setWheelsMaxAirPressure(),
-                            InputValidations.setCarModel(),
-                            InputValidations.setCarEnergyPercentage());
+                        s_UserChoice = eUserChoice.ShowAllExistingVehicles;
                         break;
                     }
 
-                case eVehiclesAvailable.ElectricMotorcycle:
+                case '3':
                     {
-                        electricMotorcycleCreation(
-                            i_RegistrationId,
-                            InputValidations.setOwnerName(),
-                            InputValidations.setPhoneNumber(),
-                            InputValidations.setWheelsManufacture(),
-                            InputValidations.setWheelsCurrentAirPressure(),
-                            InputValidations.setWheelsMaxAirPressure(),
-                            InputValidations.setCarModel(),
-                            InputValidations.setCarEnergyPercentage());
+                        s_UserChoice = eUserChoice.UpdateVehicleStatus;
                         break;
                     }
 
-                case eVehiclesAvailable.FueledMotorcycle:
+                case '4':
                     {
-                        fueledMotorcycleCreation(
-                            i_RegistrationId,
-                            InputValidations.setOwnerName(),
-                            InputValidations.setPhoneNumber(),
-                            InputValidations.setWheelsManufacture(),
-                            InputValidations.setWheelsCurrentAirPressure(),
-                            InputValidations.setWheelsMaxAirPressure(),
-                            InputValidations.setCarModel(),
-                            InputValidations.setCarEnergyPercentage());
+                        s_UserChoice = eUserChoice.FillAllTires;
                         break;
                     }
 
-                case eVehiclesAvailable.Truck:
+                case '5':
                     {
-                        truckCreation(
-                            i_RegistrationId,
-                            InputValidations.setOwnerName(),
-                            InputValidations.setPhoneNumber(),
-                            InputValidations.setWheelsManufacture(),
-                            InputValidations.setWheelsCurrentAirPressure(),
-                            InputValidations.setWheelsMaxAirPressure(),
-                            InputValidations.setCarModel(),
-                            InputValidations.setCarEnergyPercentage());
+                        s_UserChoice = eUserChoice.FuelVehicle;
+                        break;
+                    }
+
+                case '6':
+                    {
+                        s_UserChoice = eUserChoice.ChargeVehicle;
+                        break;
+                    }
+
+                case '7':
+                    {
+                        s_UserChoice = eUserChoice.ShowVehicleFullDetails;
                         break;
                     }
 
                 default:
                     {
-                        throw new FormatException();
+                        s_UserChoice = eUserChoice.Exit;
+                        break;
                     }
+            }
+        } // Done
+
+        private static void registerNewVehicle()
+        {
+            try
+            {
+                string vehicleID = InputValidations.setVehicleId();
+
+                if (!CreateAndSaveData.s_VehiclesInSystem.ContainsKey(vehicleID))
+                {
+                    string vehicleTypeMessage = string.Format(
+                        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" +
+                        Environment.NewLine +
+                        "Please choose the type of the vehicle you wish to add:" +
+                        Environment.NewLine +
+                        "   1 - Electric car" +
+                        Environment.NewLine +
+                        "   2 - Fueled car" +
+                        Environment.NewLine +
+                        "   3 - Electric motorcycle" +
+                        Environment.NewLine +
+                        "   4 - Fueled motorcycle" +
+                        Environment.NewLine +
+                        "   5 - Truck" +
+                        Environment.NewLine +
+                        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                    Console.WriteLine(vehicleTypeMessage);
+                    s_MenuChoiceInput = Console.ReadLine();
+                    InputValidations.setChosenVehicle(s_MenuChoiceInput, ref s_VehicleType);
+                    createChosenVehicle(vehicleID);
+                }
+                else
+                {
+                    Console.WriteLine("-> This vehicle is already in the system! Moving existing vehicle to repair now...");
+                    CreateAndSaveData.UpdateVehicleStatusInLists(eVehicleStatus.InRepair, vehicleID);
+                }
+            }
+            catch (ArgumentException i_ArgumentException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Vehicle ID entered is invalid! Please make sure to type only number digits and try again." +
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_ArgumentException.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+                registerNewVehicle();
+            }
+            catch (FormatException i_FormatException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Vehicle type choice entered is invalid! Please choose again." +
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_FormatException.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+                registerNewVehicle();
+            }
+        } // Done
+
+        private static void createChosenVehicle(string i_RegistrationId)
+        {
+            try
+            {
+                switch (s_VehicleType)
+                {
+                    case eVehiclesAvailable.FueledCar:
+                        {
+                            fueledCarCreation(
+                                i_RegistrationId,
+                                InputValidations.setOwnerName(),
+                                InputValidations.setPhoneNumber(),
+                                InputValidations.setWheelsManufacture(),
+                                InputValidations.setWheelsCurrentAirPressure(),
+                                InputValidations.setWheelsMaxAirPressure(),
+                                InputValidations.setCarModel(),
+                                InputValidations.setCarEnergyPercentage());
+                            break;
+                        }
+
+                    case eVehiclesAvailable.ElectricCar:
+                        {
+                            electricCarCreation(
+                                i_RegistrationId,
+                                InputValidations.setOwnerName(),
+                                InputValidations.setPhoneNumber(),
+                                InputValidations.setWheelsManufacture(),
+                                InputValidations.setWheelsCurrentAirPressure(),
+                                InputValidations.setWheelsMaxAirPressure(),
+                                InputValidations.setCarModel(),
+                                InputValidations.setCarEnergyPercentage());
+                            break;
+                        }
+
+                    case eVehiclesAvailable.ElectricMotorcycle:
+                        {
+                            electricMotorcycleCreation(
+                                i_RegistrationId,
+                                InputValidations.setOwnerName(),
+                                InputValidations.setPhoneNumber(),
+                                InputValidations.setWheelsManufacture(),
+                                InputValidations.setWheelsCurrentAirPressure(),
+                                InputValidations.setWheelsMaxAirPressure(),
+                                InputValidations.setCarModel(),
+                                InputValidations.setCarEnergyPercentage());
+                            break;
+                        }
+
+                    case eVehiclesAvailable.FueledMotorcycle:
+                        {
+                            fueledMotorcycleCreation(
+                                i_RegistrationId,
+                                InputValidations.setOwnerName(),
+                                InputValidations.setPhoneNumber(),
+                                InputValidations.setWheelsManufacture(),
+                                InputValidations.setWheelsCurrentAirPressure(),
+                                InputValidations.setWheelsMaxAirPressure(),
+                                InputValidations.setCarModel(),
+                                InputValidations.setCarEnergyPercentage());
+                            break;
+                        }
+
+                    case eVehiclesAvailable.Truck:
+                        {
+                            truckCreation(
+                                i_RegistrationId,
+                                InputValidations.setOwnerName(),
+                                InputValidations.setPhoneNumber(),
+                                InputValidations.setWheelsManufacture(),
+                                InputValidations.setWheelsCurrentAirPressure(),
+                                InputValidations.setWheelsMaxAirPressure(),
+                                InputValidations.setCarModel(),
+                                InputValidations.setCarEnergyPercentage());
+                            break;
+                        }
+
+                    default:
+                        {
+                            throw new FormatException();
+                        }
+                }
+            }
+            catch (FormatException i_FormatException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Value entered is invalid! Please type again correctly." +
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_FormatException.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+                createChosenVehicle(i_RegistrationId);
             }
         }
 
@@ -519,17 +626,35 @@ namespace Ex03.ConsoleUI
 
         private static void showVehicleFullDetails()
         {
-            string idToShow = InputValidations.setVehicleId();
-
             try
             {
+                string idToShow = InputValidations.setVehicleId();
                 Console.WriteLine(CreateAndSaveData.s_VehiclesInSystem[idToShow]);
             }
-            catch (ArgumentException exception)
+            catch (KeyNotFoundException i_KeyNotFoundException)
             {
-                string output = $"This id is not registered in our garage! {Environment.NewLine} {exception.Message}";
-                Console.Write(output);
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> This ID is not registered in our garage! Please type existing ID." +
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_KeyNotFoundException.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+                showVehicleFullDetails();
             }
-        }
+            catch (ArgumentException i_ArgumentException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Vehicle ID entered is invalid! Please make sure to type only number digits and try again." +
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_ArgumentException.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+                registerNewVehicle();
+            }
+        } // Done
     }
 }

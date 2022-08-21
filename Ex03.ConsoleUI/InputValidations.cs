@@ -5,70 +5,43 @@ namespace Ex03.ConsoleUI
 {
     internal class InputValidations
     {
-        internal static bool MenuChoiceInputValidation(string i_Input)
+        internal static void checkValidMenuChoice(string i_MenuChoice) // Done
         {
-            bool isValid = true;
-
-            if (i_Input == null || i_Input.Length != 1)
+            if (i_MenuChoice == null || i_MenuChoice.Length != 1)
             {
                 throw new FormatException();
             }
             else
             {
-                char.TryParse(i_Input, out char inputChar);
-                if (inputChar == 'q' || inputChar == 'Q')
+                if (int.TryParse(i_MenuChoice, out int o_MenuChoiceInteger))
                 {
-                    isValid = true;
-                }
-                else if (char.IsDigit(inputChar))
-                {
-                    int.TryParse(i_Input, out int inputInt);
-                    if (inputInt < 1 || inputInt > 7)
+                    if (o_MenuChoiceInteger < 1 || o_MenuChoiceInteger > 7)
                     {
-                        isValid = false;
+                        throw new FormatException();
+                    }
+                }
+                else if (char.TryParse(i_MenuChoice, out char o_MenuChoiceCharacter))
+                {
+                    if (o_MenuChoiceCharacter != 'q' && o_MenuChoiceCharacter != 'Q')
+                    {
+                        throw new FormatException();
                     }
                 }
                 else
                 {
-                    isValid = false;
+                    throw new FormatException();
                 }
             }
-
-            return isValid;
-        }
-
-        internal static bool CarIdValidation(string i_Input)
-        {
-            bool isValid = true;
-            if (i_Input == null)
-            {
-                isValid = false;
-            }
-            else
-            {
-                foreach (char digit in i_Input)
-                {
-                    if (char.IsDigit(digit))
-                    {
-                        continue;
-                    }
-
-                    isValid = false;
-                    break;
-                }
-            }
-
-            return isValid;
         }
 
         internal static int setEngineCapacity()
         {
             Console.WriteLine("Please enter the engine capacity:");
-            string engineCapacityStr = Console.ReadLine();
+            string engineCapacityString = Console.ReadLine();
 
-            if (int.TryParse(engineCapacityStr, out int engineCapacity))
+            if (int.TryParse(engineCapacityString, out int o_engineCapacity))
             {
-                return engineCapacity;
+                return o_engineCapacity;
             }
             else
             {
@@ -227,147 +200,279 @@ namespace Ex03.ConsoleUI
             return fuelType;
         }
 
-        internal static void setChosenVehicle(string i_UserChoiceInput, ref eVehiclesAvailable i_VehicleType)
+        internal static string setVehicleId() // Done
         {
-            char.TryParse(i_UserChoiceInput, out char userVehicleSelectionChoice);
-            switch (userVehicleSelectionChoice)
+            Console.WriteLine("Please enter the vehicle ID:");
+            string vehicleID = Console.ReadLine();
+
+            if (vehicleID == null)
+            {
+                throw new ArgumentException();
+            }
+            else
+            {
+                foreach (char digit in vehicleID)
+                {
+                    if (!char.IsDigit(digit))
+                    {
+                        throw new ArgumentException();
+                    }
+                }
+            }
+
+            return vehicleID;
+        }
+
+        internal static void setChosenVehicle(string i_UserChosenVehicle, ref eVehiclesAvailable io_VehicleType) // Done
+        {
+            char.TryParse(i_UserChosenVehicle, out char o_UserVehicleSelectionChoice);
+            switch (o_UserVehicleSelectionChoice)
             {
                 case '1':
-                    i_VehicleType = eVehiclesAvailable.ElectricCar;
-                    break;
+                    {
+                        io_VehicleType = eVehiclesAvailable.ElectricCar;
+                        break;
+                    }
+
                 case '2':
-                    i_VehicleType = eVehiclesAvailable.FueledCar;
-                    break;
+                    {
+                        io_VehicleType = eVehiclesAvailable.FueledCar;
+                        break;
+                    }
+
                 case '3':
-                    i_VehicleType = eVehiclesAvailable.ElectricMotorcycle;
-                    break;
+                    {
+                        io_VehicleType = eVehiclesAvailable.ElectricMotorcycle;
+                        break;
+                    }
+
                 case '4':
-                    i_VehicleType = eVehiclesAvailable.FueledMotorcycle;
-                    break;
+                    {
+                        io_VehicleType = eVehiclesAvailable.FueledMotorcycle;
+                        break;
+                    }
+
                 case '5':
-                    i_VehicleType = eVehiclesAvailable.Truck;
-                    break;
+                    {
+                        io_VehicleType = eVehiclesAvailable.Truck;
+                        break;
+                    }
+
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    {
+                        throw new FormatException();
+                    }
             }
         }
 
-        internal static string setOwnerName()
+        internal static string setOwnerName() // Done
         {
-            Console.WriteLine("Please enter your name: ");
+            Console.WriteLine("Please enter your name (Letters only): ");
             string ownerName = Console.ReadLine();
+
+            if (ownerName == null)
+            {
+                throw new FormatException("Invalid Owner Name.");
+            }
+            else
+            {
+                foreach (char character in ownerName)
+                {
+                    if (!char.IsLetter(character))
+                    {
+                        throw new FormatException("Invalid Owner Name.");
+                    }
+                }
+            }
+
             return ownerName;
         }
 
-        internal static string setPhoneNumber()
+        internal static string setPhoneNumber() // Done
         {
-            Console.WriteLine("Please enter your Phone number: ");
-            string ownerPhoneNum = Console.ReadLine();
-            return ownerPhoneNum;
+            Console.WriteLine("Please enter your Phone number (Digits only): ");
+            string ownerPhoneNumber = Console.ReadLine();
+
+            if (ownerPhoneNumber == null)
+            {
+                throw new FormatException("Invalid Owner Phone Number.");
+            }
+            else
+            {
+                foreach (char digit in ownerPhoneNumber)
+                {
+                    if (!char.IsDigit(digit))
+                    {
+                        throw new FormatException("Invalid Owner Phone Number.");
+                    }
+                }
+            }
+
+            return ownerPhoneNumber;
         }
 
-        internal static string setWheelsManufacture()
+        internal static string setWheelsManufacture() // Done
         {
-            Console.WriteLine("Please enter Wheel manufacture name (will apply for all tires): ");
-            string wheelManufacture = Console.ReadLine();
-            return wheelManufacture;
+            Console.WriteLine("Please enter Wheel manufacture name (Letters only, will apply for all tires): ");
+            string wheelManufactureName = Console.ReadLine();
+
+            if (wheelManufactureName == null)
+            {
+                throw new FormatException("Invalid Wheel Manufacture Name.");
+            }
+            else
+            {
+                foreach (char character in wheelManufactureName)
+                {
+                    if (!char.IsLetter(character))
+                    {
+                        throw new FormatException("Invalid Wheel Manufacture Name.");
+                    }
+                }
+            }
+
+            return wheelManufactureName;
         }
 
-        internal static float setWheelsCurrentAirPressure()
+        internal static float setWheelsCurrentAirPressure() // Done
         {
-            Console.WriteLine("Please enter Car wheels current air pressure (will apply for all tires): ");
+            Console.WriteLine("Please enter Car wheels current air pressure (Number only, will apply for all tires): ");
             string currentAirPressureString = Console.ReadLine();
-            bool legalInput = float.TryParse(currentAirPressureString, out float currentAirPressure); // use to validate later
-            return currentAirPressure;
+
+            if (currentAirPressureString == null)
+            {
+                throw new FormatException("Invalid Air Pressure Entered.");
+            }
+
+            if (!float.TryParse(currentAirPressureString, out float o_CurrentAirPressure))
+            {
+                throw new FormatException("Invalid Air Pressure Entered.");
+            }
+
+            return o_CurrentAirPressure;
         }
 
-        internal static float setWheelsMaxAirPressure()
+        internal static float setWheelsMaxAirPressure() // Done
         {
-            Console.WriteLine("Please enter Car wheels max air pressure (will apply for all tires): ");
+            Console.WriteLine("Please enter Car wheels max air pressure (Number only, will apply for all tires): ");
             string maxAirPressureString = Console.ReadLine();
-            bool legalInput = float.TryParse(maxAirPressureString, out float maxAirPressure); // use to validate later
-            return maxAirPressure;
+
+            if (maxAirPressureString == null)
+            {
+                throw new FormatException("Invalid Max Air Pressure Entered.");
+            }
+
+            if (!float.TryParse(maxAirPressureString, out float o_MaxAirPressure))
+            {
+                throw new FormatException("Invalid Max Air Pressure Entered.");
+            }
+
+            return o_MaxAirPressure;
         }
 
-        internal static float setCarEnergyPercentage()
+        internal static float setCarEnergyPercentage() // Done
         {
-            Console.WriteLine("Please enter car energy percentage left: ");
+            Console.WriteLine("Please enter car energy percentage left (Number only): ");
             string energyPercentageString = Console.ReadLine();
-            bool legalInput = float.TryParse(energyPercentageString, out float energyPercentage);
-            return energyPercentage;
+
+            if (energyPercentageString == null)
+            {
+                throw new FormatException("Invalid Car Energy Percentage Entered.");
+            }
+
+            if (!float.TryParse(energyPercentageString, out float o_EnergyPercentage))
+            {
+                throw new FormatException("Invalid Car Energy Percentage Entered.");
+            }
+
+            return o_EnergyPercentage;
         }
 
-        internal static string setCarModel()
+        internal static string setCarModel() // Done
         {
-            Console.WriteLine("Please enter Car model: ");
+            Console.WriteLine("Please enter Car model (Letters only): ");
             string carModel = Console.ReadLine();
+
+            if (carModel == null)
+            {
+                throw new FormatException("Invalid Car Model Entered.");
+            }
+            else
+            {
+                foreach (char character in carModel)
+                {
+                    if (!char.IsLetter(character))
+                    {
+                        throw new FormatException("Invalid Car Model Entered.");
+                    }
+                }
+            }
+
             return carModel;
         }
 
-        internal static void setUserChoice(string i_UserChoiceInput, ref eUserChoice io_UserChoice)
+        internal static float setCurrentFuelStatus() // Done
         {
-            char.TryParse(i_UserChoiceInput, out char userMenuSelectionChoice);
-            switch (userMenuSelectionChoice)
-            {
-                case '1':
-                    io_UserChoice = eUserChoice.RegisterNewVehicle;
-                    break;
-                case '2':
-                    io_UserChoice = eUserChoice.ShowAllExistingVehicles;
-                    break;
-                case '3':
-                    io_UserChoice = eUserChoice.UpdateVehicleStatus;
-                    break;
-                case '4':
-                    io_UserChoice = eUserChoice.FillAllTires;
-                    break;
-                case '5':
-                    io_UserChoice = eUserChoice.FuelVehicle;
-                    break;
-                case '6':
-                    io_UserChoice = eUserChoice.ChargeVehicle;
-                    break;
-                case '7':
-                    io_UserChoice = eUserChoice.ShowVehicleFullDetails;
-                    break;
-                default:
-                    io_UserChoice = eUserChoice.Exit;
-                    break;
-            }
-        }
-
-        internal static float setCurrentFuelStatus()
-        {
-            Console.WriteLine("Please enter the vehicle current fuel status:");
+            Console.WriteLine("Please enter the vehicle current fuel status (Number only):");
             string fuelCurrentStatusString = Console.ReadLine();
-            float.TryParse(fuelCurrentStatusString, out float fuelCurrentStatus);
-            return fuelCurrentStatus;
+
+            if (fuelCurrentStatusString == null)
+            {
+                throw new FormatException("Invalid Vehicle Current Fuel Status Entered.");
+            }
+
+            if (!float.TryParse(fuelCurrentStatusString, out float o_FuelCurrentStatusString))
+            {
+                throw new FormatException("Invalid Vehicle Current Fuel Status Entered.");
+            }
+
+            return o_FuelCurrentStatusString;
         }
 
-        internal static float setMaxFuelCapacity()
+        internal static float setMaxFuelCapacity() // Done
         {
-            Console.WriteLine("Please enter the vehicle fuel max capacity:");
-            string fuelMaxCapacityStr = Console.ReadLine();
-            float.TryParse(fuelMaxCapacityStr, out float fuelMaxCapacity);
-            return fuelMaxCapacity;
+            Console.WriteLine("Please enter the vehicle fuel max capacity (Number only):");
+            string fuelMaxCapacityString = Console.ReadLine();
+
+            if (fuelMaxCapacityString == null)
+            {
+                throw new FormatException("Invalid Vehicle Fuel Max Capacity Entered.");
+            }
+
+            if (!float.TryParse(fuelMaxCapacityString, out float o_FuelMaxCapacity))
+            {
+                throw new FormatException("Invalid Vehicle Fuel Max Capacity Entered.");
+            }
+
+            return o_FuelMaxCapacity;
         }
 
-        internal static float setTruckMaxCapacity()
+        internal static float setTruckMaxCapacity() // Done
         {
-            Console.WriteLine("Please enter truck max cargo capacity: ");
+            Console.WriteLine("Please enter truck max cargo capacity (Number only): ");
             string cargoCapacityString = Console.ReadLine();
-            float.TryParse(cargoCapacityString, out float cargoCapacity);
-            return cargoCapacity;
+
+            if (cargoCapacityString == null)
+            {
+                throw new FormatException("Invalid Truck Max Cargo Capacity Entered.");
+            }
+
+            if (!float.TryParse(cargoCapacityString, out float o_CargoCapacity))
+            {
+                throw new FormatException("Invalid Truck Max Cargo Capacity Entered.");
+            }
+
+            return o_CargoCapacity;
         }
 
-        internal static bool setIsTruckCooling()
+        internal static bool setIsTruckCooling() // Done
         {
             Console.WriteLine("Is the truck transporting with cooling? (yes/no)");
             string isCoolingString = Console.ReadLine();
 
             if (isCoolingString == null)
             {
-                throw new FormatException();
+                throw new FormatException("You should type only 'yes' or 'no'.");
             }
             else
             {
@@ -385,43 +490,49 @@ namespace Ex03.ConsoleUI
 
                     default:
                         {
-                            throw new ArgumentException();
+                            throw new FormatException("You should type only 'yes' or 'no'.");
                         }
                 }
             }
         }
 
-        internal static float setBatteryTimeLeft()
+        internal static float setBatteryTimeLeft() // Done
         {
-            Console.WriteLine("Please enter the battery time left: ");
+            Console.WriteLine("Please enter the battery time left (Number only): ");
             string batteryTimeLeftString = Console.ReadLine();
-            float.TryParse(batteryTimeLeftString, out float batteryTimeLeft);
-            return batteryTimeLeft;
-        }
 
-        internal static float setBatteryMaxTime()
-        {
-            Console.WriteLine("Please enter the max battery capacity:");
-            string batterTimeCapacityString = Console.ReadLine();
-            float.TryParse(batterTimeCapacityString, out float batteryTimeCapacity);
-            return batteryTimeCapacity;
-        }
-
-        internal static string setVehicleId()
-        {
-            Console.WriteLine("Please enter the vehicle ID:");
-            string id = Console.ReadLine();
-
-            while (!InputValidations.CarIdValidation(id))
+            if (batteryTimeLeftString == null)
             {
-                Console.WriteLine("Car id entered is invalid! please enter a valid id:");
-                id = Console.ReadLine();
+                throw new FormatException("Invalid Battery Time Left Entered.");
             }
 
-            return id;
+            if (!float.TryParse(batteryTimeLeftString, out float o_BatteryTimeLeft))
+            {
+                throw new FormatException("Invalid Battery Time Left Entered.");
+            }
+
+            return o_BatteryTimeLeft;
         }
 
-        internal static eVehicleStatus setVehicleStatus()
+        internal static float setBatteryMaxTime() // Done
+        {
+            Console.WriteLine("Please enter the max battery capacity (Number only):");
+            string batteryMaxTimeCapacityString = Console.ReadLine();
+
+            if (batteryMaxTimeCapacityString == null)
+            {
+                throw new FormatException("Invalid Max Battery Capacity Entered.");
+            }
+
+            if (!float.TryParse(batteryMaxTimeCapacityString, out float o_BatteryMaxTimeCapacity))
+            {
+                throw new FormatException("Invalid Max Battery Capacity Entered.");
+            }
+
+            return o_BatteryMaxTimeCapacity;
+        }
+
+        internal static eVehicleStatus setVehicleStatus() // Done
         {
             Console.WriteLine("Please enter desired vehicle status (In repair = 1 / Repaired = 2 / Paid = 3):");
             string vehicleStatusToUpdate = Console.ReadLine();
