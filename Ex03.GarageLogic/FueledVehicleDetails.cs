@@ -2,7 +2,7 @@
 
 namespace Ex03.GarageLogic
 {
-    internal class FueledVehicleDetails
+    public class FueledVehicleDetails
     {
         internal eFuelType r_FuelType;
         internal float r_MaxFuelCapacity;

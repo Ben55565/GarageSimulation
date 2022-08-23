@@ -16,9 +16,9 @@ namespace Ex03.GarageLogic
 
         public void FillAirInWheel(float i_AirToAdd) //handle exception here
         {
-            if (CurrentAirPressure + i_AirToAdd > r_MaxAirPressure)
+            if (CurrentAirPressure + i_AirToAdd > r_MaxAirPressure || i_AirToAdd == 0)
             {
-                throw new ValueOutOfRangeException();
+                throw new ValueOutOfRangeException(r_MaxAirPressure, 0, "Surpassed Maximum Air Pressure.");
             }
             else
             {

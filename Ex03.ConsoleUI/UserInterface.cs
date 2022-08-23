@@ -548,23 +548,33 @@ namespace Ex03.ConsoleUI
 
         private static void fillAllTires()
         {
-            string carId = InputValidations.setVehicleId();
-            CreateAndSaveData.s_VehiclesInSystem[carId].FillAirInTiresToTheMax();
-            Console.WriteLine("All vehicle tires were filled to max capacity of air pressure!" + Environment.NewLine);
+            try
+            {
+                string carId = InputValidations.setVehicleId();
+                CreateAndSaveData.s_VehiclesInSystem[carId].FillAirInTiresToTheMax();
+                Console.WriteLine("All vehicle tires were filled to max capacity of air pressure!" + Environment.NewLine);
+            }
+            catch (ValueOutOfRangeException i_ValueOutOfRangeException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_ValueOutOfRangeException.ExceptionMessage +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+            }
         }
 
         private static void fuelVehicle()
         {
-            Console.WriteLine("Please enter the amount you wish to fill (Litters for fueled vehicle):");
-            CreateAndSaveData.verifyVehicleTypeAndFuelVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setFuelType(), InputValidations.setVehicleId());
-            Console.WriteLine("Vehicle has been fueled!" + Environment.NewLine);
+            CreateAndSaveData.VerifyVehicleTypeAndFuelVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setFuelType(), InputValidations.setVehicleId());
+            Console.WriteLine(Environment.NewLine + "Vehicle has been fueled!" + Environment.NewLine);
         }
 
         private static void chargeVehicle()
         {
-            Console.WriteLine("Please enter the amount you wish to fill (minutes for electric vehicle):");
-            CreateAndSaveData.verifyVehicleTypeAndChargeVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setVehicleId());
-            Console.WriteLine("Vehicle has been charged!" + Environment.NewLine);
+            CreateAndSaveData.VerifyVehicleTypeAndChargeVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setVehicleId());
+            Console.WriteLine(Environment.NewLine + "Vehicle has been charged!" + Environment.NewLine);
         }
 
         private static void showVehicleFullDetails()

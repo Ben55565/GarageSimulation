@@ -2,10 +2,10 @@
 
 namespace Ex03.GarageLogic
 {
-    internal class ElectricVehicleDetails
+    public class ElectricVehicleDetails
     {
-        private readonly float r_MaxBatteryCapacityTime;
-        private float m_CurrentBatteryTimeLeft;
+        public float r_MaxBatteryCapacityTime;
+        public float m_CurrentBatteryTimeLeft;
 
         public ElectricVehicleDetails(float i_MaxBatteryCapacityTime, float i_CurrentBatteryTimeLeft)
         {

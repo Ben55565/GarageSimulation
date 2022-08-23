@@ -52,15 +52,11 @@
     <Compile Include="ElectricVehicleDetails.cs" />
     <Compile Include="eVehicleStatus.cs" />
     <Compile Include="eFuelType.cs" />
-    <Compile Include="ElectricCar.cs" />
-    <Compile Include="ElectricMotorcycle.cs" />
     <Compile Include="eLicenseType.cs" />
     <Compile Include="eNumOfDoors.cs" />
     <Compile Include="eUserChoiceInMenu.cs" />
     <Compile Include="eVehiclesAvailable.cs" />
     <Compile Include="eVehicleType.cs" />
-    <Compile Include="FueledCar.cs" />
-    <Compile Include="FueledMotorcycle.cs" />
     <Compile Include="FueledVehicleDetails.cs" />
     <Compile Include="Motorcycle.cs" />
     <Compile Include="OwnerDetailsAndStatus.cs" />
