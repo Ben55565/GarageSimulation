@@ -5,66 +5,47 @@ namespace Ex03.GarageLogic
 {
     public class Vehicle
     {
-        internal string m_ModelName;
-        internal float m_EnergyPercentageLeft;
-        internal Wheel[] m_Wheels;
-        internal ElectricVehicleDetails m_electricEngine;
-        internal FueledVehicleDetails m_fueledEngine;
-        private readonly string r_VehicleDetailsMessage;
+        private readonly string r_ModelName;
+        private readonly float r_EnergyPercentageLeft;
+        private readonly Wheel[] r_Wheels;
         private readonly StringBuilder r_WheelsDetails = new StringBuilder();
+        internal ElectricEngine m_electricEngine;
+        internal FuelEngine m_fueledEngine;
 
-        public Vehicle(Vehicle vehicle)
+        public Vehicle(string i_ModelName, string i_RegistrationId, float i_EnergyPercentageLeft, Wheel[] i_Wheels, OwnerDetailsAndStatus i_OwnerDetails, object i_EngineType)
         {
-            m_ModelName = vehicle.m_ModelName;
-            m_EnergyPercentageLeft = vehicle.m_EnergyPercentageLeft;
-            m_Wheels = vehicle.m_Wheels;
-            m_electricEngine = vehicle.m_electricEngine;
-            RegistrationId = vehicle.RegistrationId;
-            OwnerDetails = vehicle.OwnerDetails;
-            r_VehicleDetailsMessage = vehicle.r_VehicleDetailsMessage;
-            m_fueledEngine = vehicle.m_fueledEngine;
-            r_WheelsDetails = vehicle.r_WheelsDetails;
-        }
-
-        public Vehicle(string i_ModelName, string i_RegistrationId, float i_EnergyPercentageLeft, Wheel[] i_Wheels, OwnerDetailsAndStatus i_OwnerDetails, ElectricVehicleDetails i_ElectricEngine)
-        {
-            m_ModelName = i_ModelName;
+            r_ModelName = i_ModelName;
             RegistrationId = i_RegistrationId;
-            m_EnergyPercentageLeft = i_EnergyPercentageLeft;
-            m_Wheels = i_Wheels;
+            r_EnergyPercentageLeft = i_EnergyPercentageLeft;
+            r_Wheels = i_Wheels;
             OwnerDetails = i_OwnerDetails;
-            m_electricEngine = i_ElectricEngine;
-            setWheelsDetails();
-            r_VehicleDetailsMessage = createVehicleDetailsMessage("Electric");
-        }
 
-        public Vehicle(string i_ModelName, string i_RegistrationId, float i_EnergyPercentageLeft, Wheel[] i_Wheels, OwnerDetailsAndStatus i_OwnerDetails, FueledVehicleDetails i_FueledEngine)
-        {
-            m_ModelName = i_ModelName;
-            RegistrationId = i_RegistrationId;
-            m_EnergyPercentageLeft = i_EnergyPercentageLeft;
-            m_Wheels = i_Wheels;
-            OwnerDetails = i_OwnerDetails;
-            m_fueledEngine = i_FueledEngine;
-            setWheelsDetails();
-            r_VehicleDetailsMessage = createVehicleDetailsMessage("Fueled");
+            if (i_EngineType.GetType() == typeof(ElectricEngine))
+            {
+                m_electricEngine = (ElectricEngine)i_EngineType;
+            }
+            else
+            {
+                m_fueledEngine = (FuelEngine)i_EngineType;
+            }
         }
 
         public OwnerDetailsAndStatus OwnerDetails { get; set; }
 
         public string RegistrationId { get; set; }
 
-        private string createVehicleDetailsMessage(string i_EngineType)
+        protected string createVehicleDetailsMessage()
         {
-            object engineType = null;
+            setWheelsDetails();
+            object vehicleEngineType;
 
-            if (i_EngineType == "Fueled")
+            if (m_electricEngine == null)
             {
-                engineType = m_fueledEngine;
+                vehicleEngineType = m_fueledEngine;
             }
             else
             {
-                engineType = m_electricEngine;
+                vehicleEngineType = m_electricEngine;
             }
 
             return string.Format(
@@ -86,31 +67,32 @@ namespace Ex03.GarageLogic
                 "{4}" +
                 Environment.NewLine +
                 "{5}",
-                m_ModelName,
+                r_ModelName,
                 RegistrationId,
-                m_EnergyPercentageLeft,
+                r_EnergyPercentageLeft,
                 r_WheelsDetails,
                 OwnerDetails,
-                engineType);
+                vehicleEngineType);
         }
 
-        private void setWheelsDetails()
+        protected void setWheelsDetails()
         {
-            for (int i = 0; i < m_Wheels.Length; i++)
+            r_WheelsDetails.Clear();
+            for (int i = 0; i < r_Wheels.Length; i++)
             {
-                r_WheelsDetails.AppendLine(Environment.NewLine + "Wheel #" + (i + 1).ToString());
-                r_WheelsDetails.AppendLine(m_Wheels[i].ToString());
+                r_WheelsDetails.AppendLine(Environment.NewLine + "Wheel #" + (i + 1));
+                r_WheelsDetails.AppendLine(r_Wheels[i].ToString());
             }
         }
 
-        public void SetVehicleStatus(eVehicleStatus i_VehicleStatus)
+        internal void SetVehicleStatus(eVehicleStatus i_VehicleStatus)
         {
             OwnerDetails.VehicleStatus = i_VehicleStatus;
         }
 
         public void FillAirInTiresToTheMax()
         {
-            foreach (Wheel wheel in m_Wheels)
+            foreach (Wheel wheel in r_Wheels)
             {
                 float airToFill = wheel.r_MaxAirPressure - wheel.CurrentAirPressure;
 
@@ -119,11 +101,6 @@ namespace Ex03.GarageLogic
                     throw new ValueOutOfRangeException(wheel.r_MaxAirPressure, 0, "Surpassed Maximum Air Pressure.");
                 }
             }
-        }
-
-        public override string ToString()
-        {
-            return r_VehicleDetailsMessage;
         }
     }
 }

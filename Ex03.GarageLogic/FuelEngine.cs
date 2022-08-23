@@ -2,20 +2,20 @@
 
 namespace Ex03.GarageLogic
 {
-    public class FueledVehicleDetails
+    internal class FuelEngine
     {
         internal readonly eFuelType r_FuelType;
         internal readonly float r_MaxFuelCapacity;
-        internal float m_CurrentFuelStatus;
+        private float m_CurrentFuelStatus;
 
-        public FueledVehicleDetails(eFuelType i_FuelType, float i_currentFuelStatus, float i_MaxFuelCapacity)
+        public FuelEngine(eFuelType i_FuelType, float i_currentFuelStatus, float i_MaxFuelCapacity)
         {
             r_FuelType = i_FuelType;
             r_MaxFuelCapacity = i_MaxFuelCapacity;
             m_CurrentFuelStatus = i_currentFuelStatus;
         }
 
-        public bool FuelVehicle(float i_LitersToFuel)
+        internal bool FuelVehicle(float i_LitersToFuel)
         {
             bool canFuelVehicle = true;
 

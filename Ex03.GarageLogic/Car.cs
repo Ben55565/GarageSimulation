@@ -4,22 +4,31 @@ namespace Ex03.GarageLogic
 {
     internal class Car : Vehicle
     {
-        public eCarColor M_CarColor;
-        public eNumOfDoors M_NumOfDoors;
-        private readonly string r_ElectricOrFueledDetails;
+        private readonly eCarColor r_CarColor;
+        private readonly eNumOfDoors r_NumOfDoors;
 
-        public Car(Vehicle i_VehicleBasicDetails, eCarColor i_CarColor, eNumOfDoors i_NumOfDoors)
-        : base(i_VehicleBasicDetails)
+        public Car(string i_ModelName, string i_RegistrationId, float i_EnergyPercentageLeft, Wheel[] i_Wheels, OwnerDetailsAndStatus i_OwnerDetails, object i_Engine, eCarColor i_CarColor, eNumOfDoors i_NumOfDoors)
+        : base(i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, i_Wheels, i_OwnerDetails, i_Engine)
         {
-            M_CarColor = i_CarColor;
-            M_NumOfDoors = i_NumOfDoors;
-            string vehicleDetailsMessage = string.Format(Environment.NewLine + base.ToString() + Environment.NewLine + Environment.NewLine + "======== Car details ========" + Environment.NewLine + Environment.NewLine + "Car color: {0}" + Environment.NewLine + "Number of doors: {1}", M_CarColor, M_NumOfDoors);
-            r_ElectricOrFueledDetails = i_VehicleBasicDetails.m_electricEngine == null ? string.Format(Environment.NewLine + "You have checked in to our garage an Fueled car!" + Environment.NewLine + Environment.NewLine + "======== Fueled Car details ========" + Environment.NewLine + "{0}" + Environment.NewLine, vehicleDetailsMessage) : string.Format(Environment.NewLine + "You have checked in to our garage an electric car!" + Environment.NewLine + Environment.NewLine + "======== Electric Car details ========" + Environment.NewLine + "{0}" + Environment.NewLine, vehicleDetailsMessage);
+            r_CarColor = i_CarColor;
+            r_NumOfDoors = i_NumOfDoors;
         }
 
         public override string ToString()
         {
-            return r_ElectricOrFueledDetails;
+            return string.Format(
+                "{0}" +
+                Environment.NewLine +
+                Environment.NewLine +
+                "======== Car details ========" +
+                Environment.NewLine +
+                Environment.NewLine +
+                "The car Color: {1}" +
+                Environment.NewLine +
+                "The car amount of doors: {2}",
+                createVehicleDetailsMessage(),
+                r_CarColor.ToString(),
+                r_NumOfDoors.ToString());
         }
     }
 }

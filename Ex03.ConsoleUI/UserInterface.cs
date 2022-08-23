@@ -4,12 +4,6 @@ using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
-    ////    TO DO LIST:
-    ////    1. make sure max values are not lower then current value entered
-    ////    2. write ValueOutOfRangeException class for exception if entered to much
-    ////       air pressure of fuel amount, throw from relevant classes and catch it here
-    ////       this class should contain float MaxValue and float MinValue and inherits exception
-
     internal class UserInterface
     {
         private static string s_MenuChoiceInput;
@@ -40,6 +34,8 @@ namespace Ex03.ConsoleUI
         private static void showMenu()
         {
                 string menuMessage = string.Format(
+                    Environment.NewLine +
+                    Environment.NewLine +
                     "---------------------------------------------------------------------------------" +
                     Environment.NewLine +
                     "Please choose your action:" +
@@ -62,7 +58,9 @@ namespace Ex03.ConsoleUI
                     Environment.NewLine +
                     "Please enter 'q' to exit the system." +
                     Environment.NewLine +
-                    "---------------------------------------------------------------------------------");
+                    "---------------------------------------------------------------------------------" +
+                    Environment.NewLine +
+                    Environment.NewLine);
                 Console.WriteLine(menuMessage);
         }
 
@@ -154,9 +152,11 @@ namespace Ex03.ConsoleUI
             {
                 string vehicleID = InputValidations.setVehicleId();
 
-                if (!CreateAndSaveData.s_VehiclesInSystem.ContainsKey(vehicleID))
+                if (!GarageManager.s_VehiclesInSystem.ContainsKey(vehicleID))
                 {
                     string vehicleTypeMessage = string.Format(
+                        Environment.NewLine +
+                        Environment.NewLine +
                         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" +
                         Environment.NewLine +
                         "Please choose the type of the vehicle you wish to add:" +
@@ -173,7 +173,9 @@ namespace Ex03.ConsoleUI
                         "   5 - Truck" +
                         Environment.NewLine +
                         Environment.NewLine +
-                        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" +
+                        Environment.NewLine +
+                        Environment.NewLine);
                     Console.WriteLine(vehicleTypeMessage);
                     s_MenuChoiceInput = Console.ReadLine();
                     InputValidations.setChosenVehicle(s_MenuChoiceInput, ref s_VehicleType);
@@ -182,7 +184,7 @@ namespace Ex03.ConsoleUI
                 else
                 {
                     Console.WriteLine("-> This vehicle is already in the system! Moving existing vehicle to repair now...");
-                    CreateAndSaveData.UpdateVehicleStatus(eVehicleStatus.InRepair, vehicleID);
+                    GarageManager.UpdateVehicleStatus(eVehicleStatus.InRepair, vehicleID);
                 }
             }
             catch (FormatException i_FormatException)
@@ -203,75 +205,152 @@ namespace Ex03.ConsoleUI
         {
             try
             {
+                string ownerName = InputValidations.setOwnerName();
+                string ownerPhoneNumber = InputValidations.setPhoneNumber();
+                string wheelsManufacture = InputValidations.setWheelsManufacture();
+                float currentWheelsAirPressure = InputValidations.setWheelsCurrentAirPressure();
+                float wheelsMaxAirPressure = InputValidations.setWheelsMaxAirPressure();
+
+                if (currentWheelsAirPressure > wheelsMaxAirPressure)
+                {
+                    throw new ValueOutOfRangeException(wheelsMaxAirPressure, 0, "Current Air Pressure can't be bigger than the defined Max Air Pressure: ");
+                }
+
+                string carModel = InputValidations.setCarModel();
+                float vehicleEnergyPercentage = InputValidations.setCarEnergyPercentage();
+
                 switch (s_VehicleType)
                 {
                     case eVehiclesAvailable.FueledCar:
                         {
-                            fueledCarCreation(
+                            float currentFuelStatus = InputValidations.setCurrentFuelStatus();
+                            float maxFuelCapacity = InputValidations.setMaxFuelCapacity();
+
+                            if (maxFuelCapacity < currentFuelStatus)
+                            {
+                                throw new ValueOutOfRangeException(maxFuelCapacity, 0, "Current fuel amount left must be less than the maximum: ");
+                            }
+
+                            GarageManager.CreateFueledCar(
+                                carModel,
                                 i_RegistrationId,
-                                InputValidations.setOwnerName(),
-                                InputValidations.setPhoneNumber(),
-                                InputValidations.setWheelsManufacture(),
-                                InputValidations.setWheelsCurrentAirPressure(),
-                                InputValidations.setWheelsMaxAirPressure(),
-                                InputValidations.setCarModel(),
-                                InputValidations.setCarEnergyPercentage());
+                                vehicleEnergyPercentage,
+                                wheelsManufacture,
+                                currentWheelsAirPressure,
+                                wheelsMaxAirPressure,
+                                InputValidations.setCarColor(),
+                                InputValidations.setNumOfDoors(),
+                                InputValidations.setFuelType(),
+                                currentFuelStatus,
+                                maxFuelCapacity,
+                                ownerName,
+                                ownerPhoneNumber);
                             break;
                         }
 
                     case eVehiclesAvailable.ElectricCar:
                         {
-                            electricCarCreation(
+                            float batteryTimeLeft = InputValidations.setBatteryTimeLeft();
+                            float batteryMaxTime = InputValidations.setBatteryMaxTime();
+
+                            if (batteryMaxTime < batteryTimeLeft)
+                            {
+                                throw new ValueOutOfRangeException(batteryMaxTime, 0, "Current battery time left must be less than the maximum: ");
+                            }
+
+                            GarageManager.CreateElectricCar(
+                                carModel,
                                 i_RegistrationId,
-                                InputValidations.setOwnerName(),
-                                InputValidations.setPhoneNumber(),
-                                InputValidations.setWheelsManufacture(),
-                                InputValidations.setWheelsCurrentAirPressure(),
-                                InputValidations.setWheelsMaxAirPressure(),
-                                InputValidations.setCarModel(),
-                                InputValidations.setCarEnergyPercentage());
+                                vehicleEnergyPercentage,
+                                wheelsManufacture,
+                                currentWheelsAirPressure,
+                                wheelsMaxAirPressure,
+                                InputValidations.setCarColor(),
+                                InputValidations.setNumOfDoors(),
+                                batteryTimeLeft,
+                                batteryMaxTime,
+                                ownerName,
+                                ownerPhoneNumber);
                             break;
                         }
 
                     case eVehiclesAvailable.ElectricMotorcycle:
                         {
-                            electricMotorcycleCreation(
+                            float batteryTimeLeft = InputValidations.setBatteryTimeLeft();
+                            float batteryMaxTime = InputValidations.setBatteryMaxTime();
+
+                            if (batteryMaxTime < batteryTimeLeft)
+                            {
+                                throw new ValueOutOfRangeException(batteryMaxTime, 0, "Current battery time left must be less than the maximum: ");
+                            }
+
+                            GarageManager.CreateElectricMotorcycle(
+                                carModel,
                                 i_RegistrationId,
-                                InputValidations.setOwnerName(),
-                                InputValidations.setPhoneNumber(),
-                                InputValidations.setWheelsManufacture(),
-                                InputValidations.setWheelsCurrentAirPressure(),
-                                InputValidations.setWheelsMaxAirPressure(),
-                                InputValidations.setCarModel(),
-                                InputValidations.setCarEnergyPercentage());
+                                vehicleEnergyPercentage,
+                                wheelsManufacture,
+                                currentWheelsAirPressure,
+                                wheelsMaxAirPressure,
+                                InputValidations.setLicenseType(),
+                                InputValidations.setEngineCapacity(),
+                                batteryTimeLeft,
+                                batteryMaxTime,
+                                ownerName,
+                                ownerPhoneNumber);
                             break;
                         }
 
                     case eVehiclesAvailable.FueledMotorcycle:
                         {
-                            fueledMotorcycleCreation(
+                            float currentFuelStatus = InputValidations.setCurrentFuelStatus();
+                            float maxFuelCapacity = InputValidations.setMaxFuelCapacity();
+
+                            if (maxFuelCapacity < currentFuelStatus)
+                            {
+                                throw new ValueOutOfRangeException(maxFuelCapacity, 0, "Current fuel amount left must be less than the maximum: ");
+                            }
+
+                            GarageManager.CreateFueledMotorcycle(
+                                carModel,
                                 i_RegistrationId,
-                                InputValidations.setOwnerName(),
-                                InputValidations.setPhoneNumber(),
-                                InputValidations.setWheelsManufacture(),
-                                InputValidations.setWheelsCurrentAirPressure(),
-                                InputValidations.setWheelsMaxAirPressure(),
-                                InputValidations.setCarModel(),
-                                InputValidations.setCarEnergyPercentage());
+                                vehicleEnergyPercentage,
+                                wheelsManufacture,
+                                currentWheelsAirPressure,
+                                wheelsMaxAirPressure,
+                                InputValidations.setLicenseType(),
+                                InputValidations.setEngineCapacity(),
+                                InputValidations.setFuelType(),
+                                InputValidations.setCurrentFuelStatus(),
+                                InputValidations.setMaxFuelCapacity(),
+                                ownerName,
+                                ownerPhoneNumber);
                             break;
                         }
 
                     case eVehiclesAvailable.Truck:
                         {
-                            truckCreation(
+                            float currentFuelStatus = InputValidations.setCurrentFuelStatus();
+                            float maxFuelCapacity = InputValidations.setMaxFuelCapacity();
+
+                            if (maxFuelCapacity < currentFuelStatus)
+                            {
+                                throw new ValueOutOfRangeException(maxFuelCapacity, 0, "Current fuel amount left must be less than the maximum: ");
+                            }
+
+                            GarageManager.CreateTruck(
+                                carModel,
                                 i_RegistrationId,
-                                InputValidations.setOwnerName(),
-                                InputValidations.setPhoneNumber(),
-                                InputValidations.setWheelsManufacture(),
-                                InputValidations.setWheelsCurrentAirPressure(),
-                                InputValidations.setWheelsMaxAirPressure(),
-                                InputValidations.setCarModel(),
-                                InputValidations.setCarEnergyPercentage());
+                                vehicleEnergyPercentage,
+                                wheelsManufacture,
+                                currentWheelsAirPressure,
+                                wheelsMaxAirPressure,
+                                InputValidations.setIsTruckCooling(),
+                                InputValidations.setTruckMaxCapacity(),
+                                ownerName,
+                                ownerPhoneNumber,
+                                InputValidations.setFuelType(),
+                                currentFuelStatus,
+                                maxFuelCapacity);
                             break;
                         }
 
@@ -293,137 +372,20 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine(errorMessage);
                 createChosenVehicle(i_RegistrationId);
             }
+            catch (ValueOutOfRangeException i_ValueOutOfRangeException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_ValueOutOfRangeException.ExceptionMessage +
+                    i_ValueOutOfRangeException.MaxValue +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+                createChosenVehicle(i_RegistrationId);
+            }
         }
 
-        private static void truckCreation(
-            string i_RegistrationId,
-            string i_OwnerName,
-            string i_OwnerPhoneNumber,
-            string i_WheelManufacture,
-            float i_CurrentAirPressure,
-            float i_MaxAirPressure,
-            string i_CarModel,
-            float i_EnergyPercentage)
-        {
-            CreateAndSaveData.CreateTruck(
-                i_CarModel,
-                i_RegistrationId,
-                i_EnergyPercentage,
-                i_WheelManufacture,
-                i_CurrentAirPressure,
-                i_MaxAirPressure,
-                InputValidations.setIsTruckCooling(),
-                InputValidations.setTruckMaxCapacity(),
-                i_OwnerName,
-                i_OwnerPhoneNumber,
-                InputValidations.setFuelType(),
-                InputValidations.setCurrentFuelStatus(),
-                InputValidations.setMaxFuelCapacity());
-        }
-
-        private static void fueledMotorcycleCreation(
-            string i_RegistrationId,
-            string i_OwnerName,
-            string i_OwnerPhoneNum,
-            string i_WheelManufacture,
-            float i_CurrentAirPressure,
-            float i_MaxAirPressure,
-            string i_CarModel,
-            float i_EnergyPercentage)
-        {
-            CreateAndSaveData.CreateFueledMotorcycle(
-                i_CarModel,
-                i_RegistrationId,
-                i_EnergyPercentage,
-                i_WheelManufacture,
-                i_CurrentAirPressure,
-                i_MaxAirPressure,
-                InputValidations.setLicenseType(),
-                InputValidations.setEngineCapacity(),
-                InputValidations.setFuelType(),
-                InputValidations.setCurrentFuelStatus(),
-                InputValidations.setMaxFuelCapacity(),
-                i_OwnerName,
-                i_OwnerPhoneNum);
-        }
-
-        private static void electricMotorcycleCreation(
-            string i_RegistrationId,
-            string i_OwnerName,
-            string i_OwnerPhoneNum,
-            string i_WheelManufacture,
-            float i_CurrentAirPressure,
-            float i_MaxAirPressure,
-            string i_CarModel,
-            float i_EnergyPercentage)
-        {
-            CreateAndSaveData.CreateElectricMotorcycle(
-                i_CarModel,
-                i_RegistrationId,
-                i_EnergyPercentage,
-                i_WheelManufacture,
-                i_CurrentAirPressure,
-                i_MaxAirPressure,
-                InputValidations.setLicenseType(),
-                InputValidations.setEngineCapacity(),
-                InputValidations.setBatteryTimeLeft(),
-                InputValidations.setBatteryMaxTime(),
-                i_OwnerName,
-                i_OwnerPhoneNum);
-        }
-
-        private static void electricCarCreation(
-            string i_RegistrationId,
-            string i_OwnerName,
-            string i_OwnerPhoneNum,
-            string i_WheelManufacture,
-            float i_CurrentAirPressure,
-            float i_MaxAirPressure,
-            string i_CarModel,
-            float i_EnergyPercentage)
-        {
-            CreateAndSaveData.CreateElectricCar(
-                i_CarModel,
-                i_RegistrationId,
-                i_EnergyPercentage,
-                i_WheelManufacture,
-                i_CurrentAirPressure,
-                i_MaxAirPressure,
-                InputValidations.setCarColor(),
-                InputValidations.setNumOfDoors(),
-                InputValidations.setBatteryTimeLeft(),
-                InputValidations.setBatteryMaxTime(),
-                i_OwnerName,
-                i_OwnerPhoneNum);
-        }
-
-        private static void fueledCarCreation(
-            string i_RegistrationId,
-            string i_OwnerName,
-            string i_OwnerPhoneNum,
-            string i_WheelManufacture,
-            float i_CurrentAirPressure,
-            float i_MaxAirPressure,
-            string i_CarModel,
-            float i_EnergyPercentage)
-        {
-            CreateAndSaveData.CreateFueledCar(
-                i_CarModel,
-                i_RegistrationId,
-                i_EnergyPercentage,
-                i_WheelManufacture,
-                i_CurrentAirPressure,
-                i_MaxAirPressure,
-                InputValidations.setCarColor(),
-                InputValidations.setNumOfDoors(),
-                InputValidations.setFuelType(),
-                InputValidations.setCurrentFuelStatus(),
-                InputValidations.setMaxFuelCapacity(),
-                i_OwnerName,
-                i_OwnerPhoneNum);
-        }
-
-        private static void showAllExistingVehicles() // ***Handeled, check if exception works *** has exception, need to check its working good
+        private static void showAllExistingVehicles()
         {
             try
             {
@@ -434,9 +396,9 @@ namespace Ex03.ConsoleUI
                 {
                     case "yes":
                         {
-                            eVehicleStatus filterBy = InputValidations.setVehicleStatus();
+                            eVehicleStatus filterByVehicleStatus = InputValidations.setVehicleStatus();
 
-                            switch (filterBy)
+                            switch (filterByVehicleStatus)
                             {
                                 case eVehicleStatus.InRepair:
                                     {
@@ -455,6 +417,11 @@ namespace Ex03.ConsoleUI
                                         showAllVehiclePaid();
                                         break;
                                     }
+
+                                default:
+                                    {
+                                        throw new FormatException();
+                                    }
                             }
 
                             break;
@@ -463,7 +430,7 @@ namespace Ex03.ConsoleUI
                     case "no":
                         {
                             Console.WriteLine(Environment.NewLine + "All registered Vehicles ID's:" + Environment.NewLine);
-                            foreach (string vehicle in CreateAndSaveData.s_AllVehiclesIds)
+                            foreach (string vehicle in GarageManager.s_AllVehiclesIds)
                             {
                                 Console.WriteLine(vehicle);
                             }
@@ -491,49 +458,49 @@ namespace Ex03.ConsoleUI
 
         private static void showAllVehicleInRepair()
         {
-            if (CreateAndSaveData.s_AllVehiclesIdsInRepair.Count != 0)
+            if (GarageManager.s_AllVehiclesIdsInRepair.Count != 0)
             {
                 Console.WriteLine("List of the vehicles that are in repair:" + Environment.NewLine);
-                foreach (string carId in CreateAndSaveData.s_AllVehiclesIdsInRepair)
+                foreach (string vehicleID in GarageManager.s_AllVehiclesIdsInRepair)
                 {
-                    Console.WriteLine(carId);
+                    Console.WriteLine(vehicleID);
                 }
             }
             else
             {
-                Console.WriteLine("There are no vehicles currently in \"In Repair\" status.");
+                Console.WriteLine(Environment.NewLine + "There are no vehicles currently in \"In Repair\" status.");
             }
         }
 
         private static void showAllVehicleRepaired()
         {
-            if (CreateAndSaveData.s_AllVehiclesIdsRepaired.Count != 0)
+            if (GarageManager.s_AllVehiclesIdsRepaired.Count != 0)
             {
                 Console.WriteLine("List of the vehicles that were repaired:" + Environment.NewLine);
-                foreach (string carId in CreateAndSaveData.s_AllVehiclesIdsRepaired)
+                foreach (string vehicleID in GarageManager.s_AllVehiclesIdsRepaired)
                 {
-                    Console.WriteLine(carId);
+                    Console.WriteLine(vehicleID);
                 }
             }
             else
             {
-                Console.WriteLine("There are no vehicles in Repaired status.");
+                Console.WriteLine(Environment.NewLine + "There are no vehicles in Repaired status.");
             }
         }
 
         private static void showAllVehiclePaid()
         {
-            if (CreateAndSaveData.s_AllVehiclesIdsPaid.Count != 0)
+            if (GarageManager.s_AllVehiclesIdsPaid.Count != 0)
             {
                 Console.WriteLine("List of the vehicles that were paid:" + Environment.NewLine);
-                foreach (string carId in CreateAndSaveData.s_AllVehiclesIdsPaid)
+                foreach (string vehicleID in GarageManager.s_AllVehiclesIdsPaid)
                 {
-                    Console.WriteLine(carId);
+                    Console.WriteLine(vehicleID);
                 }
             }
             else
             {
-                Console.WriteLine("There are no vehicles in Paid status.");
+                Console.WriteLine(Environment.NewLine + "There are no vehicles in Paid status.");
             }
         }
 
@@ -541,8 +508,19 @@ namespace Ex03.ConsoleUI
         {
             try
             {
-                CreateAndSaveData.UpdateVehicleStatus(InputValidations.setVehicleStatus(), InputValidations.setVehicleId());
+                GarageManager.UpdateVehicleStatus(InputValidations.setVehicleStatus(), InputValidations.setVehicleId());
                 Console.WriteLine("Vehicle status updated!" + Environment.NewLine);
+            }
+            catch (KeyNotFoundException i_KeyNotFoundException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> This ID is not registered in our garage! Please type existing ID." +
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_KeyNotFoundException.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
             }
             catch (FormatException i_FormatException)
             {
@@ -560,7 +538,7 @@ namespace Ex03.ConsoleUI
             try
             {
                 string vehicleId = InputValidations.setVehicleId();
-                CreateAndSaveData.s_VehiclesInSystem[vehicleId].FillAirInTiresToTheMax();
+                GarageManager.s_VehiclesInSystem[vehicleId].FillAirInTiresToTheMax();
                 Console.WriteLine("All vehicle tires were filled to max capacity of air pressure!" + Environment.NewLine);
             }
             catch (ValueOutOfRangeException i_ValueOutOfRangeException)
@@ -578,16 +556,13 @@ namespace Ex03.ConsoleUI
         {
             try
             {
-                CreateAndSaveData.FuelVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setFuelType(), InputValidations.setVehicleId());
+                GarageManager.FuelVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setFuelType(), InputValidations.setVehicleId());
                 Console.WriteLine(Environment.NewLine + "Vehicle has been fueled!" + Environment.NewLine);
             }
             catch (ArgumentException i_ArgumentException)
             {
                 string errorMessage = string.Format(
-                    Environment.NewLine +
-                    "-> Error Details: " +
-                    i_ArgumentException.Message +
-                    Environment.NewLine);
+                    Environment.NewLine + "-> Error Details: " + i_ArgumentException.Message + Environment.NewLine);
                 Console.WriteLine(errorMessage);
             }
             catch (ValueOutOfRangeException i_ValueOutOfRangeException)
@@ -596,6 +571,16 @@ namespace Ex03.ConsoleUI
                     Environment.NewLine +
                     "-> Error Details: " +
                     i_ValueOutOfRangeException.ExceptionMessage +
+                    i_ValueOutOfRangeException.MaxValue +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+            }
+            catch (Exception i_Exception)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_Exception.Message +
                     Environment.NewLine);
                 Console.WriteLine(errorMessage);
             }
@@ -605,7 +590,7 @@ namespace Ex03.ConsoleUI
         {
             try
             {
-                CreateAndSaveData.ChargeVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setVehicleId());
+                GarageManager.ChargeVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setVehicleId());
                 Console.WriteLine(Environment.NewLine + "Vehicle has been charged!" + Environment.NewLine);
             }
             catch (ArgumentException i_ArgumentException)
@@ -617,6 +602,15 @@ namespace Ex03.ConsoleUI
                     Environment.NewLine);
                 Console.WriteLine(errorMessage);
             }
+            catch (Exception i_Exception)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_Exception.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+            }
         }
 
         private static void showVehicleFullDetails()
@@ -624,7 +618,7 @@ namespace Ex03.ConsoleUI
             try
             {
                 string vehicleIdToShow = InputValidations.setVehicleId();
-                Console.WriteLine(CreateAndSaveData.s_VehiclesInSystem[vehicleIdToShow]);
+                Console.WriteLine(GarageManager.s_VehiclesInSystem[vehicleIdToShow]);
             }
             catch (KeyNotFoundException i_KeyNotFoundException)
             {

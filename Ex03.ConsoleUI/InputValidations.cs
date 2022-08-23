@@ -5,7 +5,7 @@ namespace Ex03.ConsoleUI
 {
     internal class InputValidations
     {
-        private static int s_IntegerValue; // check names
+        private static int s_IntegerValue;
         private static float s_FloatValue;
 
         internal static void checkValidMenuChoice(string i_MenuChoice)
@@ -41,39 +41,37 @@ namespace Ex03.ConsoleUI
             {
                 throw new FormatException();
             }
-            else
+
+            switch (licenseTypeString.ToLower())
             {
-                switch (licenseTypeString.ToLower())
-                {
-                    case "a":
-                        {
-                            licenseType = eLicenseType.A;
-                            break;
-                        }
+                case "a":
+                    {
+                        licenseType = eLicenseType.A;
+                        break;
+                    }
 
-                    case "aa":
-                        {
-                            licenseType = eLicenseType.AA;
-                            break;
-                        }
+                case "aa":
+                    {
+                        licenseType = eLicenseType.AA;
+                        break;
+                    }
 
-                    case "b1":
-                        {
-                            licenseType = eLicenseType.B1;
-                            break;
-                        }
+                case "b1":
+                    {
+                        licenseType = eLicenseType.B1;
+                        break;
+                    }
 
-                    case "bb":
-                        {
-                            licenseType = eLicenseType.BB;
-                            break;
-                        }
+                case "bb":
+                    {
+                        licenseType = eLicenseType.BB;
+                        break;
+                    }
 
-                    default:
-                        {
-                            throw new FormatException();
-                        }
-                }
+                default:
+                    {
+                        throw new FormatException();
+                    }
             }
 
             return licenseType;
@@ -89,39 +87,37 @@ namespace Ex03.ConsoleUI
             {
                 throw new FormatException();
             }
-            else
+
+            switch (carColorString.ToLower())
             {
-                switch (carColorString.ToLower())
-                {
-                    case "black":
-                        {
-                            carColor = eCarColor.Black;
-                            break;
-                        }
+                case "black":
+                    {
+                        carColor = eCarColor.Black;
+                        break;
+                    }
 
-                    case "grey":
-                        {
-                            carColor = eCarColor.Grey;
-                            break;
-                        }
+                case "grey":
+                    {
+                        carColor = eCarColor.Grey;
+                        break;
+                    }
 
-                    case "white":
-                        {
-                            carColor = eCarColor.White;
-                            break;
-                        }
+                case "white":
+                    {
+                        carColor = eCarColor.White;
+                        break;
+                    }
 
-                    case "blue":
-                        {
-                            carColor = eCarColor.Blue;
-                            break;
-                        }
+                case "blue":
+                    {
+                        carColor = eCarColor.Blue;
+                        break;
+                    }
 
-                    default:
-                        {
-                            throw new FormatException("No such color available for a Car.");
-                        }
-                }
+                default:
+                    {
+                        throw new FormatException("No such color available for a Car.");
+                    }
             }
 
             return carColor;
@@ -137,39 +133,37 @@ namespace Ex03.ConsoleUI
             {
                 throw new FormatException();
             }
-            else
+
+            switch (carNumOfDoorsString)
             {
-                switch (carNumOfDoorsString)
-                {
-                    case "2":
-                        {
-                            carNumOfDoors = eNumOfDoors.Two;
-                            break;
-                        }
+                case "2":
+                    {
+                        carNumOfDoors = eNumOfDoors.Two;
+                        break;
+                    }
 
-                    case "3":
-                        {
-                            carNumOfDoors = eNumOfDoors.Three;
-                            break;
-                        }
+                case "3":
+                    {
+                        carNumOfDoors = eNumOfDoors.Three;
+                        break;
+                    }
 
-                    case "4":
-                        {
-                            carNumOfDoors = eNumOfDoors.Four;
-                            break;
-                        }
+                case "4":
+                    {
+                        carNumOfDoors = eNumOfDoors.Four;
+                        break;
+                    }
 
-                    case "5":
-                        {
-                            carNumOfDoors = eNumOfDoors.Five;
-                            break;
-                        }
+                case "5":
+                    {
+                        carNumOfDoors = eNumOfDoors.Five;
+                        break;
+                    }
 
-                    default:
-                        {
-                            throw new FormatException("No such amount of doors available for a Car.");
-                        }
-                }
+                default:
+                    {
+                        throw new FormatException("No such amount of doors available for a Car.");
+                    }
             }
 
             return carNumOfDoors;
@@ -185,42 +179,40 @@ namespace Ex03.ConsoleUI
             {
                 throw new FormatException();
             }
-            else
+
+            switch (fuelTypeString)
             {
-                switch (fuelTypeString)
-                {
-                    case "95":
+                case "95":
+                    {
+                        fuelType = eFuelType.Octan95;
+                        break;
+                    }
+
+                case "96":
+                    {
+                        fuelType = eFuelType.Octan96;
+                        break;
+                    }
+
+                case "98":
+                    {
+                        fuelType = eFuelType.Octan98;
+                        break;
+                    }
+
+                default:
+                    {
+                        if (fuelTypeString.ToLower() == "soler")
                         {
-                            fuelType = eFuelType.Octan95;
-                            break;
+                            fuelType = eFuelType.Soler;
+                        }
+                        else
+                        {
+                            throw new FormatException("No option of this fuel available.");
                         }
 
-                    case "96":
-                        {
-                            fuelType = eFuelType.Octan96;
-                            break;
-                        }
-
-                    case "98":
-                        {
-                            fuelType = eFuelType.Octan98;
-                            break;
-                        }
-
-                    default:
-                        {
-                            if (fuelTypeString.ToLower() == "soler")
-                            {
-                                fuelType = eFuelType.Soler;
-                            }
-                            else
-                            {
-                                throw new FormatException("No option of this fuel available.");
-                            }
-
-                            break;
-                        }
-                }
+                        break;
+                    }
             }
 
             return fuelType;
@@ -500,25 +492,23 @@ namespace Ex03.ConsoleUI
             {
                 throw new FormatException("You should type only 'yes' or 'no'.");
             }
-            else
+
+            switch (isCoolingString.ToLower())
             {
-                switch (isCoolingString.ToLower())
-                {
-                    case "yes":
-                        {
-                            return true;
-                        }
+                case "yes":
+                    {
+                        return true;
+                    }
 
-                    case "no":
-                        {
-                            return false;
-                        }
+                case "no":
+                    {
+                        return false;
+                    }
 
-                    default:
-                        {
-                            throw new FormatException("You should type only 'yes' or 'no'.");
-                        }
-                }
+                default:
+                    {
+                        throw new FormatException("You should type only 'yes' or 'no'.");
+                    }
             }
         }
 

@@ -4,23 +4,31 @@ namespace Ex03.GarageLogic
 {
     internal class Motorcycle : Vehicle
     {
-        public eLicenseType r_LicenseType;
-        public int r_EngineCapacity;
-        private readonly string r_VehicleDetailsMessage;
-        private readonly string r_ElectricOrFueledDetails;
+        private readonly eLicenseType r_LicenseType;
+        private readonly int r_EngineCapacity;
 
-        public Motorcycle(Vehicle i_VehicleBasicDetails, eLicenseType i_LicenseType, int i_EngineCapacity)
-        : base(i_VehicleBasicDetails)
+        public Motorcycle(string i_ModelName, string i_RegistrationId, float i_EnergyPercentageLeft, Wheel[] i_Wheels, OwnerDetailsAndStatus i_OwnerDetails, object i_Engine, eLicenseType i_LicenseType, int i_EngineCapacity)
+            : base(i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, i_Wheels, i_OwnerDetails, i_Engine)
         {
             r_LicenseType = i_LicenseType;
             r_EngineCapacity = i_EngineCapacity;
-            r_VehicleDetailsMessage = string.Format(Environment.NewLine + base.ToString() + Environment.NewLine + Environment.NewLine + "======== Motorcycle details ========" + Environment.NewLine + Environment.NewLine + "License type: {0}" + Environment.NewLine + "Engine capacity: {1}", r_LicenseType, r_EngineCapacity);
-            r_ElectricOrFueledDetails = i_VehicleBasicDetails.m_electricEngine == null ? string.Format(Environment.NewLine + "You have checked in to our garage an Fuel powered motorcycle!" + Environment.NewLine + Environment.NewLine + "======== Fueled Motorcycle details ========" + Environment.NewLine + "{0}" + Environment.NewLine,  r_VehicleDetailsMessage) : string.Format(Environment.NewLine + "You have checked in to our garage an electric motorcycle!" + Environment.NewLine + Environment.NewLine + "======== Electric Motorcycle details ========" + Environment.NewLine + "{0}" + Environment.NewLine, r_VehicleDetailsMessage);
         }
 
         public override string ToString()
         {
-            return r_ElectricOrFueledDetails;
+            return string.Format(
+                "{0}" +
+                Environment.NewLine +
+                Environment.NewLine +
+                "======== Motorcycle details ========" +
+                Environment.NewLine +
+                Environment.NewLine +
+                "Motorcycle license type: {1}" +
+                Environment.NewLine +
+                " Motorcycle Engine capacity: {2}",
+                createVehicleDetailsMessage(),
+                r_LicenseType.ToString(),
+                r_EngineCapacity.ToString());
         }
     }
 }

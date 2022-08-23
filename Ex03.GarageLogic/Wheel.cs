@@ -14,7 +14,9 @@ namespace Ex03.GarageLogic
             r_MaxAirPressure = i_MaxAirPressure;
         }
 
-        public bool FillAirInWheel(float i_AirToAdd)
+        public float CurrentAirPressure { get; set; }
+
+        internal bool FillAirInWheel(float i_AirToAdd)
         {
             bool isSurpassedMaxAirPressure = false;
 
@@ -30,11 +32,17 @@ namespace Ex03.GarageLogic
             return isSurpassedMaxAirPressure;
         }
 
-        public float CurrentAirPressure { get; set; }
-
         public override string ToString()
         {
-            return string.Format("Wheel module: {0}" + Environment.NewLine + "Wheel current air pressure: {1}" + Environment.NewLine + "Wheel max air pressure: {2}", r_ModuleName, CurrentAirPressure, r_MaxAirPressure);
+            return string.Format(
+                "Wheel module: {0}" +
+                Environment.NewLine +
+                "Wheel current air pressure: {1}" +
+                Environment.NewLine +
+                "Wheel max air pressure: {2}",
+                r_ModuleName,
+                CurrentAirPressure,
+                r_MaxAirPressure);
         }
     }
 }

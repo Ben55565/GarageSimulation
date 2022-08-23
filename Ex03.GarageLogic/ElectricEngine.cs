@@ -2,12 +2,12 @@
 
 namespace Ex03.GarageLogic
 {
-    public class ElectricVehicleDetails
+    internal class ElectricEngine
     {
-        public readonly float r_MaxBatteryCapacityTime;
-        public float m_CurrentBatteryTimeLeft;
+        internal readonly float r_MaxBatteryCapacityTime;
+        private float m_CurrentBatteryTimeLeft;
 
-        public ElectricVehicleDetails(float i_MaxBatteryCapacityTime, float i_CurrentBatteryTimeLeft)
+        public ElectricEngine(float i_MaxBatteryCapacityTime, float i_CurrentBatteryTimeLeft)
         {
             r_MaxBatteryCapacityTime = i_MaxBatteryCapacityTime;
             m_CurrentBatteryTimeLeft = i_CurrentBatteryTimeLeft;
@@ -31,7 +31,16 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return string.Format(Environment.NewLine + "======== Battery Details ========" + Environment.NewLine + Environment.NewLine + "Current battery time left (in hours): {0}" + Environment.NewLine + "Max battery capacity time (in hours): {1}", m_CurrentBatteryTimeLeft, r_MaxBatteryCapacityTime);
+            return string.Format(
+                Environment.NewLine +
+                "======== Battery Details ========" +
+                Environment.NewLine +
+                Environment.NewLine +
+                "Current battery time left (in hours): {0}" +
+                Environment.NewLine +
+                "Max battery capacity time (in hours): {1}",
+                m_CurrentBatteryTimeLeft,
+                r_MaxBatteryCapacityTime);
         }
     }
 }
