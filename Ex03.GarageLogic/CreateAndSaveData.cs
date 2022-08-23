@@ -1,5 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
+    using System;
     using System.Collections.Generic;
 
     public class CreateAndSaveData
@@ -11,83 +12,92 @@
         public static List<string> s_AllVehiclesIdsRepaired = new List<string>();
         public static List<string> s_AllVehiclesIdsPaid = new List<string>();
 
-        public static void UpdateVehicleStatus(eVehicleStatus i_VehicleStatus, string i_CarId)
+        public static void UpdateVehicleStatus(eVehicleStatus i_VehicleStatus, string i_VehicleID)
         {
-            s_VehiclesInSystem[i_CarId].SetCarStatus(i_VehicleStatus);
-
+            s_VehiclesInSystem[i_VehicleID].SetVehicleStatus(i_VehicleStatus);
             switch (i_VehicleStatus)
             {
                 case eVehicleStatus.InRepair:
                     {
-                        updateVehicleStatusToInRepair(i_CarId);
+                        updateVehicleStatusToInRepair(i_VehicleID);
                         break;
                     }
 
                 case eVehicleStatus.Paid:
                     {
-                        updateVehicleStatusToPaid(i_CarId);
+                        updateVehicleStatusToPaid(i_VehicleID);
                         break;
                     }
 
                 case eVehicleStatus.Repaired:
                 default:
                     {
-                        updateVehicleStatusToRepaired(i_CarId);
+                        updateVehicleStatusToRepaired(i_VehicleID);
                         break;
                     }
             }
         }
 
-        private static void updateVehicleStatusToRepaired(string i_CarId)
+        private static void updateVehicleStatusToRepaired(string i_VehicleID)
         {
-            if (s_AllVehiclesIdsPaid.Contains(i_CarId))
+            if (s_AllVehiclesIdsPaid.Contains(i_VehicleID))
             {
-                s_AllVehiclesIdsPaid.Remove(i_CarId);
-                s_AllVehiclesIdsRepaired.Add(i_CarId);
+                s_AllVehiclesIdsPaid.Remove(i_VehicleID);
+                s_AllVehiclesIdsRepaired.Add(i_VehicleID);
             }
-            else if (s_AllVehiclesIdsInRepair.Contains(i_CarId))
+            else if (s_AllVehiclesIdsInRepair.Contains(i_VehicleID))
             {
-                s_AllVehiclesIdsInRepair.Remove(i_CarId);
-                s_AllVehiclesIdsRepaired.Add(i_CarId);
+                s_AllVehiclesIdsInRepair.Remove(i_VehicleID);
+                s_AllVehiclesIdsRepaired.Add(i_VehicleID);
             }
         }
 
-        private static void updateVehicleStatusToPaid(string i_CarId)
+        private static void updateVehicleStatusToPaid(string i_VehicleID)
         {
-            if (s_AllVehiclesIdsRepaired.Contains(i_CarId))
+            if (s_AllVehiclesIdsRepaired.Contains(i_VehicleID))
             {
-                s_AllVehiclesIdsRepaired.Remove(i_CarId);
-                s_AllVehiclesIdsPaid.Add(i_CarId);
+                s_AllVehiclesIdsRepaired.Remove(i_VehicleID);
+                s_AllVehiclesIdsPaid.Add(i_VehicleID);
             }
-            else if (s_AllVehiclesIdsInRepair.Contains(i_CarId))
+            else if (s_AllVehiclesIdsInRepair.Contains(i_VehicleID))
             {
-                s_AllVehiclesIdsInRepair.Remove(i_CarId);
-                s_AllVehiclesIdsPaid.Add(i_CarId);
-            }
-        }
-
-        private static void updateVehicleStatusToInRepair(string i_CarId)
-        {
-            if (s_AllVehiclesIdsRepaired.Contains(i_CarId))
-            {
-                s_AllVehiclesIdsRepaired.Remove(i_CarId);
-                s_AllVehiclesIdsInRepair.Add(i_CarId);
-            }
-            else if (s_AllVehiclesIdsPaid.Contains(i_CarId))
-            {
-                s_AllVehiclesIdsPaid.Remove(i_CarId);
-                s_AllVehiclesIdsInRepair.Add(i_CarId);
+                s_AllVehiclesIdsInRepair.Remove(i_VehicleID);
+                s_AllVehiclesIdsPaid.Add(i_VehicleID);
             }
         }
 
-        public static void VerifyVehicleTypeAndFuelVehicle(float i_LittersToFuel, eFuelType i_FuelType, string i_CarId)
+        private static void updateVehicleStatusToInRepair(string i_VehicleID)
         {
-            s_VehiclesInSystem[i_CarId].m_fueledEngine.FuelVehicle(i_LittersToFuel); // need to throw exception when fueling wrong fuel, or fueling above the max
+            if (s_AllVehiclesIdsRepaired.Contains(i_VehicleID))
+            {
+                s_AllVehiclesIdsRepaired.Remove(i_VehicleID);
+                s_AllVehiclesIdsInRepair.Add(i_VehicleID);
+            }
+            else if (s_AllVehiclesIdsPaid.Contains(i_VehicleID))
+            {
+                s_AllVehiclesIdsPaid.Remove(i_VehicleID);
+                s_AllVehiclesIdsInRepair.Add(i_VehicleID);
+            }
         }
 
-        public static void VerifyVehicleTypeAndChargeVehicle(float i_MinutesToCharge, string i_CarId)
+        public static void FuelVehicle(float i_LittersToFuel, eFuelType i_FuelType, string i_VehicleID)// need to throw exception when fueling wrong fuel, or fueling above the max
         {
-            s_VehiclesInSystem[i_CarId].m_electricEngine.ChargeVehicle(i_MinutesToCharge); // need to throw exception when charging above max
+            if (!s_VehiclesInSystem[i_VehicleID].m_fueledEngine.FuelVehicle(i_LittersToFuel))
+            {
+                throw new ValueOutOfRangeException(s_VehiclesInSystem[i_VehicleID].m_fueledEngine.r_MaxFuelCapacity, 0, "Surpassed Maximum Fuel Capacity for this Vehicle.");
+            }
+            else if (s_VehiclesInSystem[i_VehicleID].m_fueledEngine.r_FuelType != i_FuelType)
+            {
+                throw new ArgumentException("Fuel Type is not matching the Vehicle's fuel type.");
+            }
+        }
+
+        public static void ChargeVehicle(float i_MinutesToCharge, string i_VehicleID) // need to throw exception when charging above max
+        {
+            if (!s_VehiclesInSystem[i_VehicleID].m_electricEngine.ChargeVehicle(i_MinutesToCharge))
+            {
+                throw new ValueOutOfRangeException(s_VehiclesInSystem[i_VehicleID].m_electricEngine.r_MaxBatteryCapacityTime, 0, "Surpassed Maximum Battery Capacity for this Electric Vehicle.");
+            }
         }
 
         public static Wheel[] setWheels(string i_WheelModuleName, float i_CurrentAirPressure, float i_MaxAirPressure)
@@ -149,7 +159,6 @@
             s_AllVehiclesIds.Add(i_RegistrationId);
             s_AllVehiclesIdsInRepair.Add(i_RegistrationId);
             OwnerDetailsAndStatus ownerDetails = new OwnerDetailsAndStatus(i_OwnerName, i_OwnerPhone, eVehicleStatus.InRepair);
-
             Vehicle vehicle = i_CarEngine.GetType() == typeof(ElectricVehicleDetails) ? new Vehicle(i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, vehicleWheels, ownerDetails, (ElectricVehicleDetails)i_CarEngine) : new Vehicle(i_ModelName, i_RegistrationId, i_EnergyPercentageLeft, vehicleWheels, ownerDetails, (FueledVehicleDetails)i_CarEngine);
 
             return vehicle;

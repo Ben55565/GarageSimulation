@@ -13,7 +13,7 @@ namespace Ex03.GarageLogic
         {
             M_CarColor = i_CarColor;
             M_NumOfDoors = i_NumOfDoors;
-            string vehicleDetailsMessage = string.Format(Environment.NewLine + base.ToString() + "======== Car details ========" + Environment.NewLine + Environment.NewLine + "Car color: {0}" + Environment.NewLine + "Number of doors: {1}", M_CarColor, M_NumOfDoors);
+            string vehicleDetailsMessage = string.Format(Environment.NewLine + base.ToString() + Environment.NewLine + Environment.NewLine + "======== Car details ========" + Environment.NewLine + Environment.NewLine + "Car color: {0}" + Environment.NewLine + "Number of doors: {1}", M_CarColor, M_NumOfDoors);
             r_ElectricOrFueledDetails = i_VehicleBasicDetails.m_electricEngine == null ? string.Format(Environment.NewLine + "You have checked in to our garage an Fueled car!" + Environment.NewLine + Environment.NewLine + "======== Fueled Car details ========" + Environment.NewLine + "{0}" + Environment.NewLine, vehicleDetailsMessage) : string.Format(Environment.NewLine + "You have checked in to our garage an electric car!" + Environment.NewLine + Environment.NewLine + "======== Electric Car details ========" + Environment.NewLine + "{0}" + Environment.NewLine, vehicleDetailsMessage);
         }
 

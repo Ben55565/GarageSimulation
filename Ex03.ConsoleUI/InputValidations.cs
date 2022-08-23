@@ -5,7 +5,7 @@ namespace Ex03.ConsoleUI
 {
     internal class InputValidations
     {
-        private static int s_IntValue; //check names
+        private static int s_IntegerValue; // check names
         private static float s_FloatValue;
 
         internal static void checkValidMenuChoice(string i_MenuChoice)
@@ -94,19 +94,33 @@ namespace Ex03.ConsoleUI
                 switch (carColorString.ToLower())
                 {
                     case "black":
-                        carColor = eCarColor.Black;
-                        break;
+                        {
+                            carColor = eCarColor.Black;
+                            break;
+                        }
+
                     case "grey":
-                        carColor = eCarColor.Grey;
-                        break;
+                        {
+                            carColor = eCarColor.Grey;
+                            break;
+                        }
+
                     case "white":
-                        carColor = eCarColor.White;
-                        break;
+                        {
+                            carColor = eCarColor.White;
+                            break;
+                        }
+
                     case "blue":
-                        carColor = eCarColor.Blue;
-                        break;
+                        {
+                            carColor = eCarColor.Blue;
+                            break;
+                        }
+
                     default:
-                        throw new FormatException("No such color available for a Car.");
+                        {
+                            throw new FormatException("No such color available for a Car.");
+                        }
                 }
             }
 
@@ -128,19 +142,33 @@ namespace Ex03.ConsoleUI
                 switch (carNumOfDoorsString)
                 {
                     case "2":
-                        carNumOfDoors = eNumOfDoors.Two;
-                        break;
+                        {
+                            carNumOfDoors = eNumOfDoors.Two;
+                            break;
+                        }
+
                     case "3":
-                        carNumOfDoors = eNumOfDoors.Three;
-                        break;
+                        {
+                            carNumOfDoors = eNumOfDoors.Three;
+                            break;
+                        }
+
                     case "4":
-                        carNumOfDoors = eNumOfDoors.Four;
-                        break;
+                        {
+                            carNumOfDoors = eNumOfDoors.Four;
+                            break;
+                        }
+
                     case "5":
-                        carNumOfDoors = eNumOfDoors.Five;
-                        break;
+                        {
+                            carNumOfDoors = eNumOfDoors.Five;
+                            break;
+                        }
+
                     default:
-                        throw new FormatException("No such amount of doors available for a Car.");
+                        {
+                            throw new FormatException("No such amount of doors available for a Car.");
+                        }
                 }
             }
 
@@ -162,14 +190,23 @@ namespace Ex03.ConsoleUI
                 switch (fuelTypeString)
                 {
                     case "95":
-                        fuelType = eFuelType.Octan95;
-                        break;
+                        {
+                            fuelType = eFuelType.Octan95;
+                            break;
+                        }
+
                     case "96":
-                        fuelType = eFuelType.Octan96;
-                        break;
+                        {
+                            fuelType = eFuelType.Octan96;
+                            break;
+                        }
+
                     case "98":
-                        fuelType = eFuelType.Octan98;
-                        break;
+                        {
+                            fuelType = eFuelType.Octan98;
+                            break;
+                        }
+
                     default:
                         {
                             if (fuelTypeString.ToLower() == "soler")
@@ -194,7 +231,7 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("Please enter desired vehicle status (In repair = 1 / Repaired = 2 / Paid = 3):");
             string vehicleStatusToUpdate = Console.ReadLine();
 
-            switch (vehicleStatusToUpdate?.ToLower())
+            switch (vehicleStatusToUpdate)
             {
                 case "1":
                     {
@@ -213,7 +250,7 @@ namespace Ex03.ConsoleUI
 
                 default:
                     {
-                        throw new FormatException();
+                        throw new FormatException("Wrong vehicle status value entered. Please try again.");
                     }
             }
         }
@@ -255,7 +292,7 @@ namespace Ex03.ConsoleUI
 
                 default:
                     {
-                        throw new FormatException();
+                        throw new FormatException("Invalid choice of a vehicle. Please type a number from the list only.");
                     }
             }
         }
@@ -267,7 +304,7 @@ namespace Ex03.ConsoleUI
 
             if (!checkIfInputStingIncludesOnlyDigits(vehicleID))
             {
-                throw new FormatException("Invalid Car ID.");
+                throw new FormatException("Vehicle ID entered is invalid! Please make sure to type only number digits.");
             }
 
             return vehicleID;
@@ -335,7 +372,7 @@ namespace Ex03.ConsoleUI
                 throw new FormatException("Invalid Engine Capacity Entered.");
             }
 
-            return s_IntValue;
+            return s_IntegerValue;
         }
 
         internal static float setWheelsCurrentAirPressure()
@@ -492,7 +529,7 @@ namespace Ex03.ConsoleUI
 
         internal static bool checkIfUserInputIsIntegerType(string i_UserInput)
         {
-            return !(i_UserInput == null || !int.TryParse(i_UserInput, out s_IntValue));
+            return !(i_UserInput == null || !int.TryParse(i_UserInput, out s_IntegerValue));
         }
 
         internal static bool checkIfInputStingIncludesOnlyLetters(string i_UserInput)

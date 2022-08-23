@@ -24,7 +24,7 @@ namespace Ex03.ConsoleUI
 
         private static void exitMessage()
         {
-            Console.WriteLine(Environment.NewLine + "Press enter to continue..");
+            Console.WriteLine(Environment.NewLine + "Press enter to exit..");
             Console.ReadLine();
         }
 
@@ -161,6 +161,7 @@ namespace Ex03.ConsoleUI
                         Environment.NewLine +
                         "Please choose the type of the vehicle you wish to add:" +
                         Environment.NewLine +
+                        Environment.NewLine +
                         "   1 - Electric car" +
                         Environment.NewLine +
                         "   2 - Fueled car" +
@@ -170,6 +171,7 @@ namespace Ex03.ConsoleUI
                         "   4 - Fueled motorcycle" +
                         Environment.NewLine +
                         "   5 - Truck" +
+                        Environment.NewLine +
                         Environment.NewLine +
                         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                     Console.WriteLine(vehicleTypeMessage);
@@ -183,23 +185,11 @@ namespace Ex03.ConsoleUI
                     CreateAndSaveData.UpdateVehicleStatus(eVehicleStatus.InRepair, vehicleID);
                 }
             }
-            catch (ArgumentException i_ArgumentException) //check if to change exception
-            {
-                string errorMessage = string.Format(
-                    Environment.NewLine +
-                    "-> Vehicle ID entered is invalid! Please make sure to type only number digits and try again." +
-                    Environment.NewLine +
-                    "-> Error Details: " +
-                    i_ArgumentException.Message +
-                    Environment.NewLine);
-                Console.WriteLine(errorMessage);
-                registerNewVehicle();
-            }
             catch (FormatException i_FormatException)
             {
                 string errorMessage = string.Format(
                     Environment.NewLine +
-                    "-> Vehicle type choice entered is invalid! Please choose again." +
+                    "-> Invalid input was entered. Please try again." +
                     Environment.NewLine +
                     "-> Error Details: " +
                     i_FormatException.Message +
@@ -433,62 +423,69 @@ namespace Ex03.ConsoleUI
                 i_OwnerPhoneNum);
         }
 
-        private static void showAllExistingVehicles() // has exception, need to check its working good
+        private static void showAllExistingVehicles() // ***Handeled, check if exception works *** has exception, need to check its working good
         {
-            Console.WriteLine("Would you like to show the list of ID's in the system filtered by their status? (yes/no)");
-            string showBySortInput = Console.ReadLine();
-
-            switch (showBySortInput?.ToLower())
+            try
             {
-                case "yes":
-                    {
-                        eVehicleStatus filterBy = InputValidations.setVehicleStatus();
+                Console.WriteLine("Would you like to show the list of ID's in the system filtered by their status? (yes/no)");
+                string showBySortInput = Console.ReadLine();
 
-                        switch (filterBy)
+                switch (showBySortInput?.ToLower())
+                {
+                    case "yes":
                         {
-                            case eVehicleStatus.InRepair:
-                                {
-                                    showAllVehicleInRepair();
-                                    break;
-                                }
+                            eVehicleStatus filterBy = InputValidations.setVehicleStatus();
 
-                            case eVehicleStatus.Repaired:
-                                {
-                                    showAllVehicleRepaired();
-                                    break;
-                                }
+                            switch (filterBy)
+                            {
+                                case eVehicleStatus.InRepair:
+                                    {
+                                        showAllVehicleInRepair();
+                                        break;
+                                    }
 
-                            case eVehicleStatus.Paid:
-                                {
-                                    showAllVehiclePaid();
-                                    break;
-                                }
+                                case eVehicleStatus.Repaired:
+                                    {
+                                        showAllVehicleRepaired();
+                                        break;
+                                    }
 
-                            default:
-                                {
-                                    throw new FormatException();
-                                }
+                                case eVehicleStatus.Paid:
+                                    {
+                                        showAllVehiclePaid();
+                                        break;
+                                    }
+                            }
+
+                            break;
                         }
 
-                        break;
-                    }
-
-                case "no":
-                    {
-                        Console.WriteLine(Environment.NewLine + "All registered cars id's:" + Environment.NewLine);
-                        foreach (string carId in CreateAndSaveData.s_AllVehiclesIds)
+                    case "no":
                         {
-                            Console.WriteLine(carId);
+                            Console.WriteLine(Environment.NewLine + "All registered Vehicles ID's:" + Environment.NewLine);
+                            foreach (string vehicle in CreateAndSaveData.s_AllVehiclesIds)
+                            {
+                                Console.WriteLine(vehicle);
+                            }
+
+                            Console.Write(Environment.NewLine);
+                            break;
                         }
 
-                        Console.Write(Environment.NewLine);
-                        break;
-                    }
-
-                default:
-                    {
-                        throw new FormatException();
-                    }
+                    default:
+                        {
+                            throw new FormatException("Value entered is not 'yes' or 'no'. Please type it correctly.");
+                        }
+                }
+            }
+            catch (FormatException i_FormatException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_FormatException.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
             }
         }
 
@@ -536,22 +533,34 @@ namespace Ex03.ConsoleUI
             }
             else
             {
-                Console.WriteLine("There are no vehicles in paid status.");
+                Console.WriteLine("There are no vehicles in Paid status.");
             }
         }
 
         private static void updateVehicleStatus()
         {
-            CreateAndSaveData.UpdateVehicleStatus(InputValidations.setVehicleStatus(), InputValidations.setVehicleId());
-            Console.WriteLine("Vehicle status updated!" + Environment.NewLine);
+            try
+            {
+                CreateAndSaveData.UpdateVehicleStatus(InputValidations.setVehicleStatus(), InputValidations.setVehicleId());
+                Console.WriteLine("Vehicle status updated!" + Environment.NewLine);
+            }
+            catch (FormatException i_FormatException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_FormatException.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+            }
         }
 
         private static void fillAllTires()
         {
             try
             {
-                string carId = InputValidations.setVehicleId();
-                CreateAndSaveData.s_VehiclesInSystem[carId].FillAirInTiresToTheMax();
+                string vehicleId = InputValidations.setVehicleId();
+                CreateAndSaveData.s_VehiclesInSystem[vehicleId].FillAirInTiresToTheMax();
                 Console.WriteLine("All vehicle tires were filled to max capacity of air pressure!" + Environment.NewLine);
             }
             catch (ValueOutOfRangeException i_ValueOutOfRangeException)
@@ -567,22 +576,55 @@ namespace Ex03.ConsoleUI
 
         private static void fuelVehicle()
         {
-            CreateAndSaveData.VerifyVehicleTypeAndFuelVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setFuelType(), InputValidations.setVehicleId());
-            Console.WriteLine(Environment.NewLine + "Vehicle has been fueled!" + Environment.NewLine);
+            try
+            {
+                CreateAndSaveData.FuelVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setFuelType(), InputValidations.setVehicleId());
+                Console.WriteLine(Environment.NewLine + "Vehicle has been fueled!" + Environment.NewLine);
+            }
+            catch (ArgumentException i_ArgumentException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_ArgumentException.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+            }
+            catch (ValueOutOfRangeException i_ValueOutOfRangeException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_ValueOutOfRangeException.ExceptionMessage +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+            }
         }
 
         private static void chargeVehicle()
         {
-            CreateAndSaveData.VerifyVehicleTypeAndChargeVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setVehicleId());
-            Console.WriteLine(Environment.NewLine + "Vehicle has been charged!" + Environment.NewLine);
+            try
+            {
+                CreateAndSaveData.ChargeVehicle(InputValidations.setAmountToFuelOrChargeVehicle(), InputValidations.setVehicleId());
+                Console.WriteLine(Environment.NewLine + "Vehicle has been charged!" + Environment.NewLine);
+            }
+            catch (ArgumentException i_ArgumentException)
+            {
+                string errorMessage = string.Format(
+                    Environment.NewLine +
+                    "-> Error Details: " +
+                    i_ArgumentException.Message +
+                    Environment.NewLine);
+                Console.WriteLine(errorMessage);
+            }
         }
 
         private static void showVehicleFullDetails()
         {
             try
             {
-                string idToShow = InputValidations.setVehicleId();
-                Console.WriteLine(CreateAndSaveData.s_VehiclesInSystem[idToShow]);
+                string vehicleIdToShow = InputValidations.setVehicleId();
+                Console.WriteLine(CreateAndSaveData.s_VehiclesInSystem[vehicleIdToShow]);
             }
             catch (KeyNotFoundException i_KeyNotFoundException)
             {
@@ -594,19 +636,17 @@ namespace Ex03.ConsoleUI
                     i_KeyNotFoundException.Message +
                     Environment.NewLine);
                 Console.WriteLine(errorMessage);
-                showVehicleFullDetails();
+                runUserInterface();
             }
-            catch (ArgumentException i_ArgumentException)
+            catch (FormatException i_FormatException)
             {
                 string errorMessage = string.Format(
                     Environment.NewLine +
-                    "-> Vehicle ID entered is invalid! Please make sure to type only number digits and try again." +
-                    Environment.NewLine +
                     "-> Error Details: " +
-                    i_ArgumentException.Message +
+                    i_FormatException.Message +
                     Environment.NewLine);
                 Console.WriteLine(errorMessage);
-                registerNewVehicle();
+                runUserInterface();
             }
         }
     }

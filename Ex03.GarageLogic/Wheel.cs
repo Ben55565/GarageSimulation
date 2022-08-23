@@ -14,16 +14,20 @@ namespace Ex03.GarageLogic
             r_MaxAirPressure = i_MaxAirPressure;
         }
 
-        public void FillAirInWheel(float i_AirToAdd) //handle exception here
+        public bool FillAirInWheel(float i_AirToAdd)
         {
+            bool isSurpassedMaxAirPressure = false;
+
             if (CurrentAirPressure + i_AirToAdd > r_MaxAirPressure || i_AirToAdd == 0)
             {
-                throw new ValueOutOfRangeException(r_MaxAirPressure, 0, "Surpassed Maximum Air Pressure.");
+                isSurpassedMaxAirPressure = true;
             }
             else
             {
                 CurrentAirPressure += i_AirToAdd;
             }
+
+            return isSurpassedMaxAirPressure;
         }
 
         public float CurrentAirPressure { get; set; }
